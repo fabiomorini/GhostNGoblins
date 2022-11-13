@@ -2,6 +2,7 @@ var gamePrefs=
 {
     HERO_JUMP: 450,
     HERO_SPEED: 200,
+    HERO_SPEED_CROUCH: 100,
     ENEMY_SPEED: 100,
     GRAVITY: 1000,
     GAME_WIDTH:960,
