@@ -7,36 +7,53 @@ class heroPrefab extends Phaser.GameObjects.Sprite
         _scene.physics.world.enable(this);
         //_scene.physics.add.existing(this); 
         this.cursores = _scene.input.keyboard.createCursorKeys();      
+        this.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
     }
 
     preUpdate(time,delta)
     {
-        if(this.cursores.left.isDown)
+        if(this.cursores.left.isDown && !this.cursores.down.isDown) // LEFT NOT CROUCHING
         {
-            //ME MUEVO A LA IZQUIERDA
             this.body.setVelocityX(-gamePrefs.HERO_SPEED);
             this.setFlipX(true);
             this.anims.play('run',true);
-        }else
-        if(this.cursores.right.isDown)
+        }
+        else if(this.cursores.left.isDown && this.cursores.down.isDown) // LEFT CROUCHING
         {
-            //ME MUEVO A LA DERECHA
+            this.body.setVelocityX(-gamePrefs.HERO_SPEED_CROUCH);
+            this.setFlipX(true);
+            this.anims.play('run',true);
+        }
+        else if(this.cursores.right.isDown && !this.cursores.right.isDown) // RIGHT NOT CROUCHING
+        {
             this.body.setVelocityX(gamePrefs.HERO_SPEED);
             this.setFlipX(false);
             this.anims.play('run',true);
-        }else
-        {
-            //NO ME MUEVO AT ALL
-            this.body.setVelocityX(0);
-            this.anims.stop().setFrame(0);
         }
-        //SALTO
-        if(this.cursores.up.isDown &&
-        this.body.blocked.down && //this.body.onFloor()
-        Phaser.Input.Keyboard.DownDuration(this.cursores.up,250))
+        else if(this.cursores.right.isDown && this.cursores.right.isDown) // RIGHT CROUCHING
         {
-            this.body.setVelocityY(-gamePrefs.HERO_JUMP);            
+            this.body.setVelocityX(gamePrefs.HERO_SPEED_CROUCH);
+            this.setFlipX(false);
+            this.anims.play('run',true);
         }
+
+        if(this.cursores.up.isDown && this.body.blocked.down) // CLIMB STAIRS || JUMP
+        {
+            //TODO
+            // if(player.isJumping())
+            // else if(player.isClimbingStairs)
+
+            Phaser.Input.Keyboard.DownDuration(this.cursores.up,250)
+            {
+                this.body.setVelocityY(-gamePrefs.HERO_JUMP);            
+            }
+        }
+        
+        if(Phaser.Input.Keyboard.JustDown(this.attack) && this.body.blocked.down) // ATTACK
+        {
+            //TODO
+        }
+       
 
         if(!this.body.onFloor())
         {
