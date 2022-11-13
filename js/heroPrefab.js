@@ -11,34 +11,44 @@ class heroPrefab extends Phaser.GameObjects.Sprite
 
     preUpdate(time,delta)
     {
-        if(this.cursores.left.isDown) // LEFT
+        if(this.cursores.left.isDown && !this.cursores.down.isDown) // LEFT NOT CROUCHING
         {
             this.body.setVelocityX(-gamePrefs.HERO_SPEED);
             this.setFlipX(true);
             this.anims.play('run',true);
         }
-        else if(this.cursores.right.isDown) // RIGHT
+        else if(this.cursores.left.isDown && this.cursores.down.isDown) // LEFT CROUCHING
+        {
+            this.body.setVelocityX(-gamePrefs.HERO_SPEED_CROUCH);
+            this.setFlipX(true);
+            this.anims.play('run',true);
+        }
+        else if(this.cursores.right.isDown && !this.cursores.right.isDown) // RIGHT NOT CROUCHING
         {
             this.body.setVelocityX(gamePrefs.HERO_SPEED);
             this.setFlipX(false);
             this.anims.play('run',true);
         }
-        else if(this.cursores.down.isDown) // CROUCH
+        else if(this.cursores.right.isDown && this.cursores.right.isDown) // RIGHT CROUCHING
         {
-            // TODO
+            this.body.setVelocityX(gamePrefs.HERO_SPEED_CROUCH);
+            this.setFlipX(false);
+            this.anims.play('run',true);
         }
-        else if(this.cursores.up.isDown) // CLIMB STAIRS || JUMP
+
+        if(this.cursores.up.isDown && this.body.blocked.down) // CLIMB STAIRS || JUMP
         {
-            // TODO
+            //TODO
+            // if(player.isJumping())
+            // else if(player.isClimbingStairs)
+
+            Phaser.Input.Keyboard.DownDuration(this.cursores.up,250)
+            {
+                this.body.setVelocityY(-gamePrefs.HERO_JUMP);            
+            }
         }
         
-        //SALTO
-        if(this.cursores.up.isDown &&
-        this.body.blocked.down && //this.body.onFloor()
-        Phaser.Input.Keyboard.DownDuration(this.cursores.up,250))
-        {
-            this.body.setVelocityY(-gamePrefs.HERO_JUMP);            
-        }
+       
 
         if(!this.body.onFloor())
         {
