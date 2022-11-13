@@ -7,6 +7,7 @@ class heroPrefab extends Phaser.GameObjects.Sprite
         _scene.physics.world.enable(this);
         //_scene.physics.add.existing(this); 
         this.cursores = _scene.input.keyboard.createCursorKeys();      
+        this.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
     }
 
     preUpdate(time,delta)
@@ -48,6 +49,10 @@ class heroPrefab extends Phaser.GameObjects.Sprite
             }
         }
         
+        if(Phaser.Input.Keyboard.JustDown(this.attack) && this.body.blocked.down) // ATTACK
+        {
+            //TODO
+        }
        
 
         if(!this.body.onFloor())
