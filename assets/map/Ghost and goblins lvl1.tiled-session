@@ -1,0 +1,71 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "stage1.tmx",
+    "expandedProjectPaths": [
+        "E:/Area de trabajo/Phaser/GhostNGoblins/assets",
+        "."
+    ],
+    "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
+        "stage1.json": {
+            "scale": 0.41482979910714285,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1793.506642004372,
+                "y": 114.50479233226838
+            }
+        },
+        "stage1.json#Graveyard Terrain": {
+            "scaleInDock": 1
+        },
+        "stage1.json#Mountain01": {
+            "scaleInDock": 1
+        },
+        "stage1.json#Tombs": {
+            "scaleInDock": 1
+        },
+        "stage1.tmx": {
+            "scale": 3,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 647.6666666666666,
+                "y": 189.16666666666663
+            }
+        },
+        "stage1.tmx#Graveyard Terrain": {
+            "scaleInDock": 1
+        },
+        "stage1.tmx#Mountain01": {
+            "scaleInDock": 1
+        },
+        "stage1.tmx#Tombs": {
+            "scaleInDock": 1
+        }
+    },
+    "last.exportedFilePath": "E:/Area de trabajo/Phaser/GhostNGoblins/assets/map",
+    "last.imagePath": "E:/Area de trabajo/Phaser/GhostNGoblins/assets/tilesets",
+    "map.height": 6,
+    "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
+    "map.lastUsedFormat": "tmx",
+    "map.renderOrder": null,
+    "map.width": 112,
+    "openFiles": [
+        "stage1.tmx",
+        "stage1.json"
+    ],
+    "project": "Ghost and goblins lvl1.tiled-project",
+    "recentFiles": [
+        "stage1.json",
+        "stage1.tmx"
+    ],
+    "tileset.embedInMap": true,
+    "tileset.tileSize": {
+        "height": 32,
+        "width": 32
+    }
+}
