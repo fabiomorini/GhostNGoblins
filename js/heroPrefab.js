@@ -11,25 +11,27 @@ class heroPrefab extends Phaser.GameObjects.Sprite
 
     preUpdate(time,delta)
     {
-        if(this.cursores.left.isDown)
+        if(this.cursores.left.isDown) // LEFT
         {
-            //ME MUEVO A LA IZQUIERDA
             this.body.setVelocityX(-gamePrefs.HERO_SPEED);
             this.setFlipX(true);
             this.anims.play('run',true);
-        }else
-        if(this.cursores.right.isDown)
+        }
+        else if(this.cursores.right.isDown) // RIGHT
         {
-            //ME MUEVO A LA DERECHA
             this.body.setVelocityX(gamePrefs.HERO_SPEED);
             this.setFlipX(false);
             this.anims.play('run',true);
-        }else
-        {
-            //NO ME MUEVO AT ALL
-            this.body.setVelocityX(0);
-            this.anims.stop().setFrame(0);
         }
+        else if(this.cursores.down.isDown) // CROUCH
+        {
+            // TODO
+        }
+        else if(this.cursores.up.isDown) // CLIMB STAIRS || JUMP
+        {
+            // TODO
+        }
+        
         //SALTO
         if(this.cursores.up.isDown &&
         this.body.blocked.down && //this.body.onFloor()
