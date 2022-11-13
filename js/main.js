@@ -7,9 +7,8 @@ var gamePrefs=
     GRAVITY: 1000,
     GAME_WIDTH:960,
     GAME_HEIGHT:540,
-    LEVEL1_WIDTH:1280,
-    LEVEL1_HEIGHT:350
-    
+    LEVEL1_WIDTH:3584,
+    LEVEL1_HEIGHT:192
 }
 
 var config =
@@ -17,7 +16,7 @@ var config =
     type: Phaser.AUTO,
     width: gamePrefs.GAME_WIDTH,
     height: gamePrefs.GAME_HEIGHT,
-    scene:[level1], //array con los niveles/pantallas/escenas (unity)
+    scene:[stage1], //array con los niveles/pantallas/escenas (unity)
     render:
     {
         pixelArt:true
