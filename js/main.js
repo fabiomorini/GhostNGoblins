@@ -1,13 +1,14 @@
 var gamePrefs=
 {
-    HERO_JUMP: 450,
-    HERO_SPEED: 200,
+    ARTHUR_JUMP: 450,
+    ARTHUR_SPEED: 200,
     ENEMY_SPEED: 100,
     GRAVITY: 1000,
     GAME_WIDTH:960,
     GAME_HEIGHT:540,
     LEVEL1_WIDTH:1280,
-    LEVEL1_HEIGHT:800
+    LEVEL1_HEIGHT:350
+    
 }
 
 var config =
