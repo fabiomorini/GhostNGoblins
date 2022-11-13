@@ -12,22 +12,18 @@ class jumperPrefab extends Phaser.GameObjects.Sprite
         _scene.physics.add.overlap
         (
             this,
-            _scene.hero,
+            _scene.arthur,
             this.hit,
             null,
             this
         );        
     }
 
-    hit(_jumper,_hero)
+    hit(_jumper,_arthur)
     {
-        if(_jumper.body.touching.up && _hero.body.touching.down)
         {
-            this.destroy();
-            _hero.body.setVelocityY(-gamePrefs.HERO_JUMP);       
-        }else
-        {
-            _hero.body.reset(65,100);
+            _arthur.health -=1;
+            _arthur.body.reset(65,100);
             this.scene.cameras.main.shake(500,0.05);
             this.scene.cameras.main.flash(500,255,0,0);
         }
