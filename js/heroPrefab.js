@@ -8,7 +8,6 @@ class heroPrefab extends Phaser.GameObjects.Sprite
         //_scene.physics.add.existing(this); 
         this.cursores = _scene.input.keyboard.createCursorKeys(); 
         this.health = 2;     
-        //this.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
     }
 
     preUpdate(time,delta)
@@ -114,6 +113,42 @@ class heroPrefab extends Phaser.GameObjects.Sprite
             }
         }
 
+        //PLAYER ATTACK
+
+        //ARMOUR
+        if(this.health == 2)
+        {
+            //NORMAL THROW
+            if(this.cursores.space.isDown && !this.cursores.down.isDown)
+            {
+                //TODO: attack logic
+                this.anims.play('AttackArmour', true);
+            }
+
+            //CROUCHING THROW
+            if(this.cursores.space.isDown && this.cursores.down.isDown)
+            {
+                //TODO: attack logic
+                this.anims.play('CrouchingAttackArmour', true);
+            }
+        }
+        //NAKED
+        else 
+        {
+            //NORMAL THROW
+            if(this.cursores.space.isDown && !this.cursores.down.isDown)
+            {
+                //TODO: attack logic
+                this.anims.play('AttackArmour', true);
+            }
+            
+            //CROUCHING THROW
+            if(this.cursores.space.isDown && this.cursores.down.isDown)
+            {
+                //TODO: attack logic
+                this.anims.play('CrouchingAttackNaked', true);
+            }
+        }
 
         super.preUpdate(time, delta);
     }
