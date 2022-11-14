@@ -1,6 +1,6 @@
 var gamePrefs=
 {
-    ARTHUR_JUMP: 450,
+    ARTHUR_JUMP: 300,
     ARTHUR_SPEED: 100,
     ENEMY_SPEED: 100,
     GRAVITY: 1000,
