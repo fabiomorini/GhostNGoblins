@@ -8,7 +8,7 @@ class heroPrefab extends Phaser.GameObjects.Sprite
         //_scene.physics.add.existing(this); 
         this.cursores = _scene.input.keyboard.createCursorKeys(); 
         this.health = 2;     
-        this.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
+        //this.attack = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
     }
 
     preUpdate(time,delta)
@@ -16,37 +16,26 @@ class heroPrefab extends Phaser.GameObjects.Sprite
         //PLAYER HAS ARMOUR
         if(this.health == 2)
         {
-            if(this.cursores.left.isDown && !this.cursores.down.isDown) // LEFT NOT CROUCHING
+            //ARMOUR animations
+            if(this.cursores.down.isDown)
+            {
+                this.body.setVelocityX(0);
+                this.anims.stop().setFrame(7);
+            }
+            else if(this.cursores.left.isDown) // LEFT 
             {
                 //ME MUEVO A LA IZQUIERDA
                 this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED);
                 this.setFlipX(true);
                 this.anims.play('run',true);
-            }
-            
-            else if(this.cursores.left.isDown && this.cursores.down.isDown) // LEFT CROUCHING
-            {
-                //ME MUEVO A LA IZQUIERDA AGACHADO
-                this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED_CROUCH);
-                this.setFlipX(true);
-                this.anims.play('run',true);
-            }
-            
-            else if(this.cursores.right.isDown && !this.cursores.right.isDown) // RIGHT NOT CROUCHING
+            }         
+            else if(this.cursores.right.isDown) // RIGHT 
             {
                 //ME MUEVO A LA DERECHA
                 this.body.setVelocityX(gamePrefs.ARTHUR_SPEED);
                 this.setFlipX(false);
                 this.anims.play('run',true);
             }
-            else if(this.cursores.right.isDown && this.cursores.right.isDown) // RIGHT CROUCHING
-            {
-                //ME MUEVO A LA DERECHA AGACHADO
-                this.body.setVelocityX(gamePrefs.ARTHUR_SPEED_CROUCH);
-                this.setFlipX(false);
-                this.anims.play('run',true);
-            }
-            
             else
             {
                 //NO ME MUEVO AT ALL
@@ -56,7 +45,7 @@ class heroPrefab extends Phaser.GameObjects.Sprite
             
             //SALTO
             if(this.cursores.up.isDown &&
-            this.body.blocked.down && //this.body.onFloor()
+            this.body.blocked.down &&  
             Phaser.Input.Keyboard.DownDuration(this.cursores.up,250))
             {
                 this.body.setVelocityY(-gamePrefs.ARTHUR_JUMP);            
@@ -78,36 +67,27 @@ class heroPrefab extends Phaser.GameObjects.Sprite
         //PLAYER HAS NO ARMOUR
         else
         {
-            if(this.cursores.left.isDown && !this.cursores.down.isDown) // LEFT NOT CROUCHING
+            //NAKED ANIMATIONS
+            if(this.cursores.down.isDown)
+            {
+                this.body.setVelocityX(0);
+                this.anims.stop().setFrame(23);
+            }
+            else if(this.cursores.left.isDown) // LEFT 
             {
                 //ME MUEVO A LA IZQUIERDA
                 this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED);
                 this.setFlipX(true);
                 this.anims.play('runNaked',true);
-            }
-            
-            else if(this.cursores.left.isDown && this.cursores.down.isDown) // LEFT CROUCHING
-            {
-                //ME MUEVO A LA IZQUIERDA AGACHADO
-                this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED_CROUCH);
-                this.setFlipX(true);
-                this.anims.play('runNaked',true);
-            }
-            
-            else if(this.cursores.right.isDown && !this.cursores.right.isDown) // RIGHT NOT CROUCHING
+            }         
+            else if(this.cursores.right.isDown) // RIGHT 
             {
                 //ME MUEVO A LA DERECHA
                 this.body.setVelocityX(gamePrefs.ARTHUR_SPEED);
                 this.setFlipX(false);
                 this.anims.play('runNaked',true);
             }
-            else if(this.cursores.right.isDown && this.cursores.right.isDown) // RIGHT CROUCHING
-            {
-                //ME MUEVO A LA DERECHA AGACHADO
-                this.body.setVelocityX(gamePrefs.ARTHUR_SPEED_CROUCH);
-                this.setFlipX(false);
-                this.anims.play('runNaked',true);
-            }else
+            else
             {
                 //NO ME MUEVO AT ALL
                 this.body.setVelocityX(0);
@@ -115,7 +95,7 @@ class heroPrefab extends Phaser.GameObjects.Sprite
             }
             //SALTO
             if(this.cursores.up.isDown &&
-            this.body.blocked.down && //this.body.onFloor()
+            this.body.blocked.down &&
             Phaser.Input.Keyboard.DownDuration(this.cursores.up,250))
             {
                 this.body.setVelocityY(-gamePrefs.ARTHUR_JUMP);            

@@ -8,26 +8,27 @@ class stage1 extends Phaser.Scene{
         this.load.setPath('assets/tilesets/');
         this.load.image('terrain','graveyardTerrain.png');
         this.load.image('mountain','mountain01.png');
-        /*this.load.spritesheet('enemy','enemy-medium.png',
-        {frameWidth:32,frameHeight:16});        */
+
+        this.load.setPath('assets/map/'); 
+        this.load.image('bg_fake','NES - Ghosts n Goblins - Stage 1.png');
 
         this.load.setPath('assets/sprites/');
-        this.load.image('bg_green','bg_green_tile.png');
-        this.load.image('puerta','spr_door_open_0.png');
-        this.load.spritesheet('hero','hero.png',
+        this.load.spritesheet('arthur','Arthur/arthur.png',
         {frameWidth:32,frameHeight:32});
+
         this.load.spritesheet('jumper','jumper.png',
         {frameWidth:32,frameHeight:32});
 
         this.load.setPath('assets/map/');
         this.load.tilemapTiledJSON('stage1','stage1.json');
+        this.load.json('json','stage1.json');
     }
 
 	create()
     {
     //Pintamos el fondo
     this.bg = this.add.tileSprite(0,0,gamePrefs.LEVEL1_WIDTH,
-        gamePrefs.LEVEL1_HEIGHT,'bg_green').setOrigin(0);
+        gamePrefs.LEVEL1_HEIGHT,'bg_fake').setOrigin(0);
 
     //Pintamos el nivel
     //Cargo el JSON
@@ -39,67 +40,26 @@ class stage1 extends Phaser.Scene{
     this.walls = this.map.createLayer('Terrain Layer','terrain');
     this.map.createLayer('Mountain Layer','mountain');
 
-    //this.map.setCollisionBetween(1,11,true,true,'layer_walls');
     this.map.setCollisionByExclusion(-1,true,true,'Terrain Layer');
 
-
-    //Pintamos la puerta
-    this.puerta = this.physics.add.sprite(65,268,'puerta');
-    this.puerta.body.allowGravity = false;
-    this.puerta.body.setImmovable(true);
-
     //Pintamos al heroe
-    //this.hero = this.physics.add.sprite(65,100,'hero');
-    this.hero = new heroPrefab(this,65,100);
-
-        /*
-    this.physics.add.collider
-        (
-            this.puerta,
-            this.hero
-        );
-            */
+    this.arthur = new heroPrefab(this,65,100);
 
         this.physics.add.collider
         (
             this.walls,
-            this.hero
+            this.arthur
         );
 
        this.loadAnimations();
 
-       this.jumper = new jumperPrefab(this,240,304);
+       this.jumper = new jumperPrefab(this,500,100);
        this.physics.add.collider
         (
             this.walls,
             this.jumper
         );
-       
-       //this.cursores = this.input.keyboard.createCursorKeys();
-       /* 
-       this.cursores.space.on
-       (
-        'up',
-        function()
-        {
-            this.createBullet();            
-        },
-        this
-       );
-       */
-       
-        /*
-        this.physics.add.overlap
-        (
-            this.bulletPool,
-            this.enemyPool,
-            this.killEnemy,
-            null,
-            this
-        );
-            */
-        
-        this.cameras.main.startFollow(this.hero);
+        this.cameras.main.startFollow(this.arthur);
         this.cameras.main.setBounds(0,0,gamePrefs.LEVEL1_WIDTH,gamePrefs.LEVEL1_HEIGHT);
     }
 
@@ -110,7 +70,47 @@ class stage1 extends Phaser.Scene{
         this.anims.create
         ({
             key:'run',
-            frames:this.anims.generateFrameNumbers('hero',{start:2,end:5}),
+            frames:this.anims.generateFrameNumbers('arthur',{start:0,end:4}),
+            frameRate:10,
+            repeat:-1
+        });
+
+        this.anims.create
+        ({
+            key:'throw',
+            frames:this.anims.generateFrameNumbers('arthur',{start:8,end:9}),
+            frameRate:10,
+            repeat:-1
+        });
+
+        this.anims.create
+        ({
+            key:'throwCrouch',
+            frames:this.anims.generateFrameNumbers('arthur',{start:10,end:11}),
+            frameRate:10,
+            repeat:-1
+        });
+
+        this.anims.create
+        ({
+            key:'runNaked',
+            frames:this.anims.generateFrameNumbers('arthur',{start:16,end:20}),
+            frameRate:10,
+            repeat:-1
+        });
+
+        this.anims.create
+        ({
+            key:'throwNaked',
+            frames:this.anims.generateFrameNumbers('arthur',{start:24,end:25}),
+            frameRate:10,
+            repeat:-1
+        });
+        
+        this.anims.create
+        ({
+            key:'throwCrouchNaked',
+            frames:this.anims.generateFrameNumbers('arthur',{start:26,end:27}),
             frameRate:10,
             repeat:-1
         });
@@ -127,24 +127,6 @@ class stage1 extends Phaser.Scene{
 
 	update()
     {
-        
-        
-        /*
-        this.bg1.tilePositionY -=.25;
-        this.bg2.tilePositionY -=1;
-
-        if(this.cursores.left.isDown){            			
-            this.nave.anims.play('left',true);
-            //this.nave.x -=gamePrefs.SPEED_NAVE;
-			this.nave.body.velocity.x -=gamePrefs.SPEED_NAVE;
-		} else if(this.cursores.right.isDown){            
-			this.nave.anims.play('right',true);           
-            //this.nave.x +=gamePrefs.SPEED_NAVE;
-            this.nave.body.velocity.x += gamePrefs.SPEED_NAVE;        
-		} else{
-			this.nave.anims.play('idle',true);
-			//this.nave.body.velocity.x=0;
-		}
-        */
     }
 }
+
