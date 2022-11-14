@@ -6,7 +6,7 @@ class jumperPrefab extends Phaser.GameObjects.Sprite
         _scene.add.existing(this);
         _scene.physics.world.enable(this);
         this.anims.play('jumper',true);
-        this.direccion = 1;
+        this.direccion = -1;
         this.scene = _scene;
         this.body.setVelocityX(gamePrefs.ENEMY_SPEED*this.direccion);
         _scene.physics.add.overlap

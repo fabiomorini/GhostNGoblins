@@ -1,45 +1,46 @@
-class level1 extends Phaser.Scene{
+class stage1 extends Phaser.Scene{
 	constructor()
     {
-        super({key:'level1'});
+        super({key:'stage1'});
     }
 	preload()
     {
         this.load.setPath('assets/tilesets/');
-        this.load.image('walls','tileset_walls.png');
-        this.load.image('moss','tileset_moss.png');
+        this.load.image('terrain','graveyardTerrain.png');
+        this.load.image('mountain','mountain01.png');
+
+        this.load.setPath('assets/map/'); 
+        this.load.image('bg_fake','NES - Ghosts n Goblins - Stage 1.png');
 
         this.load.setPath('assets/sprites/');
-        this.load.image('bg_green','bg_blue_tile.png');
         this.load.spritesheet('arthur','Arthur/arthur.png',
         {frameWidth:32,frameHeight:32});
 
         this.load.spritesheet('jumper','jumper.png',
         {frameWidth:32,frameHeight:32});
 
-        this.load.setPath('assets/maps/');
-        this.load.tilemapTiledJSON('level1','level1.json');
+        this.load.setPath('assets/map/');
+        this.load.tilemapTiledJSON('stage1','stage1.json');
+        this.load.json('json','stage1.json');
     }
 
 	create()
     {
     //Pintamos el fondo
     this.bg = this.add.tileSprite(0,0,gamePrefs.LEVEL1_WIDTH,
-        gamePrefs.LEVEL1_HEIGHT,'bg_green').setOrigin(0);
+        gamePrefs.LEVEL1_HEIGHT,'bg_fake').setOrigin(0);
 
     //Pintamos el nivel
     //Cargo el JSON
-    this.map = this.add.tilemap('level1');
+    this.map = this.add.tilemap('stage1');
     //Cargamos los TILESETS
-    this.map.addTilesetImage('walls');
-    this.map.addTilesetImage('moss');
+    this.map.addTilesetImage('terrain');
+    this.map.addTilesetImage('mountain');
     //Pintamos las CAPAS/LAYERS
-    this.walls = this.map.createLayer('layer_walls','walls');
-    this.map.createLayer('layer_moss_top','moss');
-    this.map.createLayer('layer_moss_left','moss');
-    this.map.createLayer('layer_moss_right','moss');
-    this.map.createLayer('layer_moss_bottom','moss');
-    this.map.setCollisionByExclusion(-1,true,true,'layer_walls');
+    this.walls = this.map.createLayer('Terrain Layer','terrain');
+    this.map.createLayer('Mountain Layer','mountain');
+
+    this.map.setCollisionByExclusion(-1,true,true,'Terrain Layer');
 
     //Pintamos al heroe
     this.arthur = new heroPrefab(this,65,100);
@@ -52,7 +53,7 @@ class level1 extends Phaser.Scene{
 
        this.loadAnimations();
 
-       this.jumper = new jumperPrefab(this,240,304);
+       this.jumper = new jumperPrefab(this,500,100);
        this.physics.add.collider
         (
             this.walls,
@@ -128,3 +129,4 @@ class level1 extends Phaser.Scene{
     {
     }
 }
+
