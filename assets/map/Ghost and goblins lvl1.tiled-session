@@ -30,17 +30,32 @@
             "scaleInDock": 1
         },
         "stage1.tmx": {
-            "scale": 3,
+            "scale": 2,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 647.6666666666666,
-                "y": 189.16666666666663
+                "x": 855,
+                "y": 171.75
             }
+        },
+        "stage1.tmx#2FLadders": {
+            "scaleInDock": 1
+        },
+        "stage1.tmx#2FTerrain": {
+            "scaleInDock": 1
+        },
+        "stage1.tmx#Background": {
+            "scaleInDock": 1
         },
         "stage1.tmx#Graveyard Terrain": {
             "scaleInDock": 1
         },
+        "stage1.tmx#GraveyardTrees": {
+            "scaleInDock": 1
+        },
         "stage1.tmx#Mountain01": {
+            "scaleInDock": 1
+        },
+        "stage1.tmx#Mountain02": {
             "scaleInDock": 1
         },
         "stage1.tmx#Tombs": {
@@ -55,17 +70,16 @@
     "map.renderOrder": null,
     "map.width": 112,
     "openFiles": [
-        "stage1.tmx",
-        "stage1.json"
+        "stage1.tmx"
     ],
     "project": "Ghost and goblins lvl1.tiled-project",
     "recentFiles": [
-        "stage1.json",
-        "stage1.tmx"
+        "stage1.tmx",
+        "stage1.json"
     ],
     "tileset.embedInMap": true,
     "tileset.tileSize": {
-        "height": 32,
-        "width": 32
+        "height": 208,
+        "width": 3584
     }
 }
