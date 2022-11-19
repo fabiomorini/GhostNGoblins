@@ -31,10 +31,10 @@
         },
         "stage1.tmx": {
             "scale": 2,
-            "selectedLayer": 1,
+            "selectedLayer": 6,
             "viewCenter": {
-                "x": 855,
-                "y": 171.75
+                "x": 831.5,
+                "y": 109.75
             }
         },
         "stage1.tmx#2FLadders": {
@@ -44,6 +44,9 @@
             "scaleInDock": 1
         },
         "stage1.tmx#Background": {
+            "scaleInDock": 1
+        },
+        "stage1.tmx#Fences": {
             "scaleInDock": 1
         },
         "stage1.tmx#Graveyard Terrain": {
