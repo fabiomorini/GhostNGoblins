@@ -79,7 +79,7 @@
     ],
     "tileset.embedInMap": true,
     "tileset.tileSize": {
-        "height": 208,
-        "width": 3584
+        "height": 32,
+        "width": 32
     }
 }
