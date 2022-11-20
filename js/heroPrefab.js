@@ -7,7 +7,7 @@ class heroPrefab extends Phaser.GameObjects.Sprite
         _scene.physics.world.enable(this);
         //_scene.physics.add.existing(this); 
         this.cursores = _scene.input.keyboard.createCursorKeys(); 
-        this.health = 2;     
+        this.health = 2;  
     }
 
     preUpdate(time,delta)
@@ -18,8 +18,20 @@ class heroPrefab extends Phaser.GameObjects.Sprite
             //ARMOUR animations
             if(this.cursores.down.isDown)
             {
+                //CROUCHING THROW
+                if(this.cursores.space.isDown && this.cursores.down.isDown) //TODO: attack logic
+                    this.anims.play('attackCrouch', true);
+                
+                    else //STAY CROUCHED
+                    this.anims.stop().setFrame(7);
+            }
+            //PLAYER ATTACK 
+            //NORMAL THROW
+            else if(this.cursores.space.isDown)
+            {
+                //TODO: attack logic
+                this.anims.play('attack', true);
                 this.body.setVelocityX(0);
-                this.anims.stop().setFrame(7);
             }
             else if(this.cursores.left.isDown) // LEFT 
             {
@@ -27,6 +39,7 @@ class heroPrefab extends Phaser.GameObjects.Sprite
                 this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED);
                 this.setFlipX(true);
                 this.anims.play('run',true);
+
             }         
             else if(this.cursores.right.isDown) // RIGHT 
             {
@@ -51,8 +64,20 @@ class heroPrefab extends Phaser.GameObjects.Sprite
             }
     
             if(!this.body.onFloor())
-            {
-                if(this.cursores.right.isDown || this.cursores.left.isDown) 
+            {   
+                if(this.cursores.space.isDown)
+                {
+                    //EL CUERPO SE MUEVE SI 
+                    if(this.cursores.left.isDown)
+                        this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED);
+                    
+                    else if (this.cursores.right.isDown)
+                        this.body.setVelocityX(gamePrefs.ARTHUR_SPEED);
+
+                    this.anims.play('attack', true);
+                }
+                else if(this.cursores.right.isDown || 
+                    this.cursores.left.isDown) 
                 {
                     this.anims.stop().setFrame(5);
                 }
@@ -70,7 +95,18 @@ class heroPrefab extends Phaser.GameObjects.Sprite
             if(this.cursores.down.isDown)
             {
                 this.body.setVelocityX(0);
-                this.anims.stop().setFrame(23);
+                if(this.cursores.space.isDown)  //TODO: attack logic
+                    this.anims.play('attackCrouchNaked', true);
+                
+                else
+                    this.anims.stop().setFrame(23);
+            }
+            //NORMAL THROW
+            else if(this.cursores.space.isDown)
+            {
+                //TODO: attack logic
+                this.anims.play('attackNaked', true);
+                this.body.setVelocityX(0);
             }
             else if(this.cursores.left.isDown) // LEFT 
             {
@@ -102,7 +138,21 @@ class heroPrefab extends Phaser.GameObjects.Sprite
     
             if(!this.body.onFloor())
             {
-                if(this.cursores.right.isDown || this.cursores.left.isDown) 
+                //NORMAL THROW
+                if(this.cursores.space.isDown)
+                {
+                   //EL CUERPO SE MUEVE SI SE ESTA PULSANDO LOS BOTONES DE DIRECCION
+                    if(this.cursores.left.isDown)
+                        this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED);
+                    
+                    else if (this.cursores.right.isDown)
+                        this.body.setVelocityX(gamePrefs.ARTHUR_SPEED);
+
+                    //PLAY THE ATTACK ANIMATION
+                    this.anims.play('attackNaked', true);
+                }
+                else if(this.cursores.right.isDown || 
+                    this.cursores.left.isDown) 
                 {
                     this.anims.stop().setFrame(21);
                 }
@@ -110,44 +160,7 @@ class heroPrefab extends Phaser.GameObjects.Sprite
                 {
                     this.anims.stop().setFrame(22);
                 }
-            }
-        }
-
-        //PLAYER ATTACK
-
-        //ARMOUR
-        if(this.health == 2)
-        {
-            //NORMAL THROW
-            if(this.cursores.space.isDown && !this.cursores.down.isDown)
-            {
-                //TODO: attack logic
-                this.anims.play('AttackArmour', true);
-            }
-
-            //CROUCHING THROW
-            if(this.cursores.space.isDown && this.cursores.down.isDown)
-            {
-                //TODO: attack logic
-                this.anims.play('CrouchingAttackArmour', true);
-            }
-        }
-        //NAKED
-        else 
-        {
-            //NORMAL THROW
-            if(this.cursores.space.isDown && !this.cursores.down.isDown)
-            {
-                //TODO: attack logic
-                this.anims.play('AttackArmour', true);
-            }
-            
-            //CROUCHING THROW
-            if(this.cursores.space.isDown && this.cursores.down.isDown)
-            {
-                //TODO: attack logic
-                this.anims.play('CrouchingAttackNaked', true);
-            }
+            }           
         }
 
         super.preUpdate(time, delta);
