@@ -8,11 +8,24 @@ class heroPrefab extends Phaser.GameObjects.Sprite
         //_scene.physics.add.existing(this); 
         this.cursores = _scene.input.keyboard.createCursorKeys(); 
         this.health = 2;     
+        this.isAttacking = false;
     }
 
     preUpdate(time,delta)
     {
-        //PLAYER HAS ARMOUR
+        //RESET ATTACK ANIM
+        if(this.cursores.space.isDown && !this.isAttacking)
+        {
+            this.isAttacking = true;
+        }
+        if(!this.cursores.space.isDown && this.isAttacking && this.anims.complete){
+            this.isAttacking = false;
+        }
+
+        /*
+            MOVEMENT ANIMATIONS
+        */
+        //WITH ARMOUR
         if(this.health == 2)
         {
             //ARMOUR animations
@@ -49,7 +62,6 @@ class heroPrefab extends Phaser.GameObjects.Sprite
             {
                 this.body.setVelocityY(-gamePrefs.ARTHUR_JUMP);            
             }
-    
             if(!this.body.onFloor())
             {
                 if(this.cursores.right.isDown || this.cursores.left.isDown) 
@@ -63,7 +75,7 @@ class heroPrefab extends Phaser.GameObjects.Sprite
             }
         }
 
-        //PLAYER HAS NO ARMOUR
+        //WITHOUT ARMOUR
         else
         {
             //NAKED ANIMATIONS
@@ -113,40 +125,40 @@ class heroPrefab extends Phaser.GameObjects.Sprite
             }
         }
 
-        //PLAYER ATTACK
-
-        //ARMOUR
+        /*
+            ATTACK ANIMATIONS
+        */
+        //WITH ARMOUR
         if(this.health == 2)
         {
-            //NORMAL THROW
-            if(this.cursores.space.isDown && !this.cursores.down.isDown)
-            {
-                //TODO: attack logic
-                this.anims.play('AttackArmour', true);
-            }
-
             //CROUCHING THROW
-            if(this.cursores.space.isDown && this.cursores.down.isDown)
+            if(this.isAttacking && this.cursores.down.isDown)
             {
                 //TODO: attack logic
-                this.anims.play('CrouchingAttackArmour', true);
+                this.anims.play('throwCrouch', true);
+            }
+            //NORMAL THROW
+            else if(this.isAttacking)
+            {
+                //TODO: attack logic
+                this.anims.play('throw', true);
             }
         }
-        //NAKED
+        //WITHOUT ARMOUR
         else 
         {
-            //NORMAL THROW
-            if(this.cursores.space.isDown && !this.cursores.down.isDown)
+            //CROUCHING THROW
+            if(this.isAttacking && this.cursores.down.isDown)
             {
                 //TODO: attack logic
-                this.anims.play('AttackArmour', true);
+                this.anims.play('throwCrouchNaked', true);
             }
             
-            //CROUCHING THROW
-            if(this.cursores.space.isDown && this.cursores.down.isDown)
+            //NORMAL THROW
+            if(this.isAttacking)
             {
                 //TODO: attack logic
-                this.anims.play('CrouchingAttackNaked', true);
+                this.anims.play('throwNaked', true);
             }
         }
 

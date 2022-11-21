@@ -80,7 +80,6 @@ class stage1 extends Phaser.Scene{
             key:'throw',
             frames:this.anims.generateFrameNumbers('arthur',{start:8,end:9}),
             frameRate:10,
-            repeat:-1
         });
 
         this.anims.create
@@ -88,7 +87,6 @@ class stage1 extends Phaser.Scene{
             key:'throwCrouch',
             frames:this.anims.generateFrameNumbers('arthur',{start:10,end:11}),
             frameRate:10,
-            repeat:-1
         });
 
         this.anims.create
@@ -104,7 +102,6 @@ class stage1 extends Phaser.Scene{
             key:'throwNaked',
             frames:this.anims.generateFrameNumbers('arthur',{start:24,end:25}),
             frameRate:10,
-            repeat:-1
         });
         
         this.anims.create
@@ -112,7 +109,6 @@ class stage1 extends Phaser.Scene{
             key:'throwCrouchNaked',
             frames:this.anims.generateFrameNumbers('arthur',{start:26,end:27}),
             frameRate:10,
-            repeat:-1
         });
 
         this.anims.create
