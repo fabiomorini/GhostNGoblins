@@ -16,9 +16,13 @@ class heroPrefab extends Phaser.GameObjects.Sprite
         //RESET ATTACK ANIM
         if(this.cursores.space.isDown && !this.isAttacking)
         {
+            if(this.body.onFloor()){
+                this.body.setVelocityX(0);
+            }
             this.isAttacking = true;
         }
-        if(!this.cursores.space.isDown && this.isAttacking && this.anims.complete){
+        if(!this.cursores.space.isDown && this.isAttacking)
+        {
             this.isAttacking = false;
         }
 
@@ -26,7 +30,7 @@ class heroPrefab extends Phaser.GameObjects.Sprite
             MOVEMENT ANIMATIONS
         */
         //WITH ARMOUR
-        if(this.health == 2)
+        if(this.health == 2 && !this.isAttacking)
         {
             //ARMOUR animations
             if(this.cursores.down.isDown)
@@ -62,7 +66,7 @@ class heroPrefab extends Phaser.GameObjects.Sprite
             {
                 this.body.setVelocityY(-gamePrefs.ARTHUR_JUMP);            
             }
-            if(!this.body.onFloor())
+            if(!this.body.onFloor() && !this.isAttacking)
             {
                 if(this.cursores.right.isDown || this.cursores.left.isDown) 
                 {
@@ -76,7 +80,7 @@ class heroPrefab extends Phaser.GameObjects.Sprite
         }
 
         //WITHOUT ARMOUR
-        else
+        else if(this.health < 2 && !this.isAttacking)
         {
             //NAKED ANIMATIONS
             if(this.cursores.down.isDown)
@@ -112,7 +116,7 @@ class heroPrefab extends Phaser.GameObjects.Sprite
                 this.body.setVelocityY(-gamePrefs.ARTHUR_JUMP);            
             }
     
-            if(!this.body.onFloor())
+            if(!this.body.onFloor() && !this.isAttacking)
             {
                 if(this.cursores.right.isDown || this.cursores.left.isDown) 
                 {
@@ -129,32 +133,32 @@ class heroPrefab extends Phaser.GameObjects.Sprite
             ATTACK ANIMATIONS
         */
         //WITH ARMOUR
-        if(this.health == 2)
+        if(this.health == 2 && this.isAttacking)
         {
             //CROUCHING THROW
-            if(this.isAttacking && this.cursores.down.isDown)
+            if(this.cursores.down.isDown)
             {
                 //TODO: attack logic
                 this.anims.play('throwCrouch', true);
             }
             //NORMAL THROW
-            else if(this.isAttacking)
+            else
             {
                 //TODO: attack logic
                 this.anims.play('throw', true);
             }
         }
         //WITHOUT ARMOUR
-        else 
+        else if(this.health < 2 && this.isAttacking)
         {
             //CROUCHING THROW
-            if(this.isAttacking && this.cursores.down.isDown)
+            if(this.cursores.down.isDown)
             {
                 //TODO: attack logic
                 this.anims.play('throwCrouchNaked', true);
             }
             //NORMAL THROW
-            else if(this.isAttacking)
+            else
             {
                 //TODO: attack logic
                 this.anims.play('throwNaked', true);
