@@ -19,6 +19,8 @@ class stage1 extends Phaser.Scene{
         this.load.setPath('assets/sprites/Enemies/');
         this.load.spritesheet('zombie','zombie.png',
         {frameWidth:32,frameHeight:32});
+        this.load.spritesheet('greenMonster', 'green_monster.png',
+        {frameWidth:16,frameHeight:32});
 
         this.load.setPath('assets/map/');
         this.load.tilemapTiledJSON('stage1','stage1.json');
@@ -56,10 +58,17 @@ class stage1 extends Phaser.Scene{
 
         this.zombie = new zombiePrefab(this,300,190);
         this.physics.add.collider
-         (
-             this.walls,
-             this.zombie
-         );
+        (
+            this.walls,
+            this.zombie
+        );
+
+        this.greenMonster = new greenMonsterPrefab(this,400,190);
+        this.physics.add.collider
+        (
+            this.walls,
+            this.greenMonster
+        );
 
         this.cameras.main.startFollow(this.arthur);
         this.cameras.main.setBounds(0,0,gamePrefs.LEVEL1_WIDTH,gamePrefs.LEVEL1_HEIGHT);
@@ -69,6 +78,7 @@ class stage1 extends Phaser.Scene{
     loadAnimations()
     {
         
+        //ARTHUR ARMOUR ANIMATIONS
         this.anims.create
         ({
             key:'run',
@@ -93,6 +103,7 @@ class stage1 extends Phaser.Scene{
             repeat:0
         });
 
+        //ARTHUR NAKED ANIMATIONS
         this.anims.create
         ({
             key:'runNaked',
@@ -117,6 +128,7 @@ class stage1 extends Phaser.Scene{
             repeat:0
         });
 
+        //ZOMBIE ANIMATIONS
         this.anims.create
         ({
             key:'zombieSpawn',
@@ -132,6 +144,23 @@ class stage1 extends Phaser.Scene{
             frameRate:5,
             repeat:-1
         });
+
+        //GREEN MONSTER ANIMATIONS
+        this.anims.create
+        ({
+            key: 'greenMonsterIddle',
+            frames: this.anims.generateFrameNumbers('greenMonster', {start:0, end:1}),
+            frameRate:5,
+            repeat: 0
+        })
+        
+        this.anims.create
+        ({
+            key: 'greenMonsterAttack',
+            frames: this.anims.generateFrameNumbers('greenMonster', {start:2, end:5}),
+            frameRate:5,
+            repeat: 0
+        })
         
     }
 

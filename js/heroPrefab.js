@@ -7,7 +7,8 @@ class heroPrefab extends Phaser.GameObjects.Sprite
         _scene.physics.world.enable(this);
         //_scene.physics.add.existing(this); 
         this.cursores = _scene.input.keyboard.createCursorKeys(); 
-        this.health = 2;     
+        this.health = 2;
+        this.direction = 1;    
         this.isAttacking = false;
     }
 
@@ -26,6 +27,14 @@ class heroPrefab extends Phaser.GameObjects.Sprite
             this.isAttacking = false;
         }
 
+        // DIRECTION LOGIC
+        if(this.cursores.left.isDown)
+            this.direction = -1;
+
+        if(this.cursores.right.isDown)
+            this.direction = 1;
+        
+
         /*
             MOVEMENT ANIMATIONS
         */
@@ -41,14 +50,14 @@ class heroPrefab extends Phaser.GameObjects.Sprite
             else if(this.cursores.left.isDown) // LEFT 
             {
                 //ME MUEVO A LA IZQUIERDA
-                this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED);
+                this.body.setVelocityX(this.direction * gamePrefs.ARTHUR_SPEED);
                 this.setFlipX(true);
                 this.anims.play('run',true);
             }         
             else if(this.cursores.right.isDown) // RIGHT 
             {
                 //ME MUEVO A LA DERECHA
-                this.body.setVelocityX(gamePrefs.ARTHUR_SPEED);
+                this.body.setVelocityX(this.direction * gamePrefs.ARTHUR_SPEED);
                 this.setFlipX(false);
                 this.anims.play('run',true);
             }
@@ -91,7 +100,7 @@ class heroPrefab extends Phaser.GameObjects.Sprite
             else if(this.cursores.left.isDown) // LEFT 
             {
                 //ME MUEVO A LA IZQUIERDA
-                this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED);
+                this.body.setVelocityX(this.direction * gamePrefs.ARTHUR_SPEED);
                 this.setFlipX(true);
                 this.anims.play('runNaked',true);
             }         
