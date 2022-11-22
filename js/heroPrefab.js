@@ -153,9 +153,8 @@ class heroPrefab extends Phaser.GameObjects.Sprite
                 //TODO: attack logic
                 this.anims.play('throwCrouchNaked', true);
             }
-            
             //NORMAL THROW
-            if(this.isAttacking)
+            else if(this.isAttacking)
             {
                 //TODO: attack logic
                 this.anims.play('throwNaked', true);
