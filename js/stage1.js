@@ -12,11 +12,12 @@ class stage1 extends Phaser.Scene{
         this.load.setPath('assets/map/'); 
         this.load.image('bg_fake','NES - Ghosts n Goblins - Stage 1.png');
 
-        this.load.setPath('assets/sprites/');
-        this.load.spritesheet('arthur','Arthur/arthur.png',
+        this.load.setPath('assets/sprites/Arthur/');
+        this.load.spritesheet('arthur','arthur.png',
         {frameWidth:32,frameHeight:32});
 
-        this.load.spritesheet('jumper','jumper.png',
+        this.load.setPath('assets/sprites/Enemies/');
+        this.load.spritesheet('zombie','zombie.png',
         {frameWidth:32,frameHeight:32});
 
         this.load.setPath('assets/map/');
@@ -53,12 +54,13 @@ class stage1 extends Phaser.Scene{
 
        this.loadAnimations();
 
-       this.jumper = new jumperPrefab(this,500,100);
-       this.physics.add.collider
-        (
-            this.walls,
-            this.jumper
-        );
+        this.zombie = new zombiePrefab(this,300,190);
+        this.physics.add.collider
+         (
+             this.walls,
+             this.zombie
+         );
+
         this.cameras.main.startFollow(this.arthur);
         this.cameras.main.setBounds(0,0,gamePrefs.LEVEL1_WIDTH,gamePrefs.LEVEL1_HEIGHT);
     }
@@ -117,9 +119,17 @@ class stage1 extends Phaser.Scene{
 
         this.anims.create
         ({
-            key:'jumper',
-            frames:this.anims.generateFrameNumbers('jumper',{start:0,end:3}),
-            frameRate:10,
+            key:'zombieSpawn',
+            frames:this.anims.generateFrameNumbers('zombie',{start:0,end:2}),
+            frameRate:5,
+            repeat:0
+        });
+
+        this.anims.create
+        ({
+            key:'zombieRun',
+            frames:this.anims.generateFrameNumbers('zombie',{start:3,end:5}),
+            frameRate:5,
             repeat:-1
         });
         
