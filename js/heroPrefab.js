@@ -13,14 +13,15 @@ class heroPrefab extends Phaser.GameObjects.Sprite
 
     preUpdate(time,delta)
     {
+        if(this.body.onFloor() && this.isAttacking){
+            this.body.setVelocityX(0);
+        }
         //RESET ATTACK ANIM
         if(this.cursores.space.isDown && !this.isAttacking)
         {
-            if(this.body.onFloor()){
-                this.body.setVelocityX(0);
-            }
             this.isAttacking = true;
         }
+        
         if(!this.cursores.space.isDown && this.isAttacking)
         {
             this.isAttacking = false;
