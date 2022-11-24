@@ -5,8 +5,8 @@
     },
     "activeFile": "stage1.tmx",
     "expandedProjectPaths": [
-        "E:/Area de trabajo/Phaser/GhostNGoblins/assets",
-        "."
+        ".",
+        "E:/Area de trabajo/Phaser/GhostNGoblins/assets"
     ],
     "fileStates": {
         "": {
@@ -30,11 +30,11 @@
             "scaleInDock": 1
         },
         "stage1.tmx": {
-            "scale": 2,
-            "selectedLayer": 6,
+            "scale": 3,
+            "selectedLayer": 19,
             "viewCenter": {
-                "x": 831.5,
-                "y": 109.75
+                "x": 3442,
+                "y": 214.5
             }
         },
         "stage1.tmx#2FLadders": {
@@ -49,8 +49,16 @@
         "stage1.tmx#Fences": {
             "scaleInDock": 1
         },
-        "stage1.tmx#Graveyard Terrain": {
+        "stage1.tmx#Fortress": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "stage1.tmx#Grass": {
             "scaleInDock": 1
+        },
+        "stage1.tmx#Graveyard Terrain": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "stage1.tmx#GraveyardTrees": {
             "scaleInDock": 1
@@ -62,6 +70,9 @@
             "scaleInDock": 1
         },
         "stage1.tmx#Tombs": {
+            "scaleInDock": 1
+        },
+        "stage1.tmx#Water": {
             "scaleInDock": 1
         }
     },
