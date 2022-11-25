@@ -1,3 +1,5 @@
+include <layers.js>
+
 class stage1 extends Phaser.Scene{
 	constructor()
     {
