@@ -16,13 +16,13 @@
   <image source="../tilesets/graveyardTrees.png" width="184" height="47"/>
  </tileset>
  <tileset firstgid="13" name="Mountain02" tilewidth="78" tileheight="81" tilecount="2" columns="2">
-  <image source="../tilesets/floor2MountainSides.png" width="156" height="81"/>
+  <image source="../tilesets/F2MountainSides.png" width="156" height="81"/>
  </tileset>
  <tileset firstgid="15" name="2FLadders" tilewidth="32" tileheight="32" tilecount="3" columns="3">
-  <image source="../tilesets/Floor2Laders.png" width="96" height="32"/>
+  <image source="../tilesets/F2Ladders.png" width="96" height="32"/>
  </tileset>
  <tileset firstgid="18" name="2FTerrain" tilewidth="32" tileheight="32" tilecount="4" columns="4">
-  <image source="../tilesets/floor2Terrain.png" width="128" height="32"/>
+  <image source="../tilesets/F2Terrain.png" width="128" height="32"/>
  </tileset>
  <tileset firstgid="22" name="Background" tilewidth="3584" tileheight="208" tilecount="1" columns="1">
   <image source="../tilesets/background.png" width="3584" height="208"/>
@@ -141,7 +141,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="12" name="LadersLayer" width="111" height="7" offsetx="-0.0088823" offsety="16.0054">
+ <layer id="12" name="LaddersLayer" width="111" height="7" offsetx="-0.0088823" offsety="16.0054">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,

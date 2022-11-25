@@ -14,60 +14,56 @@ LAYERS.preload = function (context) {
     context.load.image('tombs','tombs.png');
     context.load.image('terrain','graveyardTerrain.png');
 
-    this.load.setPath('assets/map/');
-    this.load.tilemapTiledJSON('stage1','stage1.json');
-    this.load.json('json','stage1.json');
+    context.load.setPath('assets/map/');
+    context.load.tilemapTiledJSON('stage1','stage1.json');
+    context.load.json('json','stage1.json');
 };
 
-LAYERS.create = function () {
+LAYERS.create = function (context) {
     //Pintamos el nivel
     //Cargo el JSON
-    this.map = this.add.tilemap('stage1');
+    context.map = context.make.tilemap({ key: 'stage1' });
 
     //Cargamos los TILESETS
-    this.map.addTilesetImage('background');
-    this.map.addTilesetImage('trees');
-    this.map.addTilesetImage('fences');
-    this.map.addTilesetImage('grass');
-    this.map.addTilesetImage('fortress');
-    this.map.addTilesetImage('water');
-    this.map.addTilesetImage('mountainSides');
-    this.map.addTilesetImage('ladders');
-    this.map.addTilesetImage('tombs');
-    this.map.addTilesetImage('terrain');
+    context.map.addTilesetImage('background');
+    context.map.addTilesetImage('trees');
+    context.map.addTilesetImage('fences');
+    context.map.addTilesetImage('grass');
+    context.map.addTilesetImage('fortress');
+    context.map.addTilesetImage('water');
+    context.map.addTilesetImage('mountainSides');
+    context.map.addTilesetImage('ladders');
+    context.map.addTilesetImage('tombs');
+    context.map.addTilesetImage('terrain');
 
     //Pintamos las CAPAS/LAYERS
-    this.background = this.map.createLayer('backgroundLayer','background');
+    context.background = context.map.createLayer('BackgroundLayer','background');
 
-    this.trees = this.map.createLayer('2FTreesLayer','trees');
-    this.map.createLayer('1FTreesLayer','trees');
+    context.trees = context.map.createLayer('2FTreesLayer','trees');
+    context.map.createLayer('1FTreesLayer','trees');
 
-    this.fences = this.map.createLayer('2FFences','fences');
-    this.map.createLayer('1FFences','fences');
+    context.fences = context.map.createLayer('2FFencesLayer','fences');
+    context.map.createLayer('1FFencesLayer','fences');
 
-    this.grass = this.map.createLayer('2FGrass','grass');
-    this.map.createLayer('1FGrass','grass');
+    context.grass = context.map.createLayer('2FGrassLayer','grass');
+    context.map.createLayer('1FGrassLayer','grass');
 
-    this.fortress = this.map.createLayer('FortressLayer','fortress');
+    context.fortress = context.map.createLayer('FortressLayer','fortress');
 
-    this.water = this.map.createLayer('WaterLayer','water');
+    context.water = context.map.createLayer('WaterLayer','water');
 
-    this.mountainSides = this.map.createLayer('2FLeftLayer','mountainSides');
-    this.map.createLayer('2FRightLayer','mountainSides');
+    context.mountainSides = context.map.createLayer('2FLeftLayer','mountainSides');
+    context.map.createLayer('2FRightLayer','mountainSides');
 
-    this.ladders = this.map.createLayer('LaddersLayer','ladders');
+    context.ladders = context.map.createLayer('LaddersLayer','ladders');
     
-    this.tombs = this.map.createLayer('1FTombsLayer','tombs');
-    this.map.createLayer('2FTombsLayer','tombs');
+    context.tombs = context.map.createLayer('1FTombsLayer','tombs');
+    context.map.createLayer('2FTombsLayer','tombs');
 
-    this.terrain = this.map.createLayer('TerrainLayer','terrain');
-    this.map.createLayer('2FTerrainLayer','terrain');
+    context.terrain = context.map.createLayer('TerrainLayer','terrain');
+    context.map.createLayer('2FTerrainLayer','terrain');
 
     //this.map.setCollisionBetween(1,11,true,true,'layer_walls');
-    this.map.setCollisionByExclusion(-1,true,true,'TerrainLayer');
-    this.map.setCollisionByExclusion(-1,true,true,'2FTerrainLayer');
+    context.map.setCollisionByExclusion(-1,true,true,'TerrainLayer');
+    context.map.setCollisionByExclusion(-1,true,true,'2FTerrainLayer');
 };
-
-//creación namespace
-LAYERS.preload(this);
-LAYERS.create(this);

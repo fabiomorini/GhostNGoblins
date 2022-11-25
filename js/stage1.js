@@ -1,5 +1,3 @@
-include <layers.js>
-
 class stage1 extends Phaser.Scene{
 	constructor()
     {
@@ -10,6 +8,9 @@ class stage1 extends Phaser.Scene{
         this.load.setPath('assets/tilesets/');
         this.load.image('terrain','graveyardTerrain.png');
         this.load.image('mountain','mountain01.png');
+
+        //creación namespace layers
+        LAYERS.preload(this);
 
         this.load.setPath('assets/map/'); 
         this.load.image('bg_fake','NES - Ghosts n Goblins - Stage 1.png');
@@ -29,21 +30,8 @@ class stage1 extends Phaser.Scene{
 
 	create()
     {
-    //Pintamos el fondo
-    this.bg = this.add.tileSprite(0,0,gamePrefs.LEVEL1_WIDTH,
-        gamePrefs.LEVEL1_HEIGHT,'bg_fake').setOrigin(0);
-
-    //Pintamos el nivel
-    //Cargo el JSON
-    this.map = this.add.tilemap('stage1');
-    //Cargamos los TILESETS
-    this.map.addTilesetImage('terrain');
-    this.map.addTilesetImage('mountain');
-    //Pintamos las CAPAS/LAYERS
-    this.walls = this.map.createLayer('Terrain Layer','terrain');
-    this.map.createLayer('Mountain Layer','mountain');
-
-    this.map.setCollisionByExclusion(-1,true,true,'Terrain Layer');
+    //Carga namespace layers
+    LAYERS.create(this);
 
     //Pintamos al heroe
     this.arthur = new heroPrefab(this,65,100);
