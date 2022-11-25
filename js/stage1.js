@@ -56,7 +56,7 @@ class stage1 extends Phaser.Scene{
 
        this.loadAnimations();
 
-        this.zombie = new zombiePrefab(this,300,190);
+        this.zombie = new zombiePrefab(this, 300, 190);
         this.physics.add.collider
         (
             this.walls,

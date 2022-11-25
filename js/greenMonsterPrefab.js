@@ -52,6 +52,7 @@ class greenMonsterPrefab extends Phaser.GameObjects.Sprite
         else if(this.randNum == 3)
         {
             this.anims.play('greenMonsterAttack', true);
+            //this.on(Phase.Animations.Events.ANIMATION_COMPLETE)
             this.anims.nextAnim = 'greenMonsterIddle';
         }
         else

@@ -1,10 +1,13 @@
-class zombiePrefab extends Phaser.GameObjects.Sprite
+class zombiePrefab extends Phaser.GameObjects.Sprite 
 {
     constructor(_scene,_positionX,_positionY,_spriteTag='zombie')
     {
         super(_scene,_positionX,_positionY,_spriteTag);
         _scene.add.existing(this);
         _scene.physics.world.enable(this);
+        this.startingPos = _positionX;
+        this.dist = 0;
+        this.maxDistance = 200;
         this.anims.play('zombieSpawn',true);
         this.anims.nextAnim = 'zombieRun';
         this.direccion = -1;
@@ -17,7 +20,7 @@ class zombiePrefab extends Phaser.GameObjects.Sprite
             this.hit,
             null,
             this
-            );        
+        );        
             
     }
 
@@ -45,8 +48,25 @@ class zombiePrefab extends Phaser.GameObjects.Sprite
             this.body.setVelocityX(gamePrefs.ENEMY_SPEED*this.direccion);
             this.flipX = !this.flipX;
         }
+        
+        this.dist = Phaser.Math.Distance.Between(this.body.position.x,0,this.startingPos,0)
+        console.log(this.body.position.x);
+        //console.log(this.startingPos);
+
+        if(this.dist > this.maxDistance)
+        {
+            this.anims.playReverse("zombieSpawn", true);
+            this.on(Phaser.Animations.Events.ANIMATION_COMPLETE,  this.anims.stop().setFrame(18) )
+            this.body.position.x(-800);
+
+        }   
+
     super.preUpdate(time,delta);
     }
 
+    resetPosition()
+    {
+        this.body.position.x = startingPos;
+    }
     
 }
