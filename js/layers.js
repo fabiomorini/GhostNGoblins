@@ -9,6 +9,7 @@ LAYERS.preload = function (context) {
     context.load.image('fortress','fortress01.png');
     context.load.image('water','water.png');
     context.load.image('f2Terrain','F2Terrain.png');
+    context.load.image('firstMountain','mountain01.png');
     context.load.image('mountainSides','F2MountainSides.png');
     context.load.image('ladders','F2Ladders.png');
     context.load.image('tombs','tombs.png');
@@ -22,46 +23,41 @@ LAYERS.preload = function (context) {
 LAYERS.create = function (context) {
     //Pintamos el nivel
     //Cargo el JSON
-    context.map = context.make.tilemap({ key: 'stage1' });
+    context.map = context.add.tilemap('stage1');
 
     //Cargamos los TILESETS
-    context.map.addTilesetImage('background');
-    context.map.addTilesetImage('trees');
-    context.map.addTilesetImage('fences');
-    context.map.addTilesetImage('grass');
-    context.map.addTilesetImage('fortress');
-    context.map.addTilesetImage('water');
-    context.map.addTilesetImage('mountainSides');
-    context.map.addTilesetImage('ladders');
-    context.map.addTilesetImage('tombs');
-    context.map.addTilesetImage('terrain');
+    context.map.addTilesetImage('Background', 'background');
+    context.map.addTilesetImage('1FTreesLayer', 'trees');
+    context.map.addTilesetImage('2FTreesLayer', 'trees');
+    context.map.addTilesetImage('1FFencesLayer', 'fences');
+    context.map.addTilesetImage('2FFencesLayer', 'fences');
+    context.map.addTilesetImage('1FGrassLayer', 'grass');
+    context.map.addTilesetImage('2FGrassLayer', 'grass');
+    context.map.addTilesetImage('FortressLayer', 'fortress');
+    context.map.addTilesetImage('WaterLayer', 'water');
+    context.map.addTilesetImage('MountainLayer', 'firstMountain');
+    context.map.addTilesetImage('2FLeftLayer', 'mountainSides');
+    context.map.addTilesetImage('2FRightLayer', 'mountainSides');
+    context.map.addTilesetImage('LaddersLayer', 'ladders');
+    context.map.addTilesetImage('1FTombsLayer', 'tombs');
+    context.map.addTilesetImage('2FTombsLayer', 'tombs');
+    context.map.addTilesetImage('TerrainLayer', 'terrain');
+    context.map.addTilesetImage('BorderTerrainLayer', 'terrain');
+    context.map.addTilesetImage('2FTerrainLayer', 'f2Terrain');
 
     //Pintamos las CAPAS/LAYERS
-    context.background = context.map.createLayer('BackgroundLayer','background');
-
-    context.trees = context.map.createLayer('2FTreesLayer','trees');
-    context.map.createLayer('1FTreesLayer','trees');
-
-    context.fences = context.map.createLayer('2FFencesLayer','fences');
-    context.map.createLayer('1FFencesLayer','fences');
-
-    context.grass = context.map.createLayer('2FGrassLayer','grass');
-    context.map.createLayer('1FGrassLayer','grass');
-
-    context.fortress = context.map.createLayer('FortressLayer','fortress');
-
-    context.water = context.map.createLayer('WaterLayer','water');
-
-    context.mountainSides = context.map.createLayer('2FLeftLayer','mountainSides');
-    context.map.createLayer('2FRightLayer','mountainSides');
-
-    context.ladders = context.map.createLayer('LaddersLayer','ladders');
-    
-    context.tombs = context.map.createLayer('1FTombsLayer','tombs');
-    context.map.createLayer('2FTombsLayer','tombs');
-
-    context.terrain = context.map.createLayer('TerrainLayer','terrain');
-    context.map.createLayer('2FTerrainLayer','terrain');
+    context.background = context.map.createLayer('BackgroundLayer','Background');
+    context.trees = context.map.createLayer('TreesLayer', ['1FTreesLayer', '2FTreesLayer']);
+    context.fences = context.map.createLayer('FencesLayer', ['1FFencesLayer', '2FFencesLayer']);
+    context.grass = context.map.createLayer('GrassLayer', ['1FGrassLayer', '2FGrassLayer']);
+    context.fortress = context.map.createLayer('FortressLayer', 'FortressLayer');
+    context.water = context.map.createLayer('WaterLayer', 'WaterLayer');
+    context.mountainSides = context.map.createLayer('FirstMountainLayer', 'MountainLayer');
+    context.mountainSides = context.map.createLayer('MountainSidesLayer', ['2FLeftLayer', '2FRightLayer']);
+    context.ladders = context.map.createLayer('LaddersLayer','LaddersLayer');
+    context.tombs = context.map.createLayer('TombsLayer', ['1FTombsLayer', '2FTombsLayer']);
+    context.terrain = context.map.createLayer('TerrainLayer', ['TerrainLayer', 'BorderTerrainLayer']);
+    context.terrain = context.map.createLayer('2FTerrainLayer', '2FTerrainLayer');
 
     //this.map.setCollisionBetween(1,11,true,true,'layer_walls');
     context.map.setCollisionByExclusion(-1,true,true,'TerrainLayer');

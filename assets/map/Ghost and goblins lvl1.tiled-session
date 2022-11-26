@@ -66,7 +66,8 @@
             "scaleInDock": 1
         },
         "stage1.tmx#Mountain01": {
-            "scaleInDock": 1
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "stage1.tmx#Mountain02": {
             "scaleInDock": 1,
