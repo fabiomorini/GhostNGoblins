@@ -5,15 +5,8 @@ class stage1 extends Phaser.Scene{
     }
 	preload()
     {
-        this.load.setPath('assets/tilesets/');
-        this.load.image('terrain','graveyardTerrain.png');
-        this.load.image('mountain','mountain01.png');
-
         //creación namespace layers
         LAYERS.preload(this);
-
-        this.load.setPath('assets/map/'); 
-        this.load.image('bg_fake','NES - Ghosts n Goblins - Stage 1.png');
 
         this.load.setPath('assets/sprites/Arthur/');
         this.load.spritesheet('arthur','arthur.png',
@@ -22,10 +15,6 @@ class stage1 extends Phaser.Scene{
         this.load.setPath('assets/sprites/Enemies/');
         this.load.spritesheet('zombie','zombie.png',
         {frameWidth:32,frameHeight:32});
-
-        this.load.setPath('assets/map/');
-        this.load.tilemapTiledJSON('stage1','stage1.json');
-        this.load.json('json','stage1.json');
     }
 
 	create()
