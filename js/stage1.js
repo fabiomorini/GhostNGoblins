@@ -27,19 +27,67 @@ class stage1 extends Phaser.Scene{
         //Pintamos al heroe
         this.arthur = new heroPrefab(this,65,100);
 
-            // this.physics.add.collider
-            // (
-            //     this.walls,
-            //     this.arthur
-            // );
+        this.physics.add.collider
+        (
+            this.terrainBorder1F,
+            this.arthur
+        );
 
+        this.physics.add.collider
+        (
+            this.terrain1F,
+            this.arthur
+        );
+
+        this.physics.add.collider
+        (
+            this.terrain2F,
+            this.arthur
+        );
+
+        this.physics.add.collider
+        (
+            this.tombs1F,
+            this.arthur
+        );
+
+        this.physics.add.collider
+        (
+            this.tombs2F,
+            this.arthur
+        );
+
+        this.physics.add.overlap
+        (
+            this.ladders,
+            this.arthur
+        );
+
+        this.physics.add.overlap
+        (
+            this.water,
+            this.arthur
+        );
             
         this.zombie = new zombiePrefab(this,300,190);
-            // this.physics.add.collider
-            //  (
-                //      this.walls,
-                //      this.zombie
-                //  );
+
+        this.physics.add.collider
+        (
+            this.terrainBorder1F,
+            this.zombie
+        );
+
+        this.physics.add.collider
+        (
+            this.terrain1F,
+            this.zombie
+        );
+
+        this.physics.add.collider
+        (
+            this.terrain2F,
+            this.zombie
+        );
             
         this.cameras.main.startFollow(this.arthur);
         this.cameras.main.setBounds(0,0,gamePrefs.LEVEL1_WIDTH,gamePrefs.LEVEL1_HEIGHT);
