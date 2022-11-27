@@ -41,24 +41,24 @@ LAYERS.create = function (context) {
 
     //Pintamos las CAPAS/LAYERS
     context.background = context.map.createLayer('BackgroundLayer','Background');
-    context.trees = context.map.createLayer('1FTreesLayer', 'GraveyardTrees');
-    context.trees = context.map.createLayer('2FTreesLayer', 'GraveyardTrees');
-    context.fences = context.map.createLayer('1FFencesLayer', 'Fences');
-    context.fences = context.map.createLayer('2FFencesLayer', 'Fences');
-    context.grass = context.map.createLayer('1FBorderGrassLayer', 'Graveyard Terrain');
-    context.grass = context.map.createLayer('1FGrassLayer', ['Graveyard Terrain', 'Grass']);
-    context.grass = context.map.createLayer('2FGrassLayer', 'Grass');
+    context.trees1F = context.map.createLayer('1FTreesLayer', 'GraveyardTrees');
+    context.trees2F = context.map.createLayer('2FTreesLayer', 'GraveyardTrees');
+    context.fences1F = context.map.createLayer('1FFencesLayer', 'Fences');
+    context.fences2F = context.map.createLayer('2FFencesLayer', 'Fences');
+    context.grassBorder1F = context.map.createLayer('1FBorderGrassLayer', 'Graveyard Terrain');
+    context.grass1F = context.map.createLayer('1FGrassLayer', ['Graveyard Terrain', 'Grass']);
+    context.grass2F = context.map.createLayer('2FGrassLayer', 'Grass');
     context.fortress = context.map.createLayer('FortressLayer', 'Fortress');
     context.water = context.map.createLayer('WaterLayer', 'Water');
-    context.mountainSides = context.map.createLayer('MountainLayer', 'Mountain01');
-    context.mountainSides = context.map.createLayer('2FLeftLayer', 'Mountain02');
-    context.mountainSides = context.map.createLayer('2FRightLayer', 'Mountain02');
+    context.firstMountain = context.map.createLayer('MountainLayer', 'Mountain01');
+    context.mountainLSide = context.map.createLayer('2FLeftLayer', 'Mountain02');
+    context.mountainRSide = context.map.createLayer('2FRightLayer', 'Mountain02');
     context.ladders = context.map.createLayer('LaddersLayer','2FLadders');
-    context.tombs = context.map.createLayer('1FTombsLayer', 'Tombs');
-    context.tombs = context.map.createLayer('2FTombsLayer', 'Tombs');
-    context.terrain = context.map.createLayer('BorderTerrainLayer', 'Graveyard Terrain');
-    context.terrain = context.map.createLayer('TerrainLayer', 'Graveyard Terrain');
-    context.terrain = context.map.createLayer('2FTerrainLayer', '2FTerrain');
+    context.tombs1F = context.map.createLayer('1FTombsLayer', 'Tombs');
+    context.tombs2F = context.map.createLayer('2FTombsLayer', 'Tombs');
+    context.terrainBorder1F = context.map.createLayer('BorderTerrainLayer', 'Graveyard Terrain');
+    context.terrain1F = context.map.createLayer('TerrainLayer', 'Graveyard Terrain');
+    context.terrain2F = context.map.createLayer('2FTerrainLayer', '2FTerrain');
 
     // context.map.setCollisionByExclusion(-1,true,true,'TerrainLayer');
     context.map.setCollisionBetween(1,1,true,true,'BorderTerrainLayer');
