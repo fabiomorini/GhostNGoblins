@@ -5,12 +5,8 @@ class stage1 extends Phaser.Scene{
     }
 	preload()
     {
-        this.load.setPath('assets/tilesets/');
-        this.load.image('terrain','graveyardTerrain.png');
-        this.load.image('mountain','mountain01.png');
-
-        this.load.setPath('assets/map/'); 
-        this.load.image('bg_fake','NES - Ghosts n Goblins - Stage 1.png');
+        //creación namespace layers
+        LAYERS.preload(this);
 
         this.load.setPath('assets/sprites/Arthur/');
         this.load.spritesheet('arthur','arthur.png',
@@ -19,48 +15,32 @@ class stage1 extends Phaser.Scene{
         this.load.setPath('assets/sprites/Enemies/');
         this.load.spritesheet('zombie','zombie.png',
         {frameWidth:32,frameHeight:32});
-
-        this.load.setPath('assets/map/');
-        this.load.tilemapTiledJSON('stage1','stage1.json');
-        this.load.json('json','stage1.json');
     }
 
 	create()
     {
-    //Pintamos el fondo
-    this.bg = this.add.tileSprite(0,0,gamePrefs.LEVEL1_WIDTH,
-        gamePrefs.LEVEL1_HEIGHT,'bg_fake').setOrigin(0);
+        //Carga namespace layers
+        LAYERS.create(this);
 
-    //Pintamos el nivel
-    //Cargo el JSON
-    this.map = this.add.tilemap('stage1');
-    //Cargamos los TILESETS
-    this.map.addTilesetImage('terrain');
-    this.map.addTilesetImage('mountain');
-    //Pintamos las CAPAS/LAYERS
-    this.walls = this.map.createLayer('Terrain Layer','terrain');
-    this.map.createLayer('Mountain Layer','mountain');
+        this.loadAnimations();
+        
+        //Pintamos al heroe
+        this.arthur = new heroPrefab(this,65,100);
 
-    this.map.setCollisionByExclusion(-1,true,true,'Terrain Layer');
+            // this.physics.add.collider
+            // (
+            //     this.walls,
+            //     this.arthur
+            // );
 
-    //Pintamos al heroe
-    this.arthur = new heroPrefab(this,65,100);
-
-        this.physics.add.collider
-        (
-            this.walls,
-            this.arthur
-        );
-
-       this.loadAnimations();
-
+            
         this.zombie = new zombiePrefab(this,300,190);
-        this.physics.add.collider
-         (
-             this.walls,
-             this.zombie
-         );
-
+            // this.physics.add.collider
+            //  (
+                //      this.walls,
+                //      this.zombie
+                //  );
+            
         this.cameras.main.startFollow(this.arthur);
         this.cameras.main.setBounds(0,0,gamePrefs.LEVEL1_WIDTH,gamePrefs.LEVEL1_HEIGHT);
     }
