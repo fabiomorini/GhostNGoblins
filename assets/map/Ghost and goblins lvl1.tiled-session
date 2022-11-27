@@ -5,8 +5,8 @@
     },
     "activeFile": "stage1.tmx",
     "expandedProjectPaths": [
-        ".",
-        "E:/Area de trabajo/Phaser/GhostNGoblins/assets"
+        "E:/Area de trabajo/Phaser/GhostNGoblins/assets",
+        "."
     ],
     "fileStates": {
         "": {
@@ -31,10 +31,10 @@
         },
         "stage1.tmx": {
             "scale": 1.5,
-            "selectedLayer": 1,
+            "selectedLayer": 2,
             "viewCenter": {
                 "x": 251,
-                "y": -52
+                "y": -52.66666666666663
             }
         },
         "stage1.tmx#2FLadders": {

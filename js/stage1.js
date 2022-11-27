@@ -19,27 +19,28 @@ class stage1 extends Phaser.Scene{
 
 	create()
     {
-    //Carga namespace layers
-    LAYERS.create(this);
+        //Carga namespace layers
+        LAYERS.create(this);
 
-    //Pintamos al heroe
-    this.arthur = new heroPrefab(this,65,100);
+        this.loadAnimations();
+        
+        //Pintamos al heroe
+        this.arthur = new heroPrefab(this,65,100);
 
-        this.physics.add.collider
-        (
-            this.walls,
-            this.arthur
-        );
+            // this.physics.add.collider
+            // (
+            //     this.walls,
+            //     this.arthur
+            // );
 
-       this.loadAnimations();
-
+            
         this.zombie = new zombiePrefab(this,300,190);
-        this.physics.add.collider
-         (
-             this.walls,
-             this.zombie
-         );
-
+            // this.physics.add.collider
+            //  (
+                //      this.walls,
+                //      this.zombie
+                //  );
+            
         this.cameras.main.startFollow(this.arthur);
         this.cameras.main.setBounds(0,0,gamePrefs.LEVEL1_WIDTH,gamePrefs.LEVEL1_HEIGHT);
     }
