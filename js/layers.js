@@ -60,12 +60,11 @@ LAYERS.create = function (context) {
     context.terrainBorder1F = context.map.createLayer('BorderTerrainLayer', 'Graveyard Terrain');
     context.terrain1F = context.map.createLayer('TerrainLayer', 'Graveyard Terrain');
 
-    // context.map.setCollisionByExclusion(-1,true,true,'TerrainLayer');
     context.map.setCollisionBetween(1,1,true,true,'BorderTerrainLayer');
     context.map.setCollisionBetween(1,1,true,true,'TerrainLayer');
     // context.map.setCollisionBetween(18,19,true,true,'2FTerrainLayer');
     context.map.setCollisionBetween(6,8,true,true,'1FTombsLayer');
-    context.map.setCollisionBetween(7,7,true,true,'2FTombsLayer');
+    context.map.setCollisionBetween(6,8,true,true,'2FTombsLayer');
     context.map.setCollisionBetween(15,17,true,true,'LaddersLayer');
     context.map.setCollisionBetween(33,34,true,true,'WaterLayer');
 };
