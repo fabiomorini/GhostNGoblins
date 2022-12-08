@@ -1,4 +1,4 @@
-class heroPrefab extends Phaser.GameObjects.Sprite
+class heroPrefab extends actorPrefab
 {
     constructor(_scene,_positionX,_positionY,_spriteTag='arthur')
     {
@@ -16,6 +16,30 @@ class heroPrefab extends Phaser.GameObjects.Sprite
         this.bulletsFired = new Array();
         this.hasArmour = true;
         this.timeSinceLastShot;
+
+        this.physics.add.collider
+        (
+            this,
+            this.tombs1F
+        );
+
+        this.physics.add.collider
+        (
+            this,
+            this.tombs2F
+        );
+
+        this.physics.add.overlap
+        (
+            this,
+            this.ladders
+        );
+
+        this.physics.add.overlap
+        (
+            this,
+            this.water
+        );
     }
 
     loadPools()
