@@ -25,7 +25,6 @@ class heroPrefab extends Phaser.GameObjects.Sprite
         this.bullets.enableBody = true;
         gamePrefs.physics.arcade.enable(this.bullets);
         
-        
     }
 
     checkArmour()
@@ -38,6 +37,7 @@ class heroPrefab extends Phaser.GameObjects.Sprite
 
     resetAttackAnim()
     {
+        //TODO finish spawning only one animation
         this.anims.complete()
         if(this.cursorKeys.space.isDown && !this.isAttacking && !this.anims.isPlaying)
         {
@@ -53,11 +53,11 @@ class heroPrefab extends Phaser.GameObjects.Sprite
     {
         //Only shoot if there are less than 3 bullets existing
         //&& if some time passed before the last shot 
-        if(this.bulletsArray.lenght < MAX_BULLET_AMOUNT &&
+        if(this.bulletsFired.lenght < gamePrefs.MAX_BULLET_AMOUNT &&
            gamePrefs.time.now - 250 > this.timeSinceLastShot)
         {
             this.timeSinceLastShot = gamePrefs.time.now;
-            this.bulletsArray.push(createBullet())
+            this.bulletsFired.push(createBullet())
         }
     }
 
@@ -121,12 +121,12 @@ class heroPrefab extends Phaser.GameObjects.Sprite
             {
                 if(this.cursorKeys.down.isDown)
                 {
-                    //this.shoot()
+                    this.shoot()
                     this.anims.play('throwCrouch', true);
                 }
                 else
                 {
-                    //this.shoot()
+                    this.shoot()
                     this.anims.play('throw', true);
                 }
             }
@@ -185,12 +185,12 @@ class heroPrefab extends Phaser.GameObjects.Sprite
              {
                 if(this.cursorKeys.down.isDown)
                 {
-                    //this.shoot()
+                    this.shoot()
                     this.anims.play('throwCrouchNaked', true);
                 }
                 else
                 {
-                    //this.shoot()
+                    this.shoot()
                     this.anims.play('throwNaked', true);
                 }
              }
@@ -249,6 +249,6 @@ class heroPrefab extends Phaser.GameObjects.Sprite
 
     update()
     {
-
+        this.bullets.forEach(gamePrefs.debug.body,gamePrefs.debug)
     }
 }

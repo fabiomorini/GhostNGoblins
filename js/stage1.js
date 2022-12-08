@@ -12,17 +12,12 @@ class stage1 extends Phaser.Scene{
         this.load.spritesheet('arthur','arthur.png',
         {frameWidth:32,frameHeight:32});
 
-        this.load.setPath('assets/sprites/Weapons/');
-        this.load.spritesheet('spear','Spear.png',
-        {frameWidth:28,frameHeight:6});
-
-        this.load.setPath('assets/sprites/Weapons/');
-        this.load.spritesheet('knife','Knife.png',
-        {frameWidth:16,frameHeight:8});
-
         this.load.setPath('assets/sprites/Enemies/');
         this.load.spritesheet('zombie','zombie.png',
         {frameWidth:32,frameHeight:32});
+
+        this.load.image("spear", "Weapons/Spear.png");
+        this.load.image("knife", "Weapons/Knife.png");
     }
 
 	create()
@@ -150,22 +145,6 @@ class stage1 extends Phaser.Scene{
             key:'throwCrouchNaked',
             frames:this.anims.generateFrameNumbers('arthur',{start:26,end:27}),
             frameRate:10,
-            repeat:0
-        });
-
-        this.anims.create
-        ({
-            key:'spearIdle',
-            frames:this.anims.generateFrameNumbers('spear',{start:0,end:0}),
-            frameRate:1,
-            repeat:0
-        });
-
-        this.anims.create
-        ({
-            key:'spearIdle',
-            frames:this.anims.generateFrameNumbers('knife',{start:0,end:0}),
-            frameRate:1,
             repeat:0
         });
 
