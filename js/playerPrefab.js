@@ -38,12 +38,12 @@ class heroPrefab extends Phaser.GameObjects.Sprite
 
     resetAttackAnim()
     {
-        if(this.cursorKeys.space.isDown && !this.isAttacking)
+        this.anims.complete()
+        if(this.cursorKeys.space.isDown && !this.isAttacking && !this.anims.isPlaying)
         {
             this.isAttacking = true;
         }
-        
-        if(this.cursorKeys.space.isDown && this.isAttacking)
+        else if(!this.cursorKeys.space.isDown && this.isAttacking && !this.anims.isPlaying)
         {
             this.isAttacking = false;
         }
@@ -121,12 +121,12 @@ class heroPrefab extends Phaser.GameObjects.Sprite
             {
                 if(this.cursorKeys.down.isDown)
                 {
-                    this.shoot()
+                    //this.shoot()
                     this.anims.play('throwCrouch', true);
                 }
                 else
                 {
-                    this.shoot()
+                    //this.shoot()
                     this.anims.play('throw', true);
                 }
             }
@@ -157,7 +157,7 @@ class heroPrefab extends Phaser.GameObjects.Sprite
                     this.body.setVelocityX(0);
                     this.anims.stop().setFrame(4);
                 }
-                
+
                 //Jump
                 if(this.cursorKeys.up.isDown &&
                 this.body.blocked.down &&
@@ -185,13 +185,12 @@ class heroPrefab extends Phaser.GameObjects.Sprite
              {
                 if(this.cursorKeys.down.isDown)
                 {
-                    this.shoot()
+                    //this.shoot()
                     this.anims.play('throwCrouchNaked', true);
                 }
-                //NORMAL THROW
                 else
                 {
-                    this.shoot()
+                    //this.shoot()
                     this.anims.play('throwNaked', true);
                 }
              }
