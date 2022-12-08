@@ -7,7 +7,9 @@ var gamePrefs=
     GAME_WIDTH:960,
     GAME_HEIGHT:540,
     LEVEL1_WIDTH:3584,
-    LEVEL1_HEIGHT:192
+    LEVEL1_HEIGHT:192,
+    SPEAR_SPEED_: 150,
+    MAX_BULLET_AMOUNT : 3
 }
 
 var config =
