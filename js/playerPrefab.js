@@ -17,29 +17,29 @@ class heroPrefab extends actorPrefab
         this.hasArmour = true;
         this.timeSinceLastShot;
 
-        this.physics.add.collider
-        (
-            this,
-            this.tombs1F
-        );
+        // _scene.physics.add.collider
+        // (
+        //     this,
+        //     _scene.tombs1F
+        // );
 
-        this.physics.add.collider
-        (
-            this,
-            this.tombs2F
-        );
+        // _scene.physics.add.collider
+        // (
+        //     this,
+        //     _scene.tombs2F
+        // );
 
-        this.physics.add.overlap
-        (
-            this,
-            this.ladders
-        );
+        // _scene.physics.add.overlap
+        // (
+        //     this,
+        //     _scene.ladders
+        // );
 
-        this.physics.add.overlap
-        (
-            this,
-            this.water
-        );
+        // _scene.physics.add.overlap
+        // (
+        //     this,
+        //     _scene.water
+        // );
     }
 
     loadPools()
