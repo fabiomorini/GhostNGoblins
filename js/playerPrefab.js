@@ -66,12 +66,12 @@ class heroPrefab extends Phaser.GameObjects.Sprite
     {
         //Spawn the bullet in the correct spot
         var auxX = 0;
-        var auxY = 10
+        var auxY = 10;
 
         if(this.direction = 1)
-            auxX = 40
+            auxX = 40;
         if(this.cursorKeys.down.isDown)
-            auxY = 20
+            auxY = 20;
         
         var bullet = this.bullets.create(this, this._positionX + auxX,
                                           this._positionY + auxY, 
@@ -157,17 +157,18 @@ class heroPrefab extends Phaser.GameObjects.Sprite
                     this.body.setVelocityX(0);
                     this.anims.stop().setFrame(4);
                 }
-
+                
                 //Jump
-                if(this.cursores.up.isDown &&
-                    this.body.blocked.down &&  
-                    Phaser.Input.Keyboard.DownDuration(this.cursores.up,250))
+                if(this.cursorKeys.up.isDown &&
+                this.body.blocked.down &&
+                Phaser.Input.Keyboard.DownDuration(this.cursorKeys.up,250))
                 {
                     this.body.setVelocityY(-gamePrefs.ARTHUR_JUMP);            
                 }
-                if(!this.body.onFloor())
+        
+                if(!this.body.onFloor() && !this.isAttacking)
                 {
-                    if(this.cursores.right.isDown || this.cursores.left.isDown) 
+                    if(this.cursorKeys.right.isDown || this.cursorKeys.left.isDown) 
                     {
                         this.anims.stop().setFrame(5);
                     }
