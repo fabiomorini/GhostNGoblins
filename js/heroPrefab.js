@@ -9,6 +9,8 @@ class heroPrefab extends Phaser.GameObjects.Sprite
         this.cursores = _scene.input.keyboard.createCursorKeys(); 
         this.health = 2;     
         this.isAttacking = false;
+        this.timeToAttack
+        this.direction = 1;
     }
 
     preUpdate(time,delta)
@@ -79,7 +81,6 @@ class heroPrefab extends Phaser.GameObjects.Sprite
                 }
             }
         }
-
         //WITHOUT ARMOUR
         else if(this.health < 2 && !this.isAttacking)
         {
@@ -139,13 +140,13 @@ class heroPrefab extends Phaser.GameObjects.Sprite
             //CROUCHING THROW
             if(this.cursores.down.isDown)
             {
-                //TODO: attack logic
+                shoot()
                 this.anims.play('throwCrouch', true);
             }
             //NORMAL THROW
             else
             {
-                //TODO: attack logic
+                shoot()
                 this.anims.play('throw', true);
             }
         }
@@ -155,15 +156,20 @@ class heroPrefab extends Phaser.GameObjects.Sprite
             //CROUCHING THROW
             if(this.cursores.down.isDown)
             {
-                //TODO: attack logic
+                shoot()
                 this.anims.play('throwCrouchNaked', true);
             }
             //NORMAL THROW
             else
             {
-                //TODO: attack logic
+                shoot()
                 this.anims.play('throwNaked', true);
             }
+        }
+
+        function shoot(){
+            this.newProjectile = new platformer
+                                 .playerBulletPrefab(platformer.game,this.x+(20*this.scale.x),this.y-this.shootOffset,this.weaponType, this.level);
         }
 
         super.preUpdate(time, delta);
