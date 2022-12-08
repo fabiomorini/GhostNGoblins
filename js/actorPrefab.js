@@ -7,7 +7,7 @@ class actorPrefab extends Phaser.GameObjects.Sprite
         (
             this,
             _scene.terrain2F,
-            this.secondFloorWalk
+            this.walkOnSecondFloor
         );
 
         _scene.physics.add.collider
@@ -23,10 +23,9 @@ class actorPrefab extends Phaser.GameObjects.Sprite
         );
     }
 
-    secondFloorWalk(_actor, _terrain)
+    walkOnSecondFloor(_actor, _terrain)
     {
-        // var collider = Game.scene.add.collider(_actor, _terrain);
-        // collider.active = false;
+        _terrain.setCollision(false, false, true, false);
     }
 
     preUpdate(time,delta)
