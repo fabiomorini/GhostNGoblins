@@ -62,9 +62,9 @@ LAYERS.create = function (context) {
 
     context.map.setCollisionBetween(1,1,true,true,'BorderTerrainLayer');
     context.map.setCollisionBetween(1,1,true,true,'TerrainLayer');
-    // context.map.setCollisionBetween(18,19,true,true,'2FTerrainLayer');
-    context.map.setCollisionBetween(6,8,true,true,'1FTombsLayer');
-    context.map.setCollisionBetween(6,8,true,true,'2FTombsLayer');
-    context.map.setCollisionBetween(15,17,true,true,'LaddersLayer');
-    context.map.setCollisionBetween(33,34,true,true,'WaterLayer');
+    // context.map.setCollisionBetween(15,16,true,true,'2FTerrainLayer');
+    context.map.setCollisionBetween(5,7,true,true,'1FTombsLayer');
+    context.map.setCollisionBetween(5,7,true,true,'2FTombsLayer');
+    context.map.setCollisionBetween(12,14,true,true,'LaddersLayer');
+    context.map.setCollisionBetween(28,29,true,true,'WaterLayer');
 };

@@ -5,8 +5,8 @@
     },
     "activeFile": "stage1.tmx",
     "expandedProjectPaths": [
-        "E:/Area de trabajo/Phaser/GhostNGoblins/assets",
-        "."
+        ".",
+        "E:/Area de trabajo/Phaser/GhostNGoblins/assets"
     ],
     "fileStates": {
         "": {
@@ -30,11 +30,11 @@
             "scaleInDock": 1
         },
         "stage1.tmx": {
-            "scale": 1.5,
-            "selectedLayer": 2,
+            "scale": 2,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 251,
-                "y": -52.66666666666663
+                "x": 860.5,
+                "y": 113.75
             }
         },
         "stage1.tmx#2FLadders": {
@@ -46,7 +46,8 @@
             "scaleInEditor": 1
         },
         "stage1.tmx#Background": {
-            "scaleInDock": 1
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         },
         "stage1.tmx#Fences": {
             "scaleInDock": 1
@@ -81,7 +82,7 @@
         }
     },
     "last.exportedFilePath": "E:/Area de trabajo/Phaser/GhostNGoblins/assets/map",
-    "last.imagePath": "C:/Users/joseadrian.guerra/Documents/CDI/Phaser/GhostNGoblins/assets/tilesets",
+    "last.imagePath": "E:/Area de trabajo/Phaser/GhostNGoblins/assets/tilesets",
     "map.height": 6,
     "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
     "map.lastUsedFormat": "tmx",
