@@ -15,6 +15,9 @@ class stage1 extends Phaser.Scene{
         this.load.setPath('assets/sprites/Enemies/');
         this.load.spritesheet('zombie','zombie.png',
         {frameWidth:32,frameHeight:32});
+
+        this.load.image("spear", "Weapons/Spear.png");
+        this.load.image("knife", "Weapons/Knife.png");
     }
 
 	create()
@@ -24,71 +27,13 @@ class stage1 extends Phaser.Scene{
 
         this.loadAnimations();
         
-        //Pintamos al heroe
+        //Pintamos al player
         this.arthur = new heroPrefab(this,65,100);
 
-        this.physics.add.collider
-        (
-            this.terrainBorder1F,
-            this.arthur
-        );
-
-        this.physics.add.collider
-        (
-            this.terrain1F,
-            this.arthur
-        );
-
-        this.physics.add.collider
-        (
-            this.terrain2F,
-            this.arthur
-        );
-
-        this.physics.add.collider
-        (
-            this.tombs1F,
-            this.arthur
-        );
-
-        this.physics.add.collider
-        (
-            this.tombs2F,
-            this.arthur
-        );
-
-        this.physics.add.overlap
-        (
-            this.ladders,
-            this.arthur
-        );
-
-        this.physics.add.overlap
-        (
-            this.water,
-            this.arthur
-        );
-            
+        //Pintamos al enemigo
         this.zombie = new zombiePrefab(this,300,190);
-
-        this.physics.add.collider
-        (
-            this.terrainBorder1F,
-            this.zombie
-        );
-
-        this.physics.add.collider
-        (
-            this.terrain1F,
-            this.zombie
-        );
-
-        this.physics.add.collider
-        (
-            this.terrain2F,
-            this.zombie
-        );
             
+        //Camaras
         this.cameras.main.startFollow(this.arthur);
         this.cameras.main.setBounds(0,0,gamePrefs.LEVEL1_WIDTH,gamePrefs.LEVEL1_HEIGHT);
     }

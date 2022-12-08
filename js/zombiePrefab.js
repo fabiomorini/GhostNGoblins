@@ -1,4 +1,4 @@
-class zombiePrefab extends Phaser.GameObjects.Sprite
+class zombiePrefab extends actorPrefab
 {
     constructor(_scene,_positionX,_positionY,_spriteTag='zombie')
     {
