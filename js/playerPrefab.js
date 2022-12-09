@@ -13,7 +13,6 @@ class heroPrefab extends actorPrefab
         this.direction = 1;
         this.bulletHeight = 28;
         this.bullets;
-        this.bulletsFired = new Array();
         this.hasArmour = true;
         this.timeSinceLastShot;
 
@@ -40,14 +39,16 @@ class heroPrefab extends actorPrefab
             this,
             _scene.water
         );
+
+        this.loadPools();
     }
 
     loadPools()
     {
         //Weapon bullets Pool
-        this.bullets = this.physics.add.group();
-        this.bullets.enableBody = true;
-        gamePrefs.physics.arcade.enable(this.bullets);
+        this.bullets = this.scene.physics.add.group();
+        //this.bullets.enableBody = true;
+        //gamePrefs.physics.arcade.enable(this.bullets);
         
     }
 
@@ -62,7 +63,7 @@ class heroPrefab extends actorPrefab
     resetAttackAnim()
     {
         //TODO finish spawning only one animation
-        this.anims.complete()
+        //this.anims.complete()
         if(this.cursorKeys.space.isDown && !this.isAttacking && !this.anims.isPlaying)
         {
             this.isAttacking = true;
@@ -77,11 +78,11 @@ class heroPrefab extends actorPrefab
     {
         //Only shoot if there are less than 3 bullets existing
         //&& if some time passed before the last shot 
-        if(this.bulletsFired.lenght < gamePrefs.MAX_BULLET_AMOUNT &&
+        if(this.bullets.lenght < gamePrefs.MAX_BULLET_AMOUNT &&
            gamePrefs.time.now - 250 > this.timeSinceLastShot)
         {
             this.timeSinceLastShot = gamePrefs.time.now;
-            this.bulletsFired.push(createBullet())
+            this.bullets.push(createBullet())
         }
     }
 
@@ -127,11 +128,6 @@ class heroPrefab extends actorPrefab
                 
             }
         }
-    }
-
-    create()
-    {
-        this.loadPools();
     }
 
     preUpdate(time,delta)

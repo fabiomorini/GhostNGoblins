@@ -16,8 +16,9 @@ class stage1 extends Phaser.Scene{
         this.load.spritesheet('zombie','zombie.png',
         {frameWidth:32,frameHeight:32});
 
-        this.load.image("spear", "Weapons/Spear.png");
-        this.load.image("knife", "Weapons/Knife.png");
+        this.load.setPath('assets/sprites/Weapons/');
+        this.load.image("spear", "Spear.png");
+        this.load.image("knife", "Knife.png");
     }
 
 	create()
