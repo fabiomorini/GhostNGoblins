@@ -8,7 +8,7 @@ var gamePrefs=
     GAME_HEIGHT:540,
     LEVEL1_WIDTH:3552,
     LEVEL1_HEIGHT:192,
-    SPEAR_SPEED_: 150,
+    SPEAR_SPEED_: 450,
     MAX_BULLET_AMOUNT : 3
 }
 

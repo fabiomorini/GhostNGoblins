@@ -76,57 +76,50 @@ class heroPrefab extends actorPrefab
 
     shoot()
     {
-        //Only shoot if there are less than 3 bullets existing
-        //&& if some time passed before the last shot 
-        if(this.bullets.lenght < gamePrefs.MAX_BULLET_AMOUNT &&
-           gamePrefs.time.now - 250 > this.timeSinceLastShot)
-        {
-            this.timeSinceLastShot = gamePrefs.time.now;
-            this.bullets.push(createBullet())
-        }
-    }
-
-    //TODO adapt to also spawn knives and fire
-    createBullet()
-    {
         //Spawn the bullet in the correct spot
-        var auxX = 0;
-        var auxY = 10;
-
-        if(this.direction = 1)
-            auxX = 40;
+        var auxX = -30;
+        var auxY = -8;
+        
+        if(this.direction == 1)
+            auxX = 30;
+        
         if(this.cursorKeys.down.isDown)
-            auxY = 20;
+            auxY = 6;
         
-        var bullet = this.bullets.create(this, this._positionX + auxX,
-                                          this._positionY + auxY, 
-                                          "spear", 1 );
-        bullet.startingPosx = this._positionX;
-        bullet.direction = this.cursorKeys.direction;
-        bullet.hasHit = false;
-        //bullet.canHit = false;    
+        var _bullet = this.bullets.getFirst(false);
         
-        if (bullet.direction == joystick.states.RIGHT)
-        { 
-            bullet.body.setVelocityX = 500;
+        if(!_bullet)
+        {
+            //TODO if some time passed before the last shot 
+            if(this.bullets.getLength() < gamePrefs.MAX_BULLET_AMOUNT + 1000)
+            {
+                _bullet = new spearPrefab(this.scene, this.x + auxX, this.y + auxY);
+                this.bullets.add(_bullet);
+            }
+            else
+            {
+                return;
+            }
         }
         else
         {
-            bullet.scale.x = -1;
-            bullet.body.setVelocityX = -500;
+            _bullet.active = true;
+            _bullet.body.reset(this.x + auxX, this.y + auxY);
         }
-        return bullet;
-    }
-
-    moveBullets()
-    {
-        for(var i = 0; i < this.bulletsFired.lenght; i++)
+        
+        _bullet.body.allowGravity = false;
+        _bullet.startingPosx = this.x + auxX;
+        _bullet.hasHit = false;
+        
+        if (this.direction == 1)
+        { 
+            _bullet.setFlipX(false);
+            _bullet.body.setVelocityX(gamePrefs.SPEAR_SPEED_);
+        }
+        else if(this.direction == -1)
         {
-            var bullet = this.bulletsFired[i];
-            if(!bullet.hasHit)
-            {
-                
-            }
+            _bullet.setFlipX(true);
+            _bullet.body.setVelocityX(-gamePrefs.SPEAR_SPEED_);
         }
     }
 
@@ -164,6 +157,7 @@ class heroPrefab extends actorPrefab
                     this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED);
                     this.setFlipX(true);
                     this.anims.play('run',true);
+                    this.direction = -1;
                 }         
                 //Right
                 else if(this.cursorKeys.right.isDown)
@@ -171,6 +165,7 @@ class heroPrefab extends actorPrefab
                     this.body.setVelocityX(gamePrefs.ARTHUR_SPEED);
                     this.setFlipX(false);
                     this.anims.play('run',true);
+                    this.direction = 1;
                 }
                 else
                 {
@@ -228,6 +223,7 @@ class heroPrefab extends actorPrefab
                     this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED);
                     this.setFlipX(true);
                     this.anims.play('runNaked',true);
+                    this.direction = -1;
                 }         
                 //Right
                 else if(this.cursorKeys.right.isDown)
@@ -235,6 +231,7 @@ class heroPrefab extends actorPrefab
                     this.body.setVelocityX(gamePrefs.ARTHUR_SPEED);
                     this.setFlipX(false);
                     this.anims.play('runNaked',true);
+                    this.direction = 1;
                 }
                 else
                 {
