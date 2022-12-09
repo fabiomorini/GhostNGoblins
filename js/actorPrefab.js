@@ -6,8 +6,7 @@ class actorPrefab extends Phaser.GameObjects.Sprite
         _scene.physics.add.collider
         (
             this,
-            _scene.terrain2F,
-            this.secondFloorWalk
+            _scene.terrain2F
         );
 
         _scene.physics.add.collider
@@ -23,14 +22,28 @@ class actorPrefab extends Phaser.GameObjects.Sprite
         );
     }
 
-    secondFloorWalk(_actor, _terrain)
-    {
-        // var collider = Game.scene.add.collider(_actor, _terrain);
-        // collider.active = false;
-    }
-
     preUpdate(time,delta)
     {
         super.preUpdate(time,delta);
+
+        if(this.scene.terrain2F.culledTiles.length > 0)
+        {
+            var tiles = this.scene.terrain2F.culledTiles
+
+            if(tiles != null)
+            {
+                for(var i = 0; i < tiles.length; i++)
+                {
+                    if(tiles[i] != null &&
+                        tiles[i].collideLeft &&
+                        tiles[i].collideRight &&
+                        tiles[i].collideUp &&
+                        tiles[i].collideDown)
+                    {
+                        tiles[i].setCollision(false, false, true, false);
+                    }
+                }
+            }
+        }
     }
 }

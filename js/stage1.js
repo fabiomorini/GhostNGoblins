@@ -32,7 +32,7 @@ class stage1 extends Phaser.Scene{
 
         //Pintamos al enemigo
         this.zombie = new zombiePrefab(this,300,190);
-            
+
         //Camaras
         this.cameras.main.startFollow(this.arthur);
         this.cameras.main.setBounds(0,0,gamePrefs.LEVEL1_WIDTH,gamePrefs.LEVEL1_HEIGHT);
