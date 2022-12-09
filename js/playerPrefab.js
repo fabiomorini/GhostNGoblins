@@ -13,7 +13,6 @@ class heroPrefab extends actorPrefab
         this.direction = 1;
         this.bulletHeight = 28;
         this.bullets;
-        this.bulletsFired = new Array();
         this.hasArmour = true;
         this.timeSinceLastShot;
 
@@ -40,14 +39,16 @@ class heroPrefab extends actorPrefab
             this,
             _scene.water
         );
+
+        this.loadPools();
     }
 
     loadPools()
     {
         //Weapon bullets Pool
-        this.bullets = this.physics.add.group();
-        this.bullets.enableBody = true;
-        gamePrefs.physics.arcade.enable(this.bullets);
+        this.bullets = this.scene.physics.add.group();
+        //this.bullets.enableBody = true;
+        //gamePrefs.physics.arcade.enable(this.bullets);
         
     }
 
@@ -61,13 +62,24 @@ class heroPrefab extends actorPrefab
 
     resetAttackAnim()
     {
+
         //TODO finish spawning only one animation
-        this.anims.complete()
-        if(this.cursorKeys.space.isDown && !this.isAttacking && !this.anims.isPlaying)
+        //this.anims.complete()
+        if(this.cursorKeys.space.isDown && 
+            !this.isAttacking && 
+            this.bullets.countActive() < gamePrefs.MAX_BULLET_AMOUNT)
         {
+            this.timeSinceLastShot = this.scene.time.addEvent(
+                {
+                    delay: 50,
+                    callback: this.shoot,
+                    callbackScope: this,
+                    repeat: 0
+                }   
+            );
             this.isAttacking = true;
         }
-        else if(!this.cursorKeys.space.isDown && this.isAttacking && !this.anims.isPlaying)
+        else if(!this.cursorKeys.space.isDown && this.isAttacking)
         {
             this.isAttacking = false;
         }
@@ -75,63 +87,35 @@ class heroPrefab extends actorPrefab
 
     shoot()
     {
-        //Only shoot if there are less than 3 bullets existing
-        //&& if some time passed before the last shot 
-        if(this.bulletsFired.lenght < gamePrefs.MAX_BULLET_AMOUNT &&
-           gamePrefs.time.now - 250 > this.timeSinceLastShot)
-        {
-            this.timeSinceLastShot = gamePrefs.time.now;
-            this.bulletsFired.push(createBullet())
-        }
-    }
-
-    //TODO adapt to also spawn knives and fire
-    createBullet()
-    {
         //Spawn the bullet in the correct spot
-        var auxX = 0;
-        var auxY = 10;
-
-        if(this.direction = 1)
-            auxX = 40;
+        var auxX = -30;
+        var auxY = -8;
+        
+        if(this.direction == 1)
+            auxX = 30;
+        
         if(this.cursorKeys.down.isDown)
-            auxY = 20;
+            auxY = 6;
         
-        var bullet = this.bullets.create(this, this._positionX + auxX,
-                                          this._positionY + auxY, 
-                                          "spear", 1 );
-        bullet.startingPosx = this._positionX;
-        bullet.direction = this.cursorKeys.direction;
-        bullet.hasHit = false;
-        //bullet.canHit = false;    
+    
+        var _bullet = this.bullets.getFirst(false);
         
-        if (bullet.direction == joystick.states.RIGHT)
+        _bullet = new spearPrefab(this.scene, this.x + auxX, this.y + auxY);
+        this.bullets.add(_bullet);
+        
+        _bullet.body.allowGravity = false;
+        _bullet.startingPosX = this.x + auxX;
+        
+        if (this.direction == 1)
         { 
-            bullet.body.setVelocityX = 500;
+            _bullet.setFlipX(false);
+            _bullet.body.setVelocityX(gamePrefs.SPEAR_SPEED_);
         }
-        else
+        else if(this.direction == -1)
         {
-            bullet.scale.x = -1;
-            bullet.body.setVelocityX = -500;
+            _bullet.setFlipX(true);
+            _bullet.body.setVelocityX(-gamePrefs.SPEAR_SPEED_);
         }
-        return bullet;
-    }
-
-    moveBullets()
-    {
-        for(var i = 0; i < this.bulletsFired.lenght; i++)
-        {
-            var bullet = this.bulletsFired[i];
-            if(!bullet.hasHit)
-            {
-                
-            }
-        }
-    }
-
-    create()
-    {
-        this.loadPools();
     }
 
     preUpdate(time,delta)
@@ -145,12 +129,10 @@ class heroPrefab extends actorPrefab
             {
                 if(this.cursorKeys.down.isDown)
                 {
-                    this.shoot()
                     this.anims.play('throwCrouch', true);
                 }
                 else
                 {
-                    this.shoot()
                     this.anims.play('throw', true);
                 }
             }
@@ -168,6 +150,7 @@ class heroPrefab extends actorPrefab
                     this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED);
                     this.setFlipX(true);
                     this.anims.play('run',true);
+                    this.direction = -1;
                 }         
                 //Right
                 else if(this.cursorKeys.right.isDown)
@@ -175,6 +158,7 @@ class heroPrefab extends actorPrefab
                     this.body.setVelocityX(gamePrefs.ARTHUR_SPEED);
                     this.setFlipX(false);
                     this.anims.play('run',true);
+                    this.direction = 1;
                 }
                 else
                 {
@@ -209,12 +193,10 @@ class heroPrefab extends actorPrefab
              {
                 if(this.cursorKeys.down.isDown)
                 {
-                    this.shoot()
                     this.anims.play('throwCrouchNaked', true);
                 }
                 else
                 {
-                    this.shoot()
                     this.anims.play('throwNaked', true);
                 }
              }
@@ -232,6 +214,7 @@ class heroPrefab extends actorPrefab
                     this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED);
                     this.setFlipX(true);
                     this.anims.play('runNaked',true);
+                    this.direction = -1;
                 }         
                 //Right
                 else if(this.cursorKeys.right.isDown)
@@ -239,6 +222,7 @@ class heroPrefab extends actorPrefab
                     this.body.setVelocityX(gamePrefs.ARTHUR_SPEED);
                     this.setFlipX(false);
                     this.anims.play('runNaked',true);
+                    this.direction = 1;
                 }
                 else
                 {

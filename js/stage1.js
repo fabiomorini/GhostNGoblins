@@ -16,8 +16,9 @@ class stage1 extends Phaser.Scene{
         this.load.spritesheet('zombie','zombie.png',
         {frameWidth:32,frameHeight:32});
 
-        this.load.image("spear", "Weapons/Spear.png");
-        this.load.image("knife", "Weapons/Knife.png");
+        this.load.setPath('assets/sprites/Weapons/');
+        this.load.image("spear", "Spear.png");
+        this.load.image("knife", "Knife.png");
     }
 
 	create()
@@ -46,7 +47,7 @@ class stage1 extends Phaser.Scene{
         ({
             key:'run',
             frames:this.anims.generateFrameNumbers('arthur',{start:0,end:4}),
-            frameRate:10,
+            frameRate:16,
             repeat:-1
         });
 
@@ -70,7 +71,7 @@ class stage1 extends Phaser.Scene{
         ({
             key:'runNaked',
             frames:this.anims.generateFrameNumbers('arthur',{start:16,end:20}),
-            frameRate:10,
+            frameRate:16,
             repeat:-1
         });
 
