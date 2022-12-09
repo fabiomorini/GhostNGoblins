@@ -25,6 +25,8 @@ class spearPrefab extends Phaser.GameObjects.Sprite
             _scene.zombie,
             this.hasHitTarget
         );
+
+        this.aliveTime = 0;
     }
 
     hasHitTarget(_this, _zombie)
@@ -35,6 +37,13 @@ class spearPrefab extends Phaser.GameObjects.Sprite
     
     preUpdate()
     {
-    
+        this.aliveTime = this.scene.time.addEvent(
+            {
+                delay: 1000,
+                callback: this.destroy,
+                callbackScope: this,
+                repeat: 0
+            }   
+        );
     }
 }

@@ -62,13 +62,24 @@ class heroPrefab extends actorPrefab
 
     resetAttackAnim()
     {
+
         //TODO finish spawning only one animation
         //this.anims.complete()
-        if(this.cursorKeys.space.isDown && !this.isAttacking && !this.anims.isPlaying)
+        if(this.cursorKeys.space.isDown && 
+            !this.isAttacking && 
+            this.bullets.countActive() < gamePrefs.MAX_BULLET_AMOUNT)
         {
+            this.timeSinceLastShot = this.scene.time.addEvent(
+                {
+                    delay: 50,
+                    callback: this.shoot,
+                    callbackScope: this,
+                    repeat: 0
+                }   
+            );
             this.isAttacking = true;
         }
-        else if(!this.cursorKeys.space.isDown && this.isAttacking && !this.anims.isPlaying)
+        else if(!this.cursorKeys.space.isDown && this.isAttacking)
         {
             this.isAttacking = false;
         }
@@ -86,29 +97,14 @@ class heroPrefab extends actorPrefab
         if(this.cursorKeys.down.isDown)
             auxY = 6;
         
+    
         var _bullet = this.bullets.getFirst(false);
-
-        if(!_bullet)
-        {
-            //TODO if some time passed before the last shot 
-            if(this.bullets.countActive() < gamePrefs.MAX_BULLET_AMOUNT)
-            {
-                _bullet = new spearPrefab(this.scene, this.x + auxX, this.y + auxY);
-                this.bullets.add(_bullet);
-            }
-            else
-            {
-                return;
-            }
-        }
-        else
-        {
-            //_bullet.active = true;
-            _bullet.body.reset(this.x + auxX, this.y + auxY);
-        }
+        
+        _bullet = new spearPrefab(this.scene, this.x + auxX, this.y + auxY);
+        this.bullets.add(_bullet);
         
         _bullet.body.allowGravity = false;
-        _bullet.startingPosx = this.x + auxX;
+        _bullet.startingPosX = this.x + auxX;
         
         if (this.direction == 1)
         { 
@@ -133,12 +129,10 @@ class heroPrefab extends actorPrefab
             {
                 if(this.cursorKeys.down.isDown)
                 {
-                    this.shoot()
                     this.anims.play('throwCrouch', true);
                 }
                 else
                 {
-                    this.shoot()
                     this.anims.play('throw', true);
                 }
             }
@@ -199,12 +193,10 @@ class heroPrefab extends actorPrefab
              {
                 if(this.cursorKeys.down.isDown)
                 {
-                    this.shoot()
                     this.anims.play('throwCrouchNaked', true);
                 }
                 else
                 {
-                    this.shoot()
                     this.anims.play('throwNaked', true);
                 }
              }

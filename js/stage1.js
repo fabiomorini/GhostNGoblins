@@ -47,7 +47,7 @@ class stage1 extends Phaser.Scene{
         ({
             key:'run',
             frames:this.anims.generateFrameNumbers('arthur',{start:0,end:4}),
-            frameRate:10,
+            frameRate:16,
             repeat:-1
         });
 
@@ -71,7 +71,7 @@ class stage1 extends Phaser.Scene{
         ({
             key:'runNaked',
             frames:this.anims.generateFrameNumbers('arthur',{start:16,end:20}),
-            frameRate:10,
+            frameRate:16,
             repeat:-1
         });
 
