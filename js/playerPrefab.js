@@ -87,11 +87,11 @@ class heroPrefab extends actorPrefab
             auxY = 6;
         
         var _bullet = this.bullets.getFirst(false);
-        
+
         if(!_bullet)
         {
             //TODO if some time passed before the last shot 
-            if(this.bullets.getLength() < gamePrefs.MAX_BULLET_AMOUNT + 1000)
+            if(this.bullets.countActive() < gamePrefs.MAX_BULLET_AMOUNT)
             {
                 _bullet = new spearPrefab(this.scene, this.x + auxX, this.y + auxY);
                 this.bullets.add(_bullet);
@@ -103,13 +103,12 @@ class heroPrefab extends actorPrefab
         }
         else
         {
-            _bullet.active = true;
+            //_bullet.active = true;
             _bullet.body.reset(this.x + auxX, this.y + auxY);
         }
         
         _bullet.body.allowGravity = false;
         _bullet.startingPosx = this.x + auxX;
-        _bullet.hasHit = false;
         
         if (this.direction == 1)
         { 
