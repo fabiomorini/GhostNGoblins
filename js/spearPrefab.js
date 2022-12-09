@@ -29,10 +29,17 @@ class spearPrefab extends Phaser.GameObjects.Sprite
         this.aliveTime = 0;
     }
 
+    hasHitNull(_this, _null)
+    {
+        _this.setActive(false);
+        _this.y += 500;
+    }
+
     hasHitTarget(_this, _zombie)
     {
         _this.setActive(false);
         _this.y += 500;
+        _zombie.destroy();
     }
     
     preUpdate()

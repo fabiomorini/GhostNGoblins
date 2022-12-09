@@ -29,11 +29,6 @@ class zombiePrefab extends actorPrefab
         this.scene.cameras.main.flash(500,255,0,0);
     }
 
-    die(_zombie, _bullet)
-    {
-        _zombie.destroy();
-    }
-
     preUpdate(time,delta)
     {
         if(this.anims.currentAnim.key !='zombieSpawn')
