@@ -26,6 +26,13 @@ class spearPrefab extends Phaser.GameObjects.Sprite
             this.hasHitTarget
         );
 
+        _scene.physics.add.collider
+        (
+            this,
+            _scene.greenMonster,
+            this.hasHitTarget
+        );
+
         this.aliveTime = 0;
     }
 
@@ -40,6 +47,13 @@ class spearPrefab extends Phaser.GameObjects.Sprite
         _this.setActive(false);
         _this.y += 500;
         _zombie.destroy();
+    }
+
+    hasHitTarget(_this, _greenMonster)
+    {
+        _this.setActive(false);
+        _this.y += 500;
+        _greenMonster.destroy();
     }
     
     preUpdate()

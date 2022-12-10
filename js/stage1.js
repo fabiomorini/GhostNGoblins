@@ -31,10 +31,12 @@ class stage1 extends Phaser.Scene{
         this.loadAnimations();
         
         //Pintamos al player
-        this.arthur = new heroPrefab(this,65,100);
+        this.arthur = new playerPrefab(this,65,100);
 
         //Pintamos al enemigo
         this.zombie = new zombiePrefab(this,300,190);
+
+        this.greenMonster = new greenMonsterPrefab(this, 500, 190);
 
         //Camaras
         this.cameras.main.startFollow(this.arthur);
@@ -50,7 +52,7 @@ class stage1 extends Phaser.Scene{
         ({
             key:'run',
             frames:this.anims.generateFrameNumbers('arthur',{start:0,end:4}),
-            frameRate:16,
+            frameRate:10,
             repeat:-1
         });
 
@@ -118,7 +120,7 @@ class stage1 extends Phaser.Scene{
             key: 'greenMonsterIddle',
             frames: this.anims.generateFrameNumbers('greenMonster', {start:0, end:1}),
             frameRate:5,
-            repeat: 0
+            repeat: -1
         })
         
         this.anims.create

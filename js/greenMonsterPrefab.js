@@ -1,4 +1,4 @@
-class greenMonsterPrefab extends Phaser.GameObjects.Sprite
+class greenMonsterPrefab extends actorPrefab
 {
     constructor(_scene,_positionX,_positionY,_spriteTag='greenMonster')
     {
@@ -21,7 +21,7 @@ class greenMonsterPrefab extends Phaser.GameObjects.Sprite
         var numberTimer = _scene.time.addEvent
         (
             {
-                delay:800, //ms
+                delay:2000, //ms
                 callback:this.makeRandom,
                 callbackScope: this,
                 loop: true
@@ -43,20 +43,31 @@ class greenMonsterPrefab extends Phaser.GameObjects.Sprite
 
     }
 
+
+    /*
+
+        PREGUNTAR AL RICHARD POR QUE A VECES SI QUE FUNCIONA EL THIS.ON() (ZOMBIE) PERO OTRAS NO, GREENMONSTER / PLAYER.
+
+    */
     preUpdate(time,delta)
     {
                 
         if(this.randNum == 1)
+        {
             this.anims.play('greenMonsterIddle', true);
-        
+        }
         else if(this.randNum == 3)
         {
             this.anims.play('greenMonsterAttack', true);
-            //this.on(Phase.Animations.Events.ANIMATION_COMPLETE)
-            this.anims.nextAnim = 'greenMonsterIddle';
+            this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, ()=> {
+                this.anims.stop();
+                this.attack();
+                console.log("se playea");
+            });
+
         }
         else
-            this.anims.stop().setFrame(0);
+        this.anims.stop().setFrame(0);
     
     super.preUpdate(time,delta);
     }
@@ -66,5 +77,12 @@ class greenMonsterPrefab extends Phaser.GameObjects.Sprite
     makeRandom(min, max)
     {
         this.randNum = Phaser.Math.Between(0, 3);
+    }
+    attack()
+    {
+        //Throw projectile
+        
+        //reset animation to iddle
+        this.anims.stop().setFrame(0);
     }
 }

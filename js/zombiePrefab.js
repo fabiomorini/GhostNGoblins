@@ -9,8 +9,9 @@ class zombiePrefab extends actorPrefab
         this.dist = 0;
         this.maxDistance = 200;
         this.anims.play('zombieSpawn',true);
-        this.on('animationcomplete', ()=> {
-            this.isSpawning = false;});
+        this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, ()=> {
+            this.isSpawning = false;
+        });
         this.direccion = -1;
         this.isSpawning = true;
         this.scene = _scene;
@@ -36,14 +37,14 @@ class zombiePrefab extends actorPrefab
     preUpdate(time,delta)
     {
         this.dist = Phaser.Math.Distance.Between(this.body.position.x,0,this.startingPos,0)
-        console.log("" + this.dist);
         if(this.dist > this.maxDistance)
         {
             this.body.setVelocityX(0);
             this.anims.playReverse("zombieSpawn", true);
-            this.on('animationcomplete', ()=> {
+            this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, ()=> {
                 this.anims.stop().setFrame(0);
-                this.resetPosition();});
+                this.resetPosition();
+            });
         }
         else {
             if(!this.isSpawning)
@@ -67,8 +68,9 @@ class zombiePrefab extends actorPrefab
         this.x = this.startingPos;
         this.anims.nextAnim = 'zombieSpawn';
         this.isSpawning = true;
-        this.on('animationcomplete', ()=> {
-            this.isSpawning = false;});
+        this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, ()=> {
+            this.isSpawning = false;
+        });
     }
     
 }
