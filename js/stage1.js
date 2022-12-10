@@ -99,7 +99,7 @@ class stage1 extends Phaser.Scene{
         this.anims.create
         ({
             key:'zombieSpawn',
-            frames:this.anims.generateFrameNumbers('zombie',{start:0,end:2}),
+            frames:this.anims.generateFrameNumbers('zombie',{start:1,end:3}),
             frameRate:5,
             repeat:0
         });
@@ -107,7 +107,7 @@ class stage1 extends Phaser.Scene{
         this.anims.create
         ({
             key:'zombieRun',
-            frames:this.anims.generateFrameNumbers('zombie',{start:3,end:5}),
+            frames:this.anims.generateFrameNumbers('zombie',{start:4,end:5}),
             frameRate:5,
             repeat:-1
         });

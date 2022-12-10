@@ -9,9 +9,10 @@ class zombiePrefab extends actorPrefab
         this.dist = 0;
         this.maxDistance = 200;
         this.anims.play('zombieSpawn',true);
-        this.anims.nextAnim = 'zombieRun';
+        this.on('animationcomplete', ()=> {
+            this.isSpawning = false;});
         this.direccion = -1;
-        this.isSpawning = false;
+        this.isSpawning = true;
         this.scene = _scene;
         _scene.physics.add.overlap
         (
@@ -34,35 +35,40 @@ class zombiePrefab extends actorPrefab
 
     preUpdate(time,delta)
     {
-        if(this.anims.currentAnim.key !='zombieSpawn')
-        {
-            this.body.setVelocityX(gamePrefs.ENEMY_SPEED*this.direccion);
-        }
-        if(this.body.blocked.right || this.body.blocked.left)
-        {
-            this.direccion *=-1;
-            this.body.setVelocityX(gamePrefs.ENEMY_SPEED*this.direccion);
-            this.flipX = !this.flipX;
-        }
-        
         this.dist = Phaser.Math.Distance.Between(this.body.position.x,0,this.startingPos,0)
-        console.log(this.body.position.x);
-        //console.log(this.startingPos);
-
+        console.log("" + this.dist);
         if(this.dist > this.maxDistance)
         {
+            this.body.setVelocityX(0);
             this.anims.playReverse("zombieSpawn", true);
-            this.on(Phaser.Animations.Events.ANIMATION_COMPLETE,  this.anims.stop().setFrame(18) )
-            this.body.position.x(-800);
-
-        }   
+            this.on('animationcomplete', ()=> {
+                this.anims.stop().setFrame(0);
+                this.resetPosition();});
+        }
+        else {
+            if(!this.isSpawning)
+            {
+                this.body.setVelocityX(gamePrefs.ENEMY_SPEED*this.direccion);
+                this.anims.play('zombieRun', true);
+            }
+            if(this.body.blocked.right || this.body.blocked.left)
+            {
+                this.direccion *=-1;
+                this.body.setVelocityX(gamePrefs.ENEMY_SPEED*this.direccion);
+                this.flipX = !this.flipX;
+            }
+        }
 
     super.preUpdate(time,delta);
     }
 
     resetPosition()
     {
-        this.body.position.x = startingPos;
+        this.x = this.startingPos;
+        this.anims.nextAnim = 'zombieSpawn';
+        this.isSpawning = true;
+        this.on('animationcomplete', ()=> {
+            this.isSpawning = false;});
     }
     
 }
