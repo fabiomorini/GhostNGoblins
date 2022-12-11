@@ -28,10 +28,10 @@ class zombiePrefab extends actorPrefab
 
     hit(_zombie,_arthur)
     {
+        _arthur.tookDamage = true;
         _arthur.health -=1;
-        _arthur.body.reset(65,100);
-        this.scene.cameras.main.shake(500,0.05);
-        this.scene.cameras.main.flash(500,255,0,0);
+        _arthur.body.setVelocityX(0);
+        _arthur.body.setVelocityY(-300);
     }
 
     preUpdate(time,delta)

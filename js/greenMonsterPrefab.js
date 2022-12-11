@@ -34,11 +34,14 @@ class greenMonsterPrefab extends actorPrefab
     hit(_greenMonster,_arthur)
     {
         {
+            _arthur.tookDamage = true;
             _arthur.health -=1;
+            _arthur.body.setVelocityX(-gamePrefs.ARTHUR_SPEED);
+            _arthur.body.setVelocityY(gamePrefs.ARTHUR_SPEED);
+
             //_arthur.body.velocity.x += gamePrefs.ARTHUR_SPEED * -_arthur.direccion;
-            _arthur.body.velocity.y -= Math.sin(0.1) * gamePrefs.ARTHUR_JUMP;
-            this.scene.cameras.main.shake(500,0.05);
-            this.scene.cameras.main.flash(500,255,0,0);
+            //_arthur.body.velocity.y -= Math.sin(0.1) * gamePrefs.ARTHUR_JUMP;
+
         }
 
     }

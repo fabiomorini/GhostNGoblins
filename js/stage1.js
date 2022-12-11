@@ -11,6 +11,8 @@ class stage1 extends Phaser.Scene{
         this.load.setPath('assets/sprites/Arthur/');
         this.load.spritesheet('arthur','arthur.png',
         {frameWidth:32,frameHeight:32});
+        this.load.spritesheet('break_armour','armour_break.png',
+        {frameWidth:52,frameHeight:49});
 
         this.load.setPath('assets/sprites/Enemies/');
         this.load.spritesheet('zombie','zombie.png',
@@ -33,9 +35,8 @@ class stage1 extends Phaser.Scene{
         //Pintamos al player
         this.arthur = new playerPrefab(this,65,100);
 
-        //Pintamos al enemigo
+        //Pintamos los enemigos
         this.zombie = new zombiePrefab(this,300,190);
-
         this.greenMonster = new greenMonsterPrefab(this, 500, 190);
 
         //Camaras
@@ -128,6 +129,13 @@ class stage1 extends Phaser.Scene{
             key: 'greenMonsterAttack',
             frames: this.anims.generateFrameNumbers('greenMonster', {start:2, end:5}),
             frameRate:5,
+            repeat: 0
+        })
+        this.anims.create
+        ({
+            key: 'breakArmour',
+            frames: this.anims.generateFrameNumbers('break_armour', {start:0, end:4}),
+            frameRate:10,
             repeat: 0
         })
         
