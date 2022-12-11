@@ -11,9 +11,12 @@ class playerPrefab extends actorPrefab
         this.timeToAttack
         this.direction = 1;
         this.bulletHeight = 28;
-        this.bullets;
+        this.spears;
+        this.knives;
+        this.fires;
         this.hasArmour = true;
         this.timeSinceLastShot;
+        this.weapon = 0;
 
         _scene.physics.add.collider
         (
@@ -40,15 +43,18 @@ class playerPrefab extends actorPrefab
         );
 
         this.loadPools();
+        
+        this.key1 = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_ONE);
+        this.key2 = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_TWO);
+        this.key3 = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_THREE);
     }
 
     loadPools()
     {
         //Weapon bullets Pool
-        this.bullets = this.scene.physics.add.group();
-        //this.bullets.enableBody = true;
-        //gamePrefs.physics.arcade.enable(this.bullets);
-        
+        this.spears = this.scene.physics.add.group();
+        this.knives = this.scene.physics.add.group();
+        this.fires = this.scene.physics.add.group();
     }
 
     checkArmour()
@@ -61,30 +67,86 @@ class playerPrefab extends actorPrefab
 
     resetAttackAnim()
     {
-
+        //Temporal: Swap between weapons
+        if(this.key1.isDown)
+        {
+            this.weapon = 0; // Spear
+        }
+        else if(this.key2.isDown)
+        {
+            this.weapon = 1;  // Knife
+        }
+        else if(this.key3.isDown)
+        {
+            this.weapon = 2; // Fire
+        }
         //TODO finish spawning only one animation
         //this.anims.complete()
-        if(this.cursorKeys.space.isDown && 
-            !this.isAttacking && 
-            this.bullets.countActive() < gamePrefs.MAX_BULLET_AMOUNT)
-        {
-            this.timeSinceLastShot = this.scene.time.addEvent(
-                {
-                    delay: 50,
-                    callback: this.shoot,
-                    callbackScope: this,
-                    repeat: 0
-                }   
-            );
-            this.isAttacking = true;
+        if(this.weapon == 0){ // Spear
+            if(this.cursorKeys.space.isDown && 
+                !this.isAttacking && 
+                this.spears.countActive() < gamePrefs.MAX_BULLET_AMOUNT)
+            {
+                this.timeSinceLastShot = this.scene.time.addEvent(
+                    {
+                        delay: 50,
+                        callback: this.shootSpear,
+                        callbackScope: this,
+                        repeat: 0
+                    }   
+                );
+                this.isAttacking = true;
+            }
+            else if(!this.cursorKeys.space.isDown && this.isAttacking)
+            {
+                this.isAttacking = false;
+            }
         }
-        else if(!this.cursorKeys.space.isDown && this.isAttacking)
+        else if(this.weapon == 1) // Knife
         {
-            this.isAttacking = false;
+            if(this.cursorKeys.space.isDown && 
+                !this.isAttacking && 
+                this.knives.countActive() < gamePrefs.MAX_BULLET_AMOUNT)
+            {
+                this.timeSinceLastShot = this.scene.time.addEvent(
+                    {
+                        delay: 50,
+                        callback: this.shootKnife,
+                        callbackScope: this,
+                        repeat: 0
+                    }   
+                );
+                this.isAttacking = true;
+            }
+            else if(!this.cursorKeys.space.isDown && this.isAttacking)
+            {
+                this.isAttacking = false;
+            }
+        }
+        else // Fire
+        {
+            if(this.cursorKeys.space.isDown && 
+                !this.isAttacking && 
+                this.fires.countActive() < gamePrefs.MAX_BULLET_AMOUNT)
+            {
+                this.timeSinceLastShot = this.scene.time.addEvent(
+                    {
+                        delay: 50,
+                        callback: this.shootFire,
+                        callbackScope: this,
+                        repeat: 0
+                    }   
+                );
+                this.isAttacking = true;
+            }
+            else if(!this.cursorKeys.space.isDown && this.isAttacking)
+            {
+                this.isAttacking = false;
+            }
         }
     }
 
-    shoot()
+    shootSpear()
     {
         //Spawn the bullet in the correct spot
         var auxX = -30;
@@ -97,10 +159,78 @@ class playerPrefab extends actorPrefab
             auxY = 6;
         
     
-        var _bullet = this.bullets.getFirst(false);
+        var _bullet = this.spears.getFirst(false);
         
         _bullet = new spearPrefab(this.scene, this.x + auxX, this.y + auxY);
-        this.bullets.add(_bullet);
+        this.spears.add(_bullet);
+        
+        _bullet.body.allowGravity = false;
+        _bullet.startingPosX = this.x + auxX;
+        
+        if (this.direction == 1)
+        { 
+            _bullet.setFlipX(false);
+            _bullet.body.setVelocityX(gamePrefs.SPEAR_SPEED_);
+        }
+        else if(this.direction == -1)
+        {
+            _bullet.setFlipX(true);
+            _bullet.body.setVelocityX(-gamePrefs.SPEAR_SPEED_);
+        }
+    }
+
+    shootFire()
+    {
+        //Spawn the bullet in the correct spot
+        var auxX = -30;
+        var auxY = -8;
+        
+        if(this.direction == 1)
+            auxX = 30;
+        
+        if(this.cursorKeys.down.isDown)
+            auxY = 6;
+        
+    
+        var _bullet = this.fires.getFirst(false);
+        
+        _bullet = new firePrefab(this.scene, this.x + auxX, this.y + auxY);
+        this.fires.add(_bullet);
+        
+        _bullet.body.allowGravity = true;
+        _bullet.startingPosX = this.x + auxX;
+        
+        if (this.direction == 1)
+        { 
+            _bullet.setFlipX(false);
+            _bullet.body.setVelocityX(gamePrefs.SPEAR_SPEED_);
+            _bullet.body.setVelocityY(-gamePrefs.SPEAR_SPEED_);
+        }
+        else if(this.direction == -1)
+        {
+            _bullet.setFlipX(true);
+            _bullet.body.setVelocityX(-gamePrefs.SPEAR_SPEED_);
+            _bullet.body.setVelocityY(-gamePrefs.SPEAR_SPEED_);
+        }
+    }
+
+    shootKnife()
+    {
+        //Spawn the bullet in the correct spot
+        var auxX = -30;
+        var auxY = -8;
+        
+        if(this.direction == 1)
+            auxX = 30;
+        
+        if(this.cursorKeys.down.isDown)
+            auxY = 6;
+        
+    
+        var _bullet = this.knives.getFirst(false);
+        
+        _bullet = new knifePrefab(this.scene, this.x + auxX, this.y + auxY);
+        this.knives.add(_bullet);
         
         _bullet.body.allowGravity = false;
         _bullet.startingPosX = this.x + auxX;
@@ -272,6 +402,5 @@ class playerPrefab extends actorPrefab
 
     update()
     {
-        this.bullets.forEach(gamePrefs.debug.body,gamePrefs.debug)
     }
 }

@@ -1,6 +1,6 @@
-class knifePrefab extends Phaser.GameObjects.Sprite
+class firePrefab extends Phaser.GameObjects.Sprite
 {
-    constructor(_scene,_posX,_posY,_tag='knife')
+    constructor(_scene,_posX,_posY,_tag='fire')
     {
         super(_scene,_posX,_posY,_tag);
             _scene.add.existing(this); 
@@ -34,6 +34,7 @@ class knifePrefab extends Phaser.GameObjects.Sprite
         );
 
         this.aliveTime = 0;
+        this.anims.play('throwFire', true);
     }
 
     hasHitNull(_this, _null)
