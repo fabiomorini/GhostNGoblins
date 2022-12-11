@@ -55,6 +55,13 @@ class stage1 extends Phaser.Scene {
         });
 
         this.anims.create({
+            key: 'die',
+            frames: this.anims.generateFrameNumbers('arthur', { start: 32, end: 43 }),
+            frameRate: 10,
+            repeat: 0
+        })
+
+        this.anims.create({
             key: 'throw',
             frames: this.anims.generateFrameNumbers('arthur', { start: 8, end: 9 }),
             frameRate: 10,
@@ -89,16 +96,7 @@ class stage1 extends Phaser.Scene {
             frameRate: 10,
             repeat: 0
         });
-
-        this.anims.create({
-            key: 'dead',
-            frames: this.anims.generateFrameNumbers('arthur', { start: 32, end: 43 }),
-            frameRate: 10,
-            repeat: 0
-        })
-
         //FIRE ANIMATION
-
         this.anims.create
         ({
             key:'throwFire',
