@@ -1,6 +1,6 @@
-class knifePrefab extends Phaser.GameObjects.Sprite
+class firePrefab extends Phaser.GameObjects.Sprite
 {
-    constructor(_scene,_posX,_posY,_tag='knife')
+    constructor(_scene,_posX,_posY,_tag='fire')
     {
         super(_scene,_posX,_posY,_tag);
             _scene.add.existing(this); 
@@ -8,14 +8,9 @@ class knifePrefab extends Phaser.GameObjects.Sprite
         _scene.physics.add.collider
         (
             this,
-            _scene.tombs1F,
-            this.hasHitTarget
-        );
-
-        _scene.physics.add.collider
-        (
-            this,
-            _scene.tombs2F,
+            [_scene.tombs1F, _scene.terrain2F, 
+             _scene.terrainBorder1F, _scene.terrain1F,
+             _scene.tombs2F],
             this.hasHitTarget
         );
 
@@ -34,6 +29,7 @@ class knifePrefab extends Phaser.GameObjects.Sprite
         );
 
         this.aliveTime = 0;
+        this.anims.play("throwFire");
     }
 
     hasHitNull(_this, _null)
@@ -56,7 +52,7 @@ class knifePrefab extends Phaser.GameObjects.Sprite
         _greenMonster.destroy();
     }
     
-    preUpdate(time,delta)
+    preUpdate(time, delta)
     {
         this.aliveTime = this.scene.time.addEvent(
             {

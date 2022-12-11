@@ -21,6 +21,8 @@ class stage1 extends Phaser.Scene{
         this.load.setPath('assets/sprites/Weapons/');
         this.load.image("spear", "Spear.png");
         this.load.image("knife", "Knife.png");
+        this.load.spritesheet("fire", "Fire projectile animation.png",
+        {frameWidth:32,frameHeight:16});
     }
 
 	create()
@@ -95,6 +97,16 @@ class stage1 extends Phaser.Scene{
             frames:this.anims.generateFrameNumbers('arthur',{start:26,end:27}),
             frameRate:10,
             repeat:0
+        });
+
+        //FIRE ANIMATION
+
+        this.anims.create
+        ({
+            key:'throwFire',
+            frames:this.anims.generateFrameNumbers('fire',{start:0,end:3}),
+            frameRate:4,
+            repeat:-1
         });
 
         //ZOMBIE ANIMATIONS
