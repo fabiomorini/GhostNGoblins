@@ -33,7 +33,10 @@ class playerPrefab extends actorPrefab
         _scene.physics.add.overlap
         (
             this,
-            _scene.ladders
+            _scene.ladders,
+            this.useLadder,
+            null,
+            this
         );
 
         _scene.physics.add.overlap
@@ -247,6 +250,46 @@ class playerPrefab extends actorPrefab
         }
     }
 
+    useLadder(_player, _ladder)
+    {
+        var tile = this.scene.ladders.getTileAtWorldXY(this.x, this.y);
+        if (tile != null && tile.index != 0)
+        {
+            this.canClimbLadder = true;
+        }
+
+        else if(this.scene.ladders.getTileAtWorldXY(this.x, this.y +20) != null &&
+        this.scene.ladders.getTileAtWorldXY(this.x, this.y +20).index != 0)
+        {
+            this.canDownLadder = true;
+        }
+
+        else if(_player.body.onFloor() || (tile == null || tile.index == 0))
+        {
+            this.canClimbLadder = false;
+            this.body.setAllowGravity(true);
+            this.body.setMaxVelocityX(gamePrefs.ARTHUR_SPEED);
+        }
+
+        else if(_player.body.onFloor() ||
+        (this.scene.ladders.getTileAtWorldXY(this.x, this.y +20) == null &&
+        this.scene.ladders.getTileAtWorldXY(this.x, this.y +20).index == 0))
+        {
+            this.canDownLadder = false;
+            this.body.setAllowGravity(true);
+            this.body.setMaxVelocityX(gamePrefs.ARTHUR_SPEED);
+        }
+    }
+
+    touchWater(_player, _water)
+    {
+        var tile = this.scene.water.getTileAtWorldXY(this.x, this.y);
+        if (tile != null && tile.index != 0)
+        {
+            console.log("Funciona");
+        }
+    }
+
     preUpdate(time,delta)
     {
         this.checkArmour();
@@ -278,37 +321,58 @@ class playerPrefab extends actorPrefab
                 //Crouch
                 if(this.cursorKeys.down.isDown)
                 {
-                    this.body.setVelocityX(0);
-                    this.anims.stop().setFrame(7);
+                    // if(this.canDownLadder)
+                    // {
+                    //     this.body.setAllowGravity(false);
+                    //     this.body.setMaxVelocityX(0);
+                    //     this.body.setMaxVelocityX(gamePrefs.ARTHUR_SPEED);
+                    //     this.body.setVelocityY(gamePrefs.ARTHUR_SPEED);
+                    // }
+                    // else
+                    // {
+                        this.body.setVelocityX(0);
+                        this.anims.stop().setFrame(7);
+                    // }
                 }
-                //Left
-                else if(this.cursorKeys.left.isDown)
+                else if(this.body.onFloor())
                 {
-                    this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED);
-                    this.setFlipX(true);
-                    this.anims.play('run',true);
-                    this.direction = -1;
-                }         
-                //Right
-                else if(this.cursorKeys.right.isDown)
-                {
-                    this.body.setVelocityX(gamePrefs.ARTHUR_SPEED);
-                    this.setFlipX(false);
-                    this.anims.play('run',true);
-                    this.direction = 1;
-                }
-                else
-                {
-                    this.body.setVelocityX(0);
-                    this.anims.stop().setFrame(4);
-                }
+                    //Left
+                    if(this.cursorKeys.left.isDown)
+                    {
+                        this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED);
+                        this.setFlipX(true);
+                        this.anims.play('run',true);
+                        this.direction = -1;
+                    }         
+                    //Right
+                    else if(this.cursorKeys.right.isDown)
+                    {
+                        this.body.setVelocityX(gamePrefs.ARTHUR_SPEED);
+                        this.setFlipX(false);
+                        this.anims.play('run',true);
+                        this.direction = 1;
+                    }
+                    else
+                    {
+                        this.body.setVelocityX(0);
+                        this.anims.stop().setFrame(4);
+                    }
 
-                //Jump
-                if(this.cursorKeys.up.isDown &&
-                this.body.blocked.down &&
-                Phaser.Input.Keyboard.DownDuration(this.cursorKeys.up,250))
-                {
-                    this.body.setVelocityY(-gamePrefs.ARTHUR_JUMP);            
+                    //Jump
+                    if(this.cursorKeys.up.isDown &&
+                    this.body.blocked.down && !this.canClimbLadder &&
+                    Phaser.Input.Keyboard.DownDuration(this.cursorKeys.up,250))
+                    {
+                        this.body.setVelocityY(-gamePrefs.ARTHUR_JUMP);
+                    }
+                    else if (this.canClimbLadder && this.cursorKeys.up.isDown &&
+                        this.body.blocked.down && this.cursorKeys.up.isDown)
+                    {
+                        this.body.setAllowGravity(false);
+                        this.body.setMaxVelocityX(0);
+                        this.body.setMaxVelocityX(gamePrefs.ARTHUR_SPEED);
+                        this.body.setVelocityY(-gamePrefs.ARTHUR_SPEED);
+                    }
                 }
         
                 if(!this.body.onFloor() && !this.isAttacking)
@@ -326,8 +390,8 @@ class playerPrefab extends actorPrefab
         }
         else
         {
-             if(this.isAttacking)
-             {
+            if(this.isAttacking)
+            {
                 if(this.cursorKeys.down.isDown)
                 {
                     this.anims.play('throwCrouchNaked', true);
@@ -337,50 +401,70 @@ class playerPrefab extends actorPrefab
                 }
                 else
                 {
-                    if(this.body.onFloor())
-                        this.body.setVelocityX(0);
+                    if(this.body.onFloor()) this.body.setVelocityX(0);
                     this.anims.play('throwNaked', true);
                     this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, ()=> {
                         this.anims.stop().setFrame(18);
                     });
                 }
-             }
-             else
-             {
+            }
+            else
+            {
                 //Crouch
                 if(this.cursorKeys.down.isDown)
                 {
-                    this.body.setVelocityX(0);
-                    this.anims.stop().setFrame(23);
+                    // if(this.canDownLadder)
+                    // {
+                    //     this.body.setAllowGravity(false);
+                    //     this.body.setMaxVelocityX(0);
+                    //     this.body.setMaxVelocityX(gamePrefs.ARTHUR_SPEED);
+                    //     this.body.setVelocityY(gamePrefs.ARTHUR_SPEED);
+                    // }
+                    // else
+                    // {
+                        this.body.setVelocityX(0);
+                        this.anims.stop().setFrame(23);
+                    // }
                 }
-                //Left
-                else if(this.cursorKeys.left.isDown) 
+                else if(this.body.onFloor())
                 {
-                    this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED);
-                    this.setFlipX(true);
-                    this.anims.play('runNaked',true);
-                    this.direction = -1;
-                }         
-                //Right
-                else if(this.cursorKeys.right.isDown)
-                {
-                    this.body.setVelocityX(gamePrefs.ARTHUR_SPEED);
-                    this.setFlipX(false);
-                    this.anims.play('runNaked',true);
-                    this.direction = 1;
-                }
-                else
-                {
-                    this.body.setVelocityX(0);
-                    this.anims.stop().setFrame(18);
-                }
+                    //Left
+                    if(this.cursorKeys.left.isDown) 
+                    {
+                        this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED);
+                        this.setFlipX(true);
+                        this.anims.play('runNaked',true);
+                        this.direction = -1;
+                    }         
+                    //Right
+                    else if(this.cursorKeys.right.isDown)
+                    {
+                        this.body.setVelocityX(gamePrefs.ARTHUR_SPEED);
+                        this.setFlipX(false);
+                        this.anims.play('runNaked',true);
+                        this.direction = 1;
+                    }
+                    else
+                    {
+                        this.body.setVelocityX(0);
+                        this.anims.stop().setFrame(18);
+                    }
 
-                //Jump
-                if(this.cursorKeys.up.isDown &&
-                this.body.blocked.down &&
-                Phaser.Input.Keyboard.DownDuration(this.cursorKeys.up,250))
-                {
-                    this.body.setVelocityY(-gamePrefs.ARTHUR_JUMP);            
+                    //Jump
+                    if(this.cursorKeys.up.isDown &&
+                    this.body.blocked.down && !this.canClimbLadder &&
+                    Phaser.Input.Keyboard.DownDuration(this.cursorKeys.up,250))
+                    {
+                        this.body.setVelocityY(-gamePrefs.ARTHUR_JUMP);
+                    }
+                    else if (this.canClimbLadder && this.cursorKeys.up.isDown &&
+                        this.body.blocked.down && this.cursorKeys.up.isDown)
+                    {
+                        this.body.setAllowGravity(false);
+                        this.body.setMaxVelocityX(0);
+                        this.body.setMaxVelocityX(gamePrefs.ARTHUR_SPEED);
+                        this.body.setVelocityY(-gamePrefs.ARTHUR_SPEED);
+                    }
                 }
         
                 if(!this.body.onFloor() && !this.isAttacking)
@@ -395,7 +479,27 @@ class playerPrefab extends actorPrefab
                     }
                 }
             }
-    }
+        }
+
+        if(this.scene.terrain2F.culledTiles.length > 0)
+        {
+            var tiles = this.scene.terrain2F.culledTiles
+
+            if(tiles != null && !(this.canClimbLadder || this.canDownLadder))
+            {
+                for(var i = 0; i < tiles.length; i++)
+                {
+                    if(tiles[i] != null &&
+                        tiles[i].collideLeft &&
+                        tiles[i].collideRight &&
+                        tiles[i].collideUp &&
+                        tiles[i].collideDown)
+                    {
+                        tiles[i].setCollision(false, false, true, false);
+                    }
+                }
+            }
+        }
 
         super.preUpdate(time, delta);
     }
