@@ -4,7 +4,7 @@ class playerPrefab extends actorPrefab {
         _scene.add.existing(this);
         _scene.physics.world.enable(this);
         this.cursorKeys = _scene.input.keyboard.createCursorKeys();
-        this.health = 1;
+        this.health = 2;
         this.tookDamage = false;
         this.isInvincible = false;
         this.isAttacking = false;
@@ -488,4 +488,5 @@ class playerPrefab extends actorPrefab {
     endInvincibility() {
         this.isInvincible = false;
     }
+    //
 }
