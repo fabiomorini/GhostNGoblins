@@ -30,11 +30,11 @@
             "scaleInDock": 1
         },
         "stage1.tmx": {
-            "scale": 4,
-            "selectedLayer": 16,
+            "scale": 2,
+            "selectedLayer": 19,
             "viewCenter": {
-                "x": 657.75,
-                "y": 152.875
+                "x": 3464,
+                "y": 143.75
             }
         },
         "stage1.tmx#2FLadders": {
