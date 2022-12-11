@@ -29,7 +29,7 @@ class firePrefab extends Phaser.GameObjects.Sprite
         );
 
         this.aliveTime = 0;
-        this.anims.play('throwFire', true);
+        this.anims.play("throwFire");
     }
 
     hasHitNull(_this, _null)
@@ -52,7 +52,7 @@ class firePrefab extends Phaser.GameObjects.Sprite
         _greenMonster.destroy();
     }
     
-    preUpdate()
+    preUpdate(time, delta)
     {
         this.aliveTime = this.scene.time.addEvent(
             {
@@ -62,5 +62,7 @@ class firePrefab extends Phaser.GameObjects.Sprite
                 repeat: 0
             }   
         );
+
+        super.preUpdate(time, delta);
     }
 }
