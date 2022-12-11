@@ -17,6 +17,8 @@ class playerPrefab extends actorPrefab
         this.hasArmour = true;
         this.timeSinceLastShot;
         this.weapon = 0;
+        this.canClimbLadder = false;
+        this.canDownLadder = false;
 
         _scene.physics.add.collider
         (
@@ -252,28 +254,27 @@ class playerPrefab extends actorPrefab
 
     useLadder(_player, _ladder)
     {
-        var tile = this.scene.ladders.getTileAtWorldXY(this.x, this.y);
-        if (tile != null && tile.index != 0)
+        var tile1 = this.scene.ladders.getTileAtWorldXY(this.x, this.y);
+        var tile2 = this.scene.ladders.getTileAtWorldXY(this.x, this.y +20);
+
+        if (tile1 != null && tile1.index != 0)
         {
             this.canClimbLadder = true;
         }
 
-        else if(this.scene.ladders.getTileAtWorldXY(this.x, this.y +20) != null &&
-        this.scene.ladders.getTileAtWorldXY(this.x, this.y +20).index != 0)
-        {
-            this.canDownLadder = true;
-        }
-
-        else if(_player.body.onFloor() || (tile == null || tile.index == 0))
+        if(tile1 == null)
         {
             this.canClimbLadder = false;
             this.body.setAllowGravity(true);
             this.body.setMaxVelocityX(gamePrefs.ARTHUR_SPEED);
         }
 
-        else if(_player.body.onFloor() ||
-        (this.scene.ladders.getTileAtWorldXY(this.x, this.y +20) == null &&
-        this.scene.ladders.getTileAtWorldXY(this.x, this.y +20).index == 0))
+        if(tile2 != null && tile2.index != 0 && tile2.index != 10)
+        {
+            this.canDownLadder = true;
+        }
+
+        if(tile2 == null)
         {
             this.canDownLadder = false;
             this.body.setAllowGravity(true);
@@ -321,18 +322,18 @@ class playerPrefab extends actorPrefab
                 //Crouch
                 if(this.cursorKeys.down.isDown)
                 {
-                    // if(this.canDownLadder)
-                    // {
-                    //     this.body.setAllowGravity(false);
-                    //     this.body.setMaxVelocityX(0);
-                    //     this.body.setMaxVelocityX(gamePrefs.ARTHUR_SPEED);
-                    //     this.body.setVelocityY(gamePrefs.ARTHUR_SPEED);
-                    // }
-                    // else
-                    // {
+                    if(this.canDownLadder)
+                    {
+                        this.body.setAllowGravity(false);
+                        this.body.setMaxVelocityX(0);
+                        this.body.setMaxVelocityX(gamePrefs.ARTHUR_SPEED);
+                        this.body.setVelocityY(gamePrefs.ARTHUR_SPEED);
+                    }
+                    else
+                    {
                         this.body.setVelocityX(0);
                         this.anims.stop().setFrame(7);
-                    // }
+                    }
                 }
                 else if(this.body.onFloor())
                 {
@@ -413,18 +414,18 @@ class playerPrefab extends actorPrefab
                 //Crouch
                 if(this.cursorKeys.down.isDown)
                 {
-                    // if(this.canDownLadder)
-                    // {
-                    //     this.body.setAllowGravity(false);
-                    //     this.body.setMaxVelocityX(0);
-                    //     this.body.setMaxVelocityX(gamePrefs.ARTHUR_SPEED);
-                    //     this.body.setVelocityY(gamePrefs.ARTHUR_SPEED);
-                    // }
-                    // else
-                    // {
+                    if(this.canDownLadder)
+                    {
+                        this.body.setAllowGravity(false);
+                        this.body.setMaxVelocityX(0);
+                        this.body.setMaxVelocityX(gamePrefs.ARTHUR_SPEED);
+                        this.body.setVelocityY(gamePrefs.ARTHUR_SPEED);
+                    }
+                    else
+                    {
                         this.body.setVelocityX(0);
                         this.anims.stop().setFrame(23);
-                    // }
+                    }
                 }
                 else if(this.body.onFloor())
                 {
@@ -500,6 +501,7 @@ class playerPrefab extends actorPrefab
                 }
             }
         }
+        console.log("Climb: " + this.canClimbLadder + ". Down: " + this.canDownLadder + ".");
 
         super.preUpdate(time, delta);
     }

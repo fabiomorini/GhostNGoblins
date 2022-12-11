@@ -11,12 +11,6 @@ class actorPrefab extends Phaser.GameObjects.Sprite
                 _scene.terrainBorder1F,
                 _scene.terrain1F]
         );
-
-        _scene.physics.add.collider
-        (
-            this,
-            _scene.terrain1F
-        );
     }
 
     preUpdate(time,delta)
