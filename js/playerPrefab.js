@@ -1,12 +1,12 @@
-class playerPrefab extends actorPrefab
-{
-    constructor(_scene,_positionX,_positionY,_spriteTag='arthur')
-    {
-        super(_scene,_positionX,_positionY,_spriteTag);
+class playerPrefab extends actorPrefab {
+    constructor(_scene, _positionX, _positionY, _spriteTag = 'arthur') {
+        super(_scene, _positionX, _positionY, _spriteTag);
         _scene.add.existing(this);
         _scene.physics.world.enable(this);
-        this.cursorKeys = _scene.input.keyboard.createCursorKeys(); 
-        this.health = 2;     
+        this.cursorKeys = _scene.input.keyboard.createCursorKeys();
+        this.health = 2;
+        this.tookDamage = false;
+        this.isInvincible = false;
         this.isAttacking = false;
         this.timeToAttack
         this.direction = 1;
@@ -21,16 +21,16 @@ class playerPrefab extends actorPrefab
         this.canDownLadder = false;
 
         _scene.physics.add.collider
-        (
-            this,
-            _scene.tombs1F
-        );
+            (
+                this,
+                _scene.tombs1F
+            );
 
         _scene.physics.add.collider
-        (
-            this,
-            _scene.tombs2F
-        );
+            (
+                this,
+                _scene.tombs2F
+            );
 
         _scene.physics.add.overlap
         (
@@ -42,10 +42,10 @@ class playerPrefab extends actorPrefab
         );
 
         _scene.physics.add.overlap
-        (
-            this,
-            _scene.water
-        );
+            (
+                this,
+                _scene.water
+            );
 
         this.loadPools();
         
@@ -54,17 +54,15 @@ class playerPrefab extends actorPrefab
         this.key3 = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_THREE);
     }
 
-    loadPools()
-    {
+    loadPools() {
         //Weapon bullets Pool
         this.spears = this.scene.physics.add.group();
         this.knives = this.scene.physics.add.group();
         this.fires = this.scene.physics.add.group();
     }
 
-    checkArmour()
-    {
-        if(this.health == 2)
+    checkArmour() {
+        if (this.health == 2)
             this.hasArmour = true;
         else
             this.hasArmour = false;
@@ -156,11 +154,11 @@ class playerPrefab extends actorPrefab
         //Spawn the bullet in the correct spot
         var auxX = -30;
         var auxY = -8;
-        
-        if(this.direction == 1)
+
+        if (this.direction == 1)
             auxX = 30;
-        
-        if(this.cursorKeys.down.isDown)
+
+        if (this.cursorKeys.down.isDown)
             auxY = 6;
         
     
@@ -171,14 +169,12 @@ class playerPrefab extends actorPrefab
         
         _bullet.body.allowGravity = false;
         _bullet.startingPosX = this.x + auxX;
-        
-        if (this.direction == 1)
-        { 
+
+        if (this.direction == 1) {
             _bullet.setFlipX(false);
             _bullet.body.setVelocityX(gamePrefs.SPEAR_SPEED_);
         }
-        else if(this.direction == -1)
-        {
+        else if (this.direction == -1) {
             _bullet.setFlipX(true);
             _bullet.body.setVelocityX(-gamePrefs.SPEAR_SPEED_);
         }
@@ -294,29 +290,57 @@ class playerPrefab extends actorPrefab
     preUpdate(time,delta)
     {
         this.checkArmour();
-        this.resetAttackAnim();    
-        
-        if(this.hasArmour)
-        {
-            if(this.isAttacking)
-            {
-                if(this.cursorKeys.down.isDown)
-                {
-                    this.anims.play('throwCrouch', true);
-                    this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, ()=> {
-                        this.anims.stop().setFrame(7);
-                    });
+        this.resetAttackAnim();
+        if (this.tookDamage) {
+            if (this.health == 1) {
+                this.anims.stop().setFrame(32);
+                var b_armour = new breakArmourPrefab(this.scene, this.body.position.x, this.body.position.y);
+                var invincibleTimer = this.scene.time.addEvent({
+                    delay: 1000, //ms
+                    callback: this.endInvincibility,
+                    callbackScope: this,
+                    loop: false
+                });
+                if (this.direction == 1) {
+                    b_armour.setFlipX(false);
                 }
-                else
-                {
-                    if(this.body.onFloor())
-                        this.body.setVelocityX(0);
-                    this.anims.play('throw', true);
-                    this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, ()=> {
-                        this.anims.stop().setFrame(4);
-                    });
+                else if (this.direction == -1) {
+                    b_armour.setFlipX(true);
                 }
+                this.tookDamage = false;
             }
+            else if (this.health <= 0) {
+                //DIE ANIMATION.
+                this.body.setVelocityX(0);
+                this.body.setVelocityY(0);
+                this.anims.play('dead', true);
+                this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+                    this.body.reset(65, 100);
+                    this.scene.cameras.main.shake(500, 0.05);
+                    this.scene.cameras.main.flash(500, 255, 0, 0);
+                    this.health = 2;
+                    this.tookDamage = false;
+                    this.isInvincible = false;
+                });
+            }
+        }
+        else {
+            if (this.hasArmour) {
+                if (this.isAttacking) {
+                    if (this.cursorKeys.down.isDown) {
+                        this.anims.play('throwCrouch', true);
+                        this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+                            this.anims.stop().setFrame(7);
+                        });
+                    }
+                    else {
+                        if (this.body.onFloor())
+                            this.body.setVelocityX(0);
+                        this.anims.play('throw', true);
+                        this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+                            this.anims.stop().setFrame(4);
+                        });
+                    }
             else
             {
                 //Crouch
@@ -382,9 +406,14 @@ class playerPrefab extends actorPrefab
                     {
                         this.anims.stop().setFrame(5);
                     }
-                    else
-                    {
-                        this.anims.stop().setFrame(6);
+
+                    if (!this.body.onFloor() && !this.isAttacking) {
+                        if (this.cursorKeys.right.isDown || this.cursorKeys.left.isDown) {
+                            this.anims.stop().setFrame(5);
+                        }
+                        else {
+                            this.anims.stop().setFrame(6);
+                        }
                     }
                 }
             }
@@ -474,13 +503,18 @@ class playerPrefab extends actorPrefab
                     {
                         this.anims.stop().setFrame(21);
                     }
-                    else
-                    {
-                        this.anims.stop().setFrame(22);
+
+                    if (!this.body.onFloor() && !this.isAttacking) {
+                        if (this.cursorKeys.right.isDown || this.cursorKeys.left.isDown) {
+                            this.anims.stop().setFrame(21);
+                        }
+                        else {
+                            this.anims.stop().setFrame(22);
+                        }
                     }
                 }
             }
-        }
+    }
 
         if(this.scene.terrain2F.culledTiles.length > 0)
         {
@@ -504,9 +538,11 @@ class playerPrefab extends actorPrefab
         console.log("Climb: " + this.canClimbLadder + ". Down: " + this.canDownLadder + ".");
 
         super.preUpdate(time, delta);
+    update() {
+        this.bullets.forEach(gamePrefs.debug.body, gamePrefs.debug)
     }
 
-    update()
-    {
+    endInvincibility() {
+        this.isInvincible = false;
     }
 }
