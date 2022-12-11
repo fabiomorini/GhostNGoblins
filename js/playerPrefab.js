@@ -238,12 +238,12 @@ class playerPrefab extends actorPrefab
         if (this.direction == 1)
         { 
             _bullet.setFlipX(false);
-            _bullet.body.setVelocityX(gamePrefs.SPEAR_SPEED_);
+            _bullet.body.setVelocityX(gamePrefs.SPEAR_SPEED_ * 1.5);
         }
         else if(this.direction == -1)
         {
             _bullet.setFlipX(true);
-            _bullet.body.setVelocityX(-gamePrefs.SPEAR_SPEED_);
+            _bullet.body.setVelocityX(-gamePrefs.SPEAR_SPEED_* 1.5);
         }
     }
 

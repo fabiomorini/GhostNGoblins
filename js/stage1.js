@@ -22,7 +22,7 @@ class stage1 extends Phaser.Scene{
         this.load.image("spear", "Spear.png");
         this.load.image("knife", "Knife.png");
         this.load.spritesheet("fire", "Fire projectile animation.png",
-        {frameWidth:26,frameHeight:16});
+        {frameWidth:32,frameHeight:16});
     }
 
 	create()
@@ -105,8 +105,8 @@ class stage1 extends Phaser.Scene{
         ({
             key:'throwFire',
             frames:this.anims.generateFrameNumbers('fire',{start:0,end:3}),
-            frameRate:10,
-            repeat:0
+            frameRate:5,
+            repeat:-1
         });
 
         //ZOMBIE ANIMATIONS
