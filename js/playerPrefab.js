@@ -6,6 +6,7 @@ class playerPrefab extends actorPrefab {
         this.cursorKeys = _scene.input.keyboard.createCursorKeys();
         this.health = 2;
         this.tookDamage = false;
+        this.isInvincible = false;
         this.isAttacking = false;
         this.timeToAttack
         this.direction = 1;
@@ -113,22 +114,35 @@ class playerPrefab extends actorPrefab {
         this.resetAttackAnim();
         if (this.tookDamage) {
             if (this.health == 1) {
+                this.anims.stop().setFrame(32);
                 var b_armour = new breakArmourPrefab(this.scene, this.body.position.x, this.body.position.y);
+                var invincibleTimer = this.scene.time.addEvent({
+                    delay: 1000, //ms
+                    callback: this.endInvincibility,
+                    callbackScope: this,
+                    loop: false
+                });
                 if (this.direction == 1) {
                     b_armour.setFlipX(false);
                 }
                 else if (this.direction == -1) {
                     b_armour.setFlipX(true);
                 }
-                while(!this.body.onFloor())
-                {
-                    
-                }
                 this.tookDamage = false;
             }
-            else {
+            else if (this.health <= 0) {
                 //DIE ANIMATION.
-                this.tookDamage = false;
+                this.body.setVelocityX(0);
+                this.body.setVelocityY(0);
+                this.anims.play('dead', true);
+                this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+                    this.body.reset(65, 100);
+                    this.scene.cameras.main.shake(500, 0.05);
+                    this.scene.cameras.main.flash(500, 255, 0, 0);
+                    this.health = 2;
+                    this.tookDamage = false;
+                    this.isInvincible = false;
+                });
             }
         }
         else {
@@ -256,5 +270,9 @@ class playerPrefab extends actorPrefab {
 
     update() {
         this.bullets.forEach(gamePrefs.debug.body, gamePrefs.debug)
+    }
+
+    endInvincibility() {
+        this.isInvincible = false;
     }
 }
