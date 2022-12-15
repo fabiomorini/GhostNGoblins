@@ -1,8 +1,11 @@
 class stage1 extends Phaser.Scene {
-    constructor() {
+    constructor() 
+    {
         super({ key: 'stage1' });
     }
-
+    
+    preload()
+    {
         this.load.setPath('assets/sprites/Arthur/');
         this.load.spritesheet('arthur','arthur.png',
         {frameWidth:32,frameHeight:32});
@@ -142,8 +145,7 @@ class stage1 extends Phaser.Scene {
             frameRate:5,
             repeat: -1
         })
-        
-    }
+
         this.anims.create({
             key: 'breakArmour',
             frames: this.anims.generateFrameNumbers('break_armour', { start: 0, end: 4 }),
