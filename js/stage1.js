@@ -23,6 +23,10 @@ class stage1 extends Phaser.Scene{
         this.load.image("knife", "Knife.png");
         this.load.spritesheet("fire", "Fire projectile animation.png",
         {frameWidth:32,frameHeight:16});
+
+        this.load.setPath('assets/sprites/Enemies/');
+        this.load.spritesheet("greenMonsterBullet", "greenMonsterBullet.png",
+        {frameWidth:32,frameHeight:32});
     }
 
 	create()
@@ -141,6 +145,15 @@ class stage1 extends Phaser.Scene{
             frames: this.anims.generateFrameNumbers('greenMonster', {start:2, end:5}),
             frameRate:5,
             repeat: 0
+        })
+
+        //GREEN MONSTER BULLET
+        this.anims.create
+        ({
+            key: 'greenMonsterBullet',
+            frames: this.anims.generateFrameNumbers('greenMonsterBullet', {start:0, end:3}),
+            frameRate:5,
+            repeat: -1
         })
         
     }
