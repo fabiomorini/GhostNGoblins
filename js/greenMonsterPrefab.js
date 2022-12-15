@@ -1,8 +1,6 @@
-class greenMonsterPrefab extends actorPrefab
-{
-    constructor(_scene,_positionX,_positionY,_spriteTag='greenMonster')
-    {
-        super(_scene,_positionX,_positionY,_spriteTag);
+class greenMonsterPrefab extends actorPrefab {
+    constructor(_scene, _positionX, _positionY, _spriteTag = 'greenMonster') {
+        super(_scene, _positionX, _positionY, _spriteTag);
         _scene.add.existing(this);
         _scene.physics.world.enable(this);
         this.direccion = -1;
@@ -11,13 +9,13 @@ class greenMonsterPrefab extends actorPrefab
         this.randNum = 0;
         this.number = 0;
         _scene.physics.add.overlap
-        (
-            this,
-            _scene.arthur,
-            this.hit,
-            null,
-            this
-        );    
+            (
+                this,
+                _scene.arthur,
+                this.hit,
+                null,
+                this
+            );
         var numberTimer = _scene.time.addEvent
         (
             {
@@ -33,10 +31,16 @@ class greenMonsterPrefab extends actorPrefab
 
 
 
-    hit(_greenMonster,_arthur)
-    {
+    hit(_greenMonster, _arthur) {
         {
-            _arthur.health -=1;
+            if (_arthur.isInvincible == false) {
+                _arthur.tookDamage = true;
+                _arthur.isInvincible = true;
+                _arthur.health -= 1;
+            }
+
+            _arthur.body.setVelocityX(0);
+            _arthur.body.setVelocityY(-300);
             //_arthur.body.velocity.x += gamePrefs.ARTHUR_SPEED * -_arthur.direccion;
             _arthur.body.velocity.y -= Math.sin(0.1) * gamePrefs.ARTHUR_JUMP;
             this.scene.cameras.main.shake(500,0.05);
@@ -81,12 +85,10 @@ class greenMonsterPrefab extends actorPrefab
 
     //THIS FUNCTION GETS CALLED BY THE TIMER EVERY 0.8SEC USED BY THE GREEN MOSTER TO DECIDE IF HE SHOOTS OR NOT. 
     //TRIED TO REPLICATE THE SAME BEHAVIOUR AS HE HAS IN THE OG GAME.
-    makeRandom(min, max)
-    {
+    makeRandom(min, max) {
         this.randNum = Phaser.Math.Between(0, 3);
     }
-    attack()
-    {
+    attack() {
         //Throw projectile
         var _bullet = this.bullet.getFirst(false);
 
