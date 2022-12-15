@@ -1,24 +1,4 @@
 var LAYERS = {};
-LAYERS.preload = function (context) {
-    //Cargamos las tileset que se utilizarán en el nivel
-    context.load.setPath('assets/tilesets/');
-    context.load.image('background','background.png');
-    context.load.image('trees','graveyardTrees.png');
-    context.load.image('fences','fences.png');
-    context.load.image('grass','grass.png');
-    context.load.image('fortress','fortress01.png');
-    context.load.image('water','water.png');
-    context.load.image('f2Terrain','F2Terrain.png');
-    context.load.image('firstMountain','mountain01.png');
-    context.load.image('mountainSides','F2MountainSides.png');
-    context.load.image('ladders','F2Ladders.png');
-    context.load.image('tombs','tombs.png');
-    context.load.image('terrain','graveyardTerrain.png');
-
-    context.load.setPath('assets/map/');
-    context.load.tilemapTiledJSON('stage1','stage1.json');
-    context.load.json('json','stage1.json');
-};
 
 LAYERS.create = function (context) {
     //Pintamos el nivel
