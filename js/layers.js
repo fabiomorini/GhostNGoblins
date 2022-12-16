@@ -39,6 +39,8 @@ LAYERS.create = function (context) {
     context.tombs1F = context.map.createLayer('1FTombsLayer', 'Tombs');
     context.terrainBorder1F = context.map.createLayer('BorderTerrainLayer', 'Graveyard Terrain');
     context.terrain1F = context.map.createLayer('TerrainLayer', 'Graveyard Terrain');
+    context.enemiesSpawn = context.map.createLayer('EnemiesLayer');
+    context.objectsSpawn = context.map.createLayer('ObjectsLayer');
 
     context.map.setCollisionBetween(1,1,true,true,'BorderTerrainLayer');
     context.map.setCollisionBetween(1,1,true,true,'TerrainLayer');

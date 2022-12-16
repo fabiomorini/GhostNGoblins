@@ -44,8 +44,22 @@ class stage1 extends Phaser.Scene {
         //Camaras
         this.cameras.main.startFollow(this.arthur);
         this.cameras.main.setBounds(0, 0, gamePrefs.LEVEL1_WIDTH, gamePrefs.LEVEL1_HEIGHT);
+
+        
+
+        console.log(this);
     }
 
+    update()
+    {
+        if (this.tombs1F.culledTiles.length > 0) {
+            var tiles = this.tombs1F.culledTiles;
+
+            for (var i = 0; i < tiles.length; i++) {
+               //tiles[i].body.setSize(16);
+            }
+        }
+    }
 
     loadAnimations() {
         //ARTHUR ARMOUR ANIMATIONS
@@ -103,7 +117,7 @@ class stage1 extends Phaser.Scene {
         ({
             key:'throwFire',
             frames:this.anims.generateFrameNumbers('fire',{start:0,end:3}),
-            frameRate:4,
+            frameRate:8,
             repeat:-1
         });
 

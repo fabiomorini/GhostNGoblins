@@ -14,7 +14,6 @@ class greenMonsterBulletPrefab extends Phaser.GameObjects.Sprite
             null,
             this
         );        
-
     }
 
     hit(_this,_arthur)

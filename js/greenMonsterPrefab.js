@@ -96,6 +96,7 @@ class greenMonsterPrefab extends actorPrefab {
         this.bullet.add(_bullet);
 
         _bullet.body.setSize(8,8);
+        _bullet.setScale(0.5);
         _bullet.body.allowGravity = false;
 
         _bullet.play("greenMonsterBullet")

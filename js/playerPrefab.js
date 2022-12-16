@@ -140,11 +140,11 @@ class playerPrefab extends actorPrefab {
 
     shootSpear() {
         //Spawn the bullet in the correct spot
-        var auxX = -30;
+        var auxX = -15;
         var auxY = -8;
 
         if (this.direction == 1)
-            auxX = 30;
+            auxX = 15;
 
         if (this.cursorKeys.down.isDown)
             auxY = 6;
@@ -156,6 +156,7 @@ class playerPrefab extends actorPrefab {
         this.spears.add(_bullet);
 
         _bullet.body.allowGravity = false;
+        _bullet.body.setSize(1, 1);
         _bullet.startingPosX = this.x + auxX;
 
         if (this.direction == 1) {
@@ -170,11 +171,11 @@ class playerPrefab extends actorPrefab {
 
     shootFire() {
         //Spawn the bullet in the correct spot
-        var auxX = -30;
+        var auxX = -15;
         var auxY = -8;
 
         if (this.direction == 1)
-            auxX = 30;
+            auxX = 15;
 
         if (this.cursorKeys.down.isDown)
             auxY = 6;
@@ -186,6 +187,7 @@ class playerPrefab extends actorPrefab {
         this.fires.add(_bullet);
 
         _bullet.body.allowGravity = true;
+        _bullet.body.setSize(1, 1);
         _bullet.startingPosX = this.x + auxX;
 
         if (this.direction == 1) {
@@ -202,11 +204,11 @@ class playerPrefab extends actorPrefab {
 
     shootKnife() {
         //Spawn the bullet in the correct spot
-        var auxX = -30;
+        var auxX = -15;
         var auxY = -8;
 
         if (this.direction == 1)
-            auxX = 30;
+            auxX = 15;
 
         if (this.cursorKeys.down.isDown)
             auxY = 6;
@@ -218,6 +220,7 @@ class playerPrefab extends actorPrefab {
         this.knives.add(_bullet);
 
         _bullet.body.allowGravity = false;
+        _bullet.body.setSize(1, 1);
         _bullet.startingPosX = this.x + auxX;
 
         if (this.direction == 1) {
