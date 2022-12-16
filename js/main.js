@@ -1,6 +1,6 @@
 var gamePrefs=
 {
-    ARTHUR_JUMP: 350,
+    ARTHUR_JUMP: 400,
     ARTHUR_SPEED: 80,
     ENEMY_SPEED: 100,
     GRAVITY: 1500,
@@ -35,7 +35,7 @@ var config =
         arcade:
         {
             gravity:{y:gamePrefs.GRAVITY},
-            debug:true
+            debug:false
         }
     }
 }

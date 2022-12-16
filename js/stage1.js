@@ -53,11 +53,12 @@ class stage1 extends Phaser.Scene {
     update()
     {
         if (this.tombs1F.culledTiles.length > 0) {
-            var tiles = this.tombs1F.culledTiles;
+            var tiles = this.tombs1F;
 
-            for (var i = 0; i < tiles.length; i++) {
-               //tiles[i].body.setSize(16);
-            }
+            //console.log(tiles);
+            //tiles.tileSet.setCollisionBounds(8,8,8,8);
+            //for (var i = 0; i < tiles.length; i++) {
+            //}
         }
     }
 
