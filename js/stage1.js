@@ -45,9 +45,7 @@ class stage1 extends Phaser.Scene {
         this.cameras.main.startFollow(this.arthur);
         this.cameras.main.setBounds(0, 0, gamePrefs.LEVEL1_WIDTH, gamePrefs.LEVEL1_HEIGHT);
 
-        
-
-        console.log(this);
+        console.log(this.enemiesSpawn.objects[0]);
     }
 
     update()
@@ -167,6 +165,20 @@ class stage1 extends Phaser.Scene {
             frameRate: 10,
             repeat: 0
         })
+
+    }
+
+    spawnEnemies()
+    {
+        const enemies = [];
+        enemiesLayer.objects.forEach(spawn => {
+            if (spawn.class === 'Zombie')
+            {
+                const zombie = createZombie(spawn.x, spawn.y);
+                enemies.push(zombie);
+                enemyGroup.add(zombie);
+            }
+        });
 
     }
 }
