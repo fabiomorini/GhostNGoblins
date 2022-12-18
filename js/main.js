@@ -1,6 +1,6 @@
 var gamePrefs=
 {
-    ARTHUR_JUMP: 350,
+    ARTHUR_JUMP: 400,
     ARTHUR_SPEED: 80,
     ENEMY_SPEED: 100,
     GRAVITY: 1500,
@@ -17,7 +17,7 @@ var config =
     type: Phaser.AUTO,
     width: gamePrefs.GAME_WIDTH,
     height: gamePrefs.GAME_HEIGHT,
-    scene:[stage1], //array con los niveles/pantallas/escenas (unity)
+    scene:[gamePreload, stage1], //array con los niveles/pantallas/escenas (unity)
     render:
     {
         pixelArt:true
@@ -35,7 +35,7 @@ var config =
         arcade:
         {
             gravity:{y:gamePrefs.GRAVITY},
-            debug:true
+            debug:false
         }
     }
 }

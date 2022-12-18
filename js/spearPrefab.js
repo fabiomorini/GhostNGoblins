@@ -56,7 +56,7 @@ class spearPrefab extends Phaser.GameObjects.Sprite
         _greenMonster.destroy();
     }
     
-    preUpdate()
+    preUpdate(time,delta)
     {
         this.aliveTime = this.scene.time.addEvent(
             {
@@ -66,5 +66,7 @@ class spearPrefab extends Phaser.GameObjects.Sprite
                 repeat: 0
             }   
         );
+
+        super.preUpdate(time, delta);
     }
 }

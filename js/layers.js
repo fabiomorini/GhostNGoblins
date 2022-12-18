@@ -1,24 +1,4 @@
 var LAYERS = {};
-LAYERS.preload = function (context) {
-    //Cargamos las tileset que se utilizarán en el nivel
-    context.load.setPath('assets/tilesets/');
-    context.load.image('background','background.png');
-    context.load.image('trees','graveyardTrees.png');
-    context.load.image('fences','fences.png');
-    context.load.image('grass','grass.png');
-    context.load.image('fortress','fortress01.png');
-    context.load.image('water','water.png');
-    context.load.image('f2Terrain','F2Terrain.png');
-    context.load.image('firstMountain','mountain01.png');
-    context.load.image('mountainSides','F2MountainSides.png');
-    context.load.image('ladders','F2Ladders.png');
-    context.load.image('tombs','tombs.png');
-    context.load.image('terrain','graveyardTerrain.png');
-
-    context.load.setPath('assets/map/');
-    context.load.tilemapTiledJSON('stage1','stage1.json');
-    context.load.json('json','stage1.json');
-};
 
 LAYERS.create = function (context) {
     //Pintamos el nivel
@@ -59,6 +39,8 @@ LAYERS.create = function (context) {
     context.tombs1F = context.map.createLayer('1FTombsLayer', 'Tombs');
     context.terrainBorder1F = context.map.createLayer('BorderTerrainLayer', 'Graveyard Terrain');
     context.terrain1F = context.map.createLayer('TerrainLayer', 'Graveyard Terrain');
+    context.enemiesSpawn = context.map.createLayer('EnemiesLayer');
+    context.objectsSpawn = context.map.createLayer('ObjectsLayer');
 
     context.map.setCollisionBetween(1,1,true,true,'BorderTerrainLayer');
     context.map.setCollisionBetween(1,1,true,true,'TerrainLayer');
