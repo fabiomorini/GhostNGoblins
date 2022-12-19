@@ -10,7 +10,7 @@ class zombiePrefab extends actorPrefab {
         this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
             this.isSpawning = false;
         });
-        this.direccion = -1;
+        this.direction = -1;
         this.isSpawning = true;
         this.scene = _scene;
         _scene.physics.add.overlap
@@ -32,11 +32,15 @@ class zombiePrefab extends actorPrefab {
             _arthur.isInvincible = true;
             _arthur.health -= 1;
         }
-        _arthur.body.setVelocityX(0);
-        _arthur.body.setVelocityY(-300);
     }
 
     preUpdate(time, delta) {
+
+        if(this.direction == 1)
+            this.setFlipX(true);
+        else 
+            this.setFlipX(false);
+
         this.dist = Phaser.Math.Distance.Between(this.body.position.x, 0, this.startingPos, 0)
         if (this.dist > this.maxDistance) {
             this.body.setVelocityX(0);
@@ -48,12 +52,12 @@ class zombiePrefab extends actorPrefab {
         }
         else {
             if (!this.isSpawning) {
-                this.body.setVelocityX(gamePrefs.ENEMY_SPEED * this.direccion);
+                this.body.setVelocityX(gamePrefs.ENEMY_SPEED * this.direction);
                 this.anims.play('zombieRun', true);
             }
             if (this.body.blocked.right || this.body.blocked.left) {
-                this.direccion *= -1;
-                this.body.setVelocityX(gamePrefs.ENEMY_SPEED * this.direccion);
+                this.direction *= -1;
+                this.body.setVelocityX(gamePrefs.ENEMY_SPEED * this.direction);
                 this.flipX = !this.flipX;
             }
         }

@@ -287,10 +287,14 @@ class playerPrefab extends actorPrefab {
         this.resetAttackAnim();
         if (this.tookDamage) {
             if (this.health == 1) {
+                if(this.direction == 1) this.body.velocity.x = -256;
+                else    this.body.velocity.x = 256;
+                
+                this.body.velocity.y = -300;
                 this.anims.stop().setFrame(32);
                 var b_armour = new breakArmourPrefab(this.scene, this.body.position.x, this.body.position.y);
                 var invincibleTimer = this.scene.time.addEvent({
-                    delay: 1000, //ms
+                    delay: 1500, //ms
                     callback: this.endInvincibility,
                     callbackScope: this,
                     loop: false

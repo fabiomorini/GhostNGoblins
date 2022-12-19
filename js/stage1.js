@@ -16,6 +16,7 @@ class stage1 extends Phaser.Scene {
         this.load.spritesheet('greenMonster', 'green_monster.png',
         {frameWidth:16,frameHeight:32});
 
+
         this.load.setPath('assets/sprites/Weapons/');
         this.load.image("spear", "Spear.png");
         this.load.image("knife", "Knife.png");
@@ -40,12 +41,11 @@ class stage1 extends Phaser.Scene {
         //Pintamos los enemigos
         this.zombie = new zombiePrefab(this, 300, 190);
         this.greenMonster = new greenMonsterPrefab(this, 500, 190);
+        this.flyingKnight = new flyingKnightPrefab(this, 120, 100)
 
         //Camaras
         this.cameras.main.startFollow(this.arthur);
         this.cameras.main.setBounds(0, 0, gamePrefs.LEVEL1_WIDTH, gamePrefs.LEVEL1_HEIGHT);
-
-        
 
         console.log(this);
     }
@@ -59,11 +59,8 @@ class stage1 extends Phaser.Scene {
             //console.log(tiles);
             //tiles.tileSet.setCollisionBounds(8,8,8,8);
             //tiles.body.setSize(1, 1, true);
-
-/*            for (var i = 0; i < tiles.length; i++) {
-            }
-        }
-    */  }
+          }
+    }
 
     loadAnimations() {
         //ARTHUR ARMOUR ANIMATIONS
@@ -171,6 +168,19 @@ class stage1 extends Phaser.Scene {
             repeat: 0
         })
 
+        this.anims.create({
+            key: 'flyingKnightIddle',
+            frames: this.anims.generateFrameNumbers('flyingKnight', { start: 0, end: 3}),
+            frameRate: 10,
+            repeat: -1
+        })
+
+        this.anims.create({
+            key: 'enemyDeath',
+            frames: this.anims.generateFrameNumbers('enemy_death', { start: 0, end: 7}),
+            frameRate: 10,
+            repeat: 0
+        })
+
     }
 }
-
