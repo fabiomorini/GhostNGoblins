@@ -42,6 +42,8 @@ class gamePreload extends Phaser.Scene
         {frameWidth:16, frameHeight:30})
         this.load.spritesheet('enemy_death', 'enemy_death.png',
         {frameWidth:44, frameHeight:35})
+        this.load.spritesheet("greenMonsterBullet", "greenMonsterBullet.png",
+        {frameWidth:32,frameHeight:32});
 
         this.load.setPath('assets/sprites/Weapons/');
         this.load.image("spear", "Spear.png");

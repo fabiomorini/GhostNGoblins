@@ -6,26 +6,7 @@ class stage1 extends Phaser.Scene {
     
     preload()
     {
-        this.load.setPath('assets/sprites/Arthur/');
-        this.load.spritesheet('arthur','arthur.png',
-        {frameWidth:32,frameHeight:32});
-
-        this.load.setPath('assets/sprites/Enemies/');
-        this.load.spritesheet('zombie','zombie.png',
-        {frameWidth:32,frameHeight:32});
-        this.load.spritesheet('greenMonster', 'green_monster.png',
-        {frameWidth:16,frameHeight:32});
-
-
-        this.load.setPath('assets/sprites/Weapons/');
-        this.load.image("spear", "Spear.png");
-        this.load.image("knife", "Knife.png");
-        this.load.spritesheet("fire", "Fire projectile animation.png",
-        {frameWidth:32,frameHeight:16});
-
-        this.load.setPath('assets/sprites/Enemies/');
-        this.load.spritesheet("greenMonsterBullet", "greenMonsterBullet.png",
-        {frameWidth:32,frameHeight:32});
+        
     }
 
 	create()
