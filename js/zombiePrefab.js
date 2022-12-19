@@ -14,14 +14,16 @@ class zombiePrefab extends actorPrefab {
         this.isSpawning = true;
         this.scene = _scene;
         _scene.physics.add.overlap
-            (
-                this,
-                _scene.arthur,
-                this.hit,
-                null,
-                this
-            );
+        (
+            this,
+            _scene.arthur,
+            this.hit,
+            null,
+            this
+        );
 
+        console.log(this.body);
+        this.body.setSize(15, 30, true)
     }
 
     hit(_zombie, _arthur) {
