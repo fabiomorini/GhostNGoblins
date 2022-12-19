@@ -357,6 +357,7 @@ class playerPrefab extends actorPrefab {
                             this.body.blocked.down && !this.canClimbLadder &&
                             Phaser.Input.Keyboard.DownDuration(this.cursorKeys.up, 250)) {
                             this.body.setVelocityY(-gamePrefs.ARTHUR_JUMP);
+                            game.sound.play('arthurJump');
                         }
                         else if (this.canClimbLadder && this.cursorKeys.up.isDown &&
                             this.body.blocked.down && this.cursorKeys.up.isDown) {
