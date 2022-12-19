@@ -53,20 +53,12 @@ class firePrefab extends Phaser.GameObjects.Sprite
         _this.y += 500;
     }
 
-    hasHitTarget(_this, _zombie)
+    hasHitTarget(_this, _enemy)
     {
         _this.setActive(false);
         _this.y += 500;
         _this.scene.sound.play('enemyDeath');
-        _zombie.destroy();
-    }
-
-    hasHitTarget(_this, _greenMonster)
-    {
-        _this.setActive(false);
-        _this.y += 500;
-        _this.scene.sound.play('enemyDeath');
-        _greenMonster.destroy();
+        _enemy.destroy();
     }
     
     preUpdate(time, delta)
