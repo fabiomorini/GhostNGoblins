@@ -8,10 +8,18 @@ class firePrefab extends Phaser.GameObjects.Sprite
         _scene.physics.add.collider
         (
             this,
-            [_scene.tombs1F, _scene.terrain2F, 
-             _scene.terrainBorder1F, _scene.terrain1F,
+            [_scene.tombs1F,
              _scene.tombs2F],
-            this.hasHitTarget
+            this.hasHitTomb
+        );
+
+        _scene.physics.add.collider
+        (
+            this,
+            [_scene.terrain2F, 
+             _scene.terrainBorder1F,
+             _scene.terrain1F],
+            this.hasHitNull
         );
 
         _scene.physics.add.collider
@@ -32,6 +40,13 @@ class firePrefab extends Phaser.GameObjects.Sprite
         this.anims.play("throwFire");
     }
 
+    hasHitTomb(_this, _tomb)
+    {
+        _this.setActive(false);
+        _this.y += 500;
+        _this.scene.sound.play('projectileBlock');
+    }
+
     hasHitNull(_this, _null)
     {
         _this.setActive(false);
@@ -42,6 +57,7 @@ class firePrefab extends Phaser.GameObjects.Sprite
     {
         _this.setActive(false);
         _this.y += 500;
+        _this.scene.sound.play('enemyDeath');
         _zombie.destroy();
     }
 
@@ -49,6 +65,7 @@ class firePrefab extends Phaser.GameObjects.Sprite
     {
         _this.setActive(false);
         _this.y += 500;
+        _this.scene.sound.play('enemyDeath');
         _greenMonster.destroy();
     }
     

@@ -169,6 +169,8 @@ class playerPrefab extends actorPrefab {
             _bullet.setFlipX(true);
             _bullet.body.setVelocityX(-gamePrefs.SPEAR_SPEED_);
         }
+        //Sonido de lanzar ataque
+        this.scene.sound.play('arthurThrow');
     }
 
     shootFire() {
@@ -202,6 +204,8 @@ class playerPrefab extends actorPrefab {
             _bullet.body.setVelocityX(-gamePrefs.SPEAR_SPEED_);
             _bullet.body.setVelocityY(-gamePrefs.SPEAR_SPEED_);
         }
+        //Sonido de lanzar ataque
+        this.scene.sound.play('arthurThrow');
     }
 
     shootKnife() {
@@ -233,6 +237,8 @@ class playerPrefab extends actorPrefab {
             _bullet.setFlipX(true);
             _bullet.body.setVelocityX(-gamePrefs.SPEAR_SPEED_ * 1.5);
         }
+        //Sonido de lanzar ataque
+        this.scene.sound.play('arthurThrow');
     }
 
     useLadder(_player, _ladder) {
@@ -306,6 +312,7 @@ class playerPrefab extends actorPrefab {
                     b_armour.setFlipX(true);
                 }
                 this.tookDamage = false;
+                this.scene.sound.play('arthurHit');
             }
             else if (this.health <= 0) {
                 //DIE ANIMATION.
@@ -319,7 +326,13 @@ class playerPrefab extends actorPrefab {
                     this.health = 2;
                     this.tookDamage = false;
                     this.isInvincible = false;
+                    this.isAlive = false;
                 });
+                //Musica de muerte de Arthur
+                if(!this.isAlive) {
+                    this.scene.sound.play('arthurDeath');
+                    this.isAlive = true;
+                }
             }
         }
         else {
@@ -378,6 +391,7 @@ class playerPrefab extends actorPrefab {
                             this.body.blocked.down && !this.canClimbLadder &&
                             Phaser.Input.Keyboard.DownDuration(this.cursorKeys.up, 250)) {
                             this.body.setVelocityY(-gamePrefs.ARTHUR_JUMP);
+                            this.scene.sound.play('arthurJump');
                         }
                         else if (this.canClimbLadder && this.cursorKeys.up.isDown &&
                             this.body.blocked.down && this.cursorKeys.up.isDown) {
@@ -459,6 +473,7 @@ class playerPrefab extends actorPrefab {
                             this.body.blocked.down && !this.canClimbLadder &&
                             Phaser.Input.Keyboard.DownDuration(this.cursorKeys.up, 250)) {
                             this.body.setVelocityY(-gamePrefs.ARTHUR_JUMP);
+                            this.scene.sound.play('arthurJump');
                         }
                         else if (this.canClimbLadder && this.cursorKeys.up.isDown &&
                             this.body.blocked.down && this.cursorKeys.up.isDown) {

@@ -18,6 +18,12 @@ class flyingKnightPrefab extends actorPrefab {
                 this
             );
         this.body.setSize(15, 28, true);
+
+        // //Audio del Flying Knight
+        // var fkAudio = _scene.sound.play('flyingKnightAudio');
+        // console.log(fkAudio);
+        // fkAudio.loop = true;
+        // fkAudio.play();
     }
 
 

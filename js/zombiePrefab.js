@@ -12,6 +12,7 @@ class zombiePrefab extends actorPrefab {
         });
         this.direction = -1;
         this.isSpawning = true;
+        this.spawningSound = true;
         this.scene = _scene;
         _scene.physics.add.overlap
         (
@@ -54,6 +55,13 @@ class zombiePrefab extends actorPrefab {
             if (!this.isSpawning) {
                 this.body.setVelocityX(gamePrefs.ENEMY_SPEED * this.direction);
                 this.anims.play('zombieRun', true);
+                this.spawningSound = true;
+            }
+            else{
+                if(this.spawningSound){
+                    this.scene.sound.play('zombieSpawn');
+                    this.spawningSound = false;
+                }
             }
             if (this.body.blocked.right || this.body.blocked.left) {
                 this.direction *= -1;
