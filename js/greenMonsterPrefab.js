@@ -27,6 +27,8 @@ class greenMonsterPrefab extends actorPrefab {
         );
 
         this.loadPools();
+
+        this.body.setSize(15, 25, true);
     }
 
 

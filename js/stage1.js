@@ -55,12 +55,15 @@ class stage1 extends Phaser.Scene {
         if (this.tombs1F.culledTiles.length > 0) {
             var tiles = this.tombs1F;
 
+            //debug.body(this.tombs1F);
             //console.log(tiles);
             //tiles.tileSet.setCollisionBounds(8,8,8,8);
-            //for (var i = 0; i < tiles.length; i++) {
-            //}
+            //tiles.body.setSize(1, 1, true);
+
+/*            for (var i = 0; i < tiles.length; i++) {
+            }
         }
-    }
+    */  }
 
     loadAnimations() {
         //ARTHUR ARMOUR ANIMATIONS

@@ -35,7 +35,7 @@ var config =
         arcade:
         {
             gravity:{y:gamePrefs.GRAVITY},
-            debug:false
+            debug:true
         }
     }
 }

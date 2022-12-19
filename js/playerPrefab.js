@@ -20,6 +20,8 @@ class playerPrefab extends actorPrefab {
         this.canClimbLadder = false;
         this.canDownLadder = false;
 
+        this.body.setSize(12, 28, true);
+
         _scene.physics.add.collider
             (
                 this,
@@ -265,7 +267,22 @@ class playerPrefab extends actorPrefab {
         }
     }
 
+    resizeCollision()
+    {
+        if(!this.cursorKeys.down.isDown)
+        {
+            this.setSize(32 + 2, 32 + 2, true)
+            this.body.setSize(12, 28, true);
+        }
+        else
+        {
+            this.setSize(32 + 2, 32 + 10, true)
+            this.body.setSize(12, 20, true);
+        }
+    }
+
     preUpdate(time, delta) {
+        this.resizeCollision();
         this.checkArmour();
         this.resetAttackAnim();
         if (this.tookDamage) {
