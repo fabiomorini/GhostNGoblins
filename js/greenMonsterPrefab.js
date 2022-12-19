@@ -3,7 +3,7 @@ class greenMonsterPrefab extends actorPrefab {
         super(_scene, _positionX, _positionY, _spriteTag);
         _scene.add.existing(this);
         _scene.physics.world.enable(this);
-        this.direccion = -1;
+        this.direction = -1;
         this.scene = _scene;
         this.anims.stop().setFrame(0);
         this.randNum = 0;
@@ -34,20 +34,11 @@ class greenMonsterPrefab extends actorPrefab {
 
 
     hit(_greenMonster, _arthur) {
-        {
             if (_arthur.isInvincible == false) {
                 _arthur.tookDamage = true;
                 _arthur.isInvincible = true;
                 _arthur.health -= 1;
             }
-
-            _arthur.body.setVelocityX(0);
-            _arthur.body.setVelocityY(-300);
-            //_arthur.body.velocity.x += gamePrefs.ARTHUR_SPEED * -_arthur.direccion;
-            _arthur.body.velocity.y -= Math.sin(0.1) * gamePrefs.ARTHUR_JUMP;
-            this.scene.cameras.main.shake(500,0.05);
-        }
-
     }
 
     loadPools()
