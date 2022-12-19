@@ -9,14 +9,14 @@ class spearPrefab extends Phaser.GameObjects.Sprite
         (
             this,
             _scene.tombs1F,
-            this.hasHitTarget
+            this.hasHitTomb
         );
 
         _scene.physics.add.collider
         (
             this,
             _scene.tombs2F,
-            this.hasHitTarget
+            this.hasHitTomb
         );
 
         _scene.physics.add.collider
@@ -36,6 +36,13 @@ class spearPrefab extends Phaser.GameObjects.Sprite
         this.aliveTime = 0;
     }
 
+    hasHitTomb(_this, _tomb)
+    {
+        _this.setActive(false);
+        _this.y += 500;
+        _this.scene.sound.play('projectileBlock');
+    }
+
     hasHitNull(_this, _null)
     {
         _this.setActive(false);
@@ -46,6 +53,7 @@ class spearPrefab extends Phaser.GameObjects.Sprite
     {
         _this.setActive(false);
         _this.y += 500;
+        _this.scene.sound.play('enemyDeath');
         _zombie.destroy();
     }
 
@@ -53,6 +61,7 @@ class spearPrefab extends Phaser.GameObjects.Sprite
     {
         _this.setActive(false);
         _this.y += 500;
+        _this.scene.sound.play('enemyDeath');
         _greenMonster.destroy();
     }
     
