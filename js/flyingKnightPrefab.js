@@ -3,10 +3,11 @@ class flyingKnightPrefab extends actorPrefab {
         super(_scene, _positionX, _positionY, _spriteTag);
         _scene.add.existing(this);
         _scene.physics.world.enable(this);
-        this.direction = 1;
+        this.direction = -1;
         this.scene = _scene;
         this.sinus = -1;
         this.ascendent = true;
+        this.gethit = false;
         this.anims.play('flyingKnightIddle', true)
         this.body.setAllowGravity(false);
         _scene.physics.add.overlap

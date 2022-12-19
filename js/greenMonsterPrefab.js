@@ -54,6 +54,11 @@ class greenMonsterPrefab extends actorPrefab {
     */
     preUpdate(time,delta)
     {
+        if(this.direction == 1)
+            this.setFlipX(true);
+        else 
+            this.setFlipX(false);
+
         if(Phaser.Math.Distance.BetweenPoints(this,this.scene.arthur) < 200)
         {
             if(this.randNum == 1)

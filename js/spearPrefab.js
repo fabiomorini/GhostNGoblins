@@ -23,14 +23,21 @@ class spearPrefab extends Phaser.GameObjects.Sprite
         (
             this,
             _scene.zombie,
-            this.hasHitTarget
+            this.hasHitZombie
         );
 
         _scene.physics.add.collider
         (
             this,
             _scene.greenMonster,
-            this.hasHitTarget
+            this.hasHitGreenMonster
+        );
+
+        _scene.physics.add.collider
+        (
+            this,
+            _scene.flyingKnight,
+            this.hasHitKnight
         );
 
         this.aliveTime = 0;
@@ -43,18 +50,51 @@ class spearPrefab extends Phaser.GameObjects.Sprite
         _this.scene.sound.play('projectileBlock');
     }
 
-    hasHitNull(_this, _null)
+    hasHitTarget(_this, _target)
     {
         _this.setActive(false);
         _this.y += 500;
+    } 
+    
+    hasHitGreenMonster(_this, _greenMonster)
+    {
+        _this.setActive(false);
+        _this.y += 500;
+        var enemyDeath = new enemyDeathPrefab(_this.scene, _greenMonster.body.position.x, _greenMonster.body.position.y);
+        _greenMonster.destroy();
     }
 
-    hasHitTarget(_this, _enemy)
+    hasHitZombie(_this, _zombie)
     {
         _this.setActive(false);
         _this.y += 500;
-        _this.scene.sound.play('enemyDeath');
-        _enemy.destroy();
+        var enemyDeath = new enemyDeathPrefab(_this.scene, _zombie.body.position.x, _zombie.body.position.y);
+        _zombie.destroy();
+    }
+
+    hasHitKnight(_this, _flyingKnight)
+    {
+        _this.setActive(false);
+        _this.y += 500;
+        _flyingKnight.gethit = true;
+        if(_flyingKnight.direction == 1)
+        {
+            if(_this.body.position.x < _flyingKnight.body.position.x)
+            {
+                var enemyDeath = new enemyDeathPrefab(_this.scene, _flyingKnight.body.position.x, _flyingKnight.body.position.y);
+                _flyingKnight.destroy();
+            }
+            else{}
+        }
+        else if(_flyingKnight.direction == -1)
+        {
+            if(_this.body.position.x > _flyingKnight.body.position.x)
+            {
+                var enemyDeath = new enemyDeathPrefab(_this.scene, _flyingKnight.body.position.x, _flyingKnight.body.position.y);
+                _flyingKnight.destroy();
+            }
+            else{}
+        }
     }
     
     preUpdate(time,delta)

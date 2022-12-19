@@ -22,7 +22,7 @@ class stage1 extends Phaser.Scene {
         //Pintamos los enemigos
         this.zombie = new zombiePrefab(this, 300, 190);
         this.greenMonster = new greenMonsterPrefab(this, 500, 190);
-        this.flyingKnight = new flyingKnightPrefab(this, 120, 100)
+        this.flyingKnight = new flyingKnightPrefab(this, 400, 100)
 
         //Camaras
         this.cameras.main.startFollow(this.arthur);
