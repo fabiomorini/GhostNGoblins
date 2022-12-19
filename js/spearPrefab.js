@@ -49,18 +49,19 @@ class spearPrefab extends Phaser.GameObjects.Sprite
         _this.y += 500;
         _this.scene.sound.play('projectileBlock');
     }
-
-    hasHitTarget(_this, _target)
+ 
+    hasHitNull(_this, _null)
     {
         _this.setActive(false);
         _this.y += 500;
-    } 
-    
+
+    }
     hasHitGreenMonster(_this, _greenMonster)
     {
         _this.setActive(false);
         _this.y += 500;
-        var enemyDeath = new enemyDeathPrefab(_this.scene, _greenMonster.body.position.x, _greenMonster.body.position.y);
+        var enemyDeath = new enemyDeathPrefab(_this.scene, _greenMonster.body.position.x, _greenMonster.body.position.y);      
+        _this.scene.sound.play('enemyDeath');
         _greenMonster.destroy();
     }
 
@@ -69,6 +70,7 @@ class spearPrefab extends Phaser.GameObjects.Sprite
         _this.setActive(false);
         _this.y += 500;
         var enemyDeath = new enemyDeathPrefab(_this.scene, _zombie.body.position.x, _zombie.body.position.y);
+        _this.scene.sound.play('enemyDeath');
         _zombie.destroy();
     }
 
@@ -79,18 +81,20 @@ class spearPrefab extends Phaser.GameObjects.Sprite
         _flyingKnight.gethit = true;
         if(_flyingKnight.direction == 1)
         {
-            if(_this.body.position.x < _flyingKnight.body.position.x)
+            if(_this.body.position.x <= _flyingKnight.body.position.x)
             {
                 var enemyDeath = new enemyDeathPrefab(_this.scene, _flyingKnight.body.position.x, _flyingKnight.body.position.y);
+                _this.scene.sound.play('enemyDeath');
                 _flyingKnight.destroy();
             }
             else{}
         }
         else if(_flyingKnight.direction == -1)
         {
-            if(_this.body.position.x > _flyingKnight.body.position.x)
+            if(_this.body.position.x >= _flyingKnight.body.position.x)
             {
                 var enemyDeath = new enemyDeathPrefab(_this.scene, _flyingKnight.body.position.x, _flyingKnight.body.position.y);
+                _this.scene.sound.play('enemyDeath');
                 _flyingKnight.destroy();
             }
             else{}
