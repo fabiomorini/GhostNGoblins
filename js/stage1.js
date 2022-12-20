@@ -22,13 +22,17 @@ class stage1 extends Phaser.Scene {
         //Pintamos los enemigos
         this.zombie = new zombiePrefab(this, 300, 190);
         this.greenMonster = new greenMonsterPrefab(this, 500, 190);
-        this.flyingKnight = new flyingKnightPrefab(this, 120, 100)
+        this.flyingKnight = new flyingKnightPrefab(this, 400, 100);
+        this.crow = new crowPrefab(this, 400, 160);
 
         //Camaras
         this.cameras.main.startFollow(this.arthur);
         this.cameras.main.setBounds(0, 0, gamePrefs.LEVEL1_WIDTH, gamePrefs.LEVEL1_HEIGHT);
 
         console.log(this);
+        
+        //TMP mecago en todo q   uew molestO A WDOAWIDHAW
+        this.sound.volume = 0;
     }
 
     update()
@@ -163,5 +167,19 @@ class stage1 extends Phaser.Scene {
             repeat: 0
         })
 
+        //  CROW ANIMATIONS
+        this.anims.create({
+            key: 'crowIdle',
+            frames: this.anims.generateFrameNumbers('crow', { start: 0, end: 3}),
+            frameRate: 8,
+            repeat: -1
+        })
+
+        this.anims.create({
+            key: 'crowFly',
+            frames: this.anims.generateFrameNumbers('crow', { start: 4, end: 7}),
+            frameRate: 8,
+            repeat: -1
+        })
     }
 }

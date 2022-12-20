@@ -26,14 +26,28 @@ class firePrefab extends Phaser.GameObjects.Sprite
         (
             this,
             _scene.zombie,
-            this.hasHitTarget
+            this.hasHitZombie
         );
 
         _scene.physics.add.collider
         (
             this,
             _scene.greenMonster,
-            this.hasHitTarget
+            this.hasHitGreenMonster
+        );
+
+        _scene.physics.add.collider
+        (
+            this,
+            _scene.flyingKnight,
+            this.hasHitKnight
+        );
+
+        _scene.physics.add.collider
+        (
+            this,
+            _scene.crow,
+            this.hasHitCrow
         );
 
         this.aliveTime = 0;
@@ -51,24 +65,62 @@ class firePrefab extends Phaser.GameObjects.Sprite
     {
         _this.setActive(false);
         _this.y += 500;
-    }
+    }  
 
-    hasHitTarget(_this, _zombie)
+    hasHitGreenMonster(_this, _greenMonster)
     {
         _this.setActive(false);
         _this.y += 500;
+        var enemyDeath = new enemyDeathPrefab(_this.scene, _greenMonster.body.position.x, _greenMonster.body.position.y);
+        _this.scene.sound.play('enemyDeath');
+        _greenMonster.destroy();
+    }
+
+    hasHitZombie(_this, _zombie)
+    {
+        _this.setActive(false);
+        _this.y += 500;
+        var enemyDeath = new enemyDeathPrefab(_this.scene, _zombie.body.position.x, _zombie.body.position.y);
         _this.scene.sound.play('enemyDeath');
         _zombie.destroy();
     }
 
-    hasHitTarget(_this, _greenMonster)
+    hasHitKnight(_this, _flyingKnight)
     {
         _this.setActive(false);
         _this.y += 500;
-        _this.scene.sound.play('enemyDeath');
-        _greenMonster.destroy();
+        _flyingKnight.gethit = true;
+        if(_flyingKnight.direction == 1)
+        {
+            if(_this.body.position.x < _flyingKnight.body.position.x)
+            {
+                var enemyDeath = new enemyDeathPrefab(_this.scene, _flyingKnight.body.position.x, _flyingKnight.body.position.y);
+                _this.scene.sound.play('enemyDeath');
+                _flyingKnight.destroy();
+            }
+            else{}
+        }
+        else if(_flyingKnight.direction == -1)
+        {
+            if(_this.body.position.x > _flyingKnight.body.position.x)
+            {
+                var enemyDeath = new enemyDeathPrefab(_this.scene, _flyingKnight.body.position.x, _flyingKnight.body.position.y);
+                _this.scene.sound.play('enemyDeath');
+                _flyingKnight.destroy();
+            }
+            else{}
+        }
     }
     
+    hasHitCrow(_this, _crow)
+    {
+        _this.setActive(false);
+        _this.y += 500;
+        var enemyDeath = new enemyDeathPrefab(_this.scene, _crow.body.position.x, _crow.body.position.y);
+        _this.scene.sound.play('enemyDeath');
+        _crow.destroy();
+    }
+
     preUpdate(time, delta)
     {
         this.aliveTime = this.scene.time.addEvent(
