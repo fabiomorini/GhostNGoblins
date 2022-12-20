@@ -1,5 +1,5 @@
-class flyingKnightPrefab extends actorPrefab {
-    constructor(_scene, _positionX, _positionY, _spriteTag = 'flyingKnight') {
+class crowPrefab extends actorPrefab {
+    constructor(_scene, _positionX, _positionY, _spriteTag = 'crow') {
         super(_scene, _positionX, _positionY, _spriteTag);
         _scene.add.existing(this);
         _scene.physics.world.enable(this);
@@ -8,8 +8,9 @@ class flyingKnightPrefab extends actorPrefab {
         this.sinus = -1;
         this.ascendent = true;
         this.gethit = false;
-        this.anims.play('flyingKnightIddle', true);
+        this.anims.play('crowIdle', true);
         this.body.setAllowGravity(false);
+
         _scene.physics.add.overlap
             (
                 this,
