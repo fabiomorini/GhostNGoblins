@@ -8,7 +8,7 @@ class flyingKnightPrefab extends actorPrefab {
         this.sinus = -1;
         this.ascendent = true;
         this.gethit = false;
-        this.anims.play('flyingKnightIddle', true);
+        this.anims.play('flyingKnightIddle', true)
         this.body.setAllowGravity(false);
         _scene.physics.add.overlap
             (

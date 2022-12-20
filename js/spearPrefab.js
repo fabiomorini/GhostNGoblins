@@ -40,21 +40,29 @@ class spearPrefab extends Phaser.GameObjects.Sprite
             this.hasHitKnight
         );
 
+        _scene.physics.add.collider
+        (
+            this,
+            _scene.crow,
+            this.hasHitCrow
+        );
+
         this.aliveTime = 0;
     }
 
+    
     hasHitTomb(_this, _tomb)
     {
         _this.setActive(false);
         _this.y += 500;
         _this.scene.sound.play('projectileBlock');
     }
- 
+    
     hasHitNull(_this, _null)
     {
         _this.setActive(false);
         _this.y += 500;
-
+        
     }
     hasHitGreenMonster(_this, _greenMonster)
     {
@@ -73,7 +81,7 @@ class spearPrefab extends Phaser.GameObjects.Sprite
         _this.scene.sound.play('enemyDeath');
         _zombie.destroy();
     }
-
+    
     hasHitKnight(_this, _flyingKnight)
     {
         _this.setActive(false);
@@ -100,6 +108,15 @@ class spearPrefab extends Phaser.GameObjects.Sprite
             else{}
         }
     }
+
+    hasHitCrow(_this, _crow)
+    {
+        _this.setActive(false);
+        _this.y += 500;
+        var enemyDeath = new enemyDeathPrefab(_this.scene, _crow.body.position.x, _crow.body.position.y);
+        _this.scene.sound.play('enemyDeath');
+        _crow.destroy();
+    }
     
     preUpdate(time,delta)
     {
@@ -111,7 +128,7 @@ class spearPrefab extends Phaser.GameObjects.Sprite
                 repeat: 0
             }   
         );
-
+        
         super.preUpdate(time, delta);
     }
 }

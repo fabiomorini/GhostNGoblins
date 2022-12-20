@@ -43,6 +43,13 @@ class firePrefab extends Phaser.GameObjects.Sprite
             this.hasHitKnight
         );
 
+        _scene.physics.add.collider
+        (
+            this,
+            _scene.crow,
+            this.hasHitCrow
+        );
+
         this.aliveTime = 0;
         this.anims.play("throwFire");
     }
@@ -105,6 +112,15 @@ class firePrefab extends Phaser.GameObjects.Sprite
         }
     }
     
+    hasHitCrow(_this, _crow)
+    {
+        _this.setActive(false);
+        _this.y += 500;
+        var enemyDeath = new enemyDeathPrefab(_this.scene, _crow.body.position.x, _crow.body.position.y);
+        _this.scene.sound.play('enemyDeath');
+        _crow.destroy();
+    }
+
     preUpdate(time, delta)
     {
         this.aliveTime = this.scene.time.addEvent(

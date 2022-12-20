@@ -21,16 +21,12 @@ class crowPrefab extends actorPrefab {
             );
         this.body.setSize(15, 28, true);
 
-        // //Audio del Flying Knight
-        // var fkAudio = _scene.sound.play('flyingKnightAudio');
-        // console.log(fkAudio);
-        // fkAudio.loop = true;
-        // fkAudio.play();
+        this.isMoving = false;
     }
 
 
 
-    hit(_flyingKnight, _arthur) {
+    hit(_this, _arthur) {
         if (_arthur.isInvincible == false) {
             _arthur.tookDamage = true;
             _arthur.isInvincible = true;
@@ -38,31 +34,43 @@ class crowPrefab extends actorPrefab {
         }
     }
 
-
-    preUpdate(time,delta)
+    checkDistance()
     {
-        if(this.direction == 1)
-            this.setFlipX(true);
-        else 
-            this.setFlipX(false);
+        if(Phaser.Math.Distance.BetweenPoints(this,this.scene.arthur) < 200)
+        {
+            this.isMoving = true;
+            this.anims.play('crowFly', true);
+        }
+    }
 
-        //Calculo para poder cambiar el movimiento del knight de arriba a abajo
+    moveCrow()
+    {
+        
         if(this.sinus <= -1)
             this.ascendent = true;
         else if( this.sinus >= 1)
             this.ascendent = false;
 
-        //Calculo para poder mover el knight de posicion frame a frame.
         if(this.ascendent)
-            this.sinus = this.sinus + 0.05;
+            this.sinus = this.sinus + 0.02;
         else 
-            this.sinus = this.sinus - 0.05;
+            this.sinus = this.sinus - 0.02;
 
 
         this.body.setVelocityX(this.direction * gamePrefs.ENEMY_SPEED);
-        this.body.velocity.y = gamePrefs.FLYINGKNIGHT_HEIGHT * Math.sin(this.sinus);
-    
-    super.preUpdate(time,delta);
+        this.body.velocity.y = gamePrefs.CROW_Y_SPEED * Math.sin(this.sinus);
+    }
+
+    preUpdate(time,delta)
+    {
+        this.checkDistance();
+
+        if(this.isMoving)
+        {
+            this.moveCrow();
+        }
+
+        super.preUpdate(time,delta);
     }
 
 }
