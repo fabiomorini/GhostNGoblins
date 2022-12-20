@@ -68,6 +68,8 @@ class gamePreload extends Phaser.Scene
             { frameWidth: 16, frameHeight: 32 });
         this.load.spritesheet('flyingKnight', 'flying_knight.png',
         {frameWidth:16, frameHeight:30})
+        this.load.spritesheet('woodyPig', 'woody_pig.png',
+        {frameWidth:32, frameHeight:16})
         this.load.spritesheet('enemy_death', 'enemy_death.png',
         {frameWidth:44, frameHeight:35})
         this.load.spritesheet("greenMonsterBullet", "greenMonsterBullet.png",
