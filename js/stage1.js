@@ -28,22 +28,36 @@ class stage1 extends Phaser.Scene {
         //Camaras
         this.cameras.main.startFollow(this.arthur);
         this.cameras.main.setBounds(0, 0, gamePrefs.LEVEL1_WIDTH, gamePrefs.LEVEL1_HEIGHT);
-
-        console.log(this);
         
         //TMP mecago en todo q   uew molestO A WDOAWIDHAW
-        this.sound.volume = 0;
+        this.sound.volume = 0.01;
+
+        this.gameStart = this.sound.add('gameStart');
+        this.gameTheme = this.sound.add('gameTheme');
+        //this.sound.
+        
+        this.gameStart.play();
+        this.hasPlayed = false;
     }
 
     update()
     {
+        if(!this.gameStart.isPlaying && !this.hasPlayed)
+        {
+            this.gameTheme.play()
+            this.gameTheme.setLoop(true);
+            this.hasPlayed = true;
+        }
+
         if (this.tombs1F.culledTiles.length > 0) {
             var tiles = this.tombs1F;
 
             //debug.body(this.tombs1F);
-            //console.log(tiles);
-            //tiles.tileSet.setCollisionBounds(8,8,8,8);
-            //tiles.body.setSize(1, 1, true);
+
+            tiles.culledTiles.forEach(element => {
+               //element.body. = 32;
+               //element.height = ;
+            });
           }
     }
 

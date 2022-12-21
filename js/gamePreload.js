@@ -37,8 +37,8 @@ class gamePreload extends Phaser.Scene
         this.load.audio('enemyDeath', 'ENEMYDEATH.wav');
         this.load.audio('projectileBlock', 'PROJECTILEBLOCK.wav');
         this.load.audio('flyingKnightAudio', 'FLYINGKNIGHT.wav');
-        this.load.audio('arthurJump', 'ARTHURJUMP.wav');
-        this.load.audio('arthurJump', 'ARTHURJUMP.wav');
+        this.load.audio('gameStart', 'GAMESTART.wav');
+        this.load.audio('gameTheme', 'GNGTHEME.mp3');
         this.load.audio('arthurJump', 'ARTHURJUMP.wav');
         this.load.audio('arthurJump', 'ARTHURJUMP.wav');
         this.load.audio('arthurJump', 'ARTHURJUMP.wav');

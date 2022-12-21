@@ -37,6 +37,8 @@ LAYERS.create = function (context) {
     context.tombs2F = context.map.createLayer('2FTombsLayer', 'Tombs');
     context.terrain2F = context.map.createLayer('2FTerrainLayer', '2FTerrain');
     context.tombs1F = context.map.createLayer('1FTombsLayer', 'Tombs');
+
+    
     context.terrainBorder1F = context.map.createLayer('BorderTerrainLayer', 'Graveyard Terrain');
     context.terrain1F = context.map.createLayer('TerrainLayer', 'Graveyard Terrain');
     context.enemiesSpawn = context.map.createLayer('EnemiesLayer');

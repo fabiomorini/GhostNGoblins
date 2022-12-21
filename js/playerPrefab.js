@@ -515,7 +515,7 @@ class playerPrefab extends actorPrefab {
                         }
                     }
                 }
-                console.log("Climb: " + this.canClimbLadder + ". Down: " + this.canDownLadder + ".");
+                //console.log("Climb: " + this.canClimbLadder + ". Down: " + this.canDownLadder + ".");
             }
         }
         super.preUpdate(time, delta);
