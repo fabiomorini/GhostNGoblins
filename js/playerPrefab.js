@@ -123,7 +123,7 @@ class playerPrefab extends actorPrefab {
         {
             if (this.cursorKeys.space.isDown &&
                 !this.isAttacking &&
-                this.fires.countActive() < gamePrefs.MAX_BULLET_AMOUNT) {
+                this.fires.countActive() < gamePrefs.MAX_FIRE_AMOUNT) {
                 this.timeSinceLastShot = this.scene.time.addEvent(
                     {
                         delay: 50,
@@ -246,7 +246,7 @@ class playerPrefab extends actorPrefab {
         var tile2 = this.scene.ladders.getTileAtWorldXY(this.x, this.y + 20);
 
         if (tile1 != null && tile1.index != 0) {
-            this.canClimbLadder = true;
+            // this.canClimbLadder = true;
         }
 
         if (tile1 == null) {
@@ -256,7 +256,7 @@ class playerPrefab extends actorPrefab {
         }
 
         if (tile2 != null && tile2.index != 0 && tile2.index != 10) {
-            this.canDownLadder = true;
+            // this.canDownLadder = true;
         }
 
         if (tile2 == null) {
