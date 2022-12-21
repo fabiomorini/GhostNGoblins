@@ -123,7 +123,7 @@ class playerPrefab extends actorPrefab {
         {
             if (this.cursorKeys.space.isDown &&
                 !this.isAttacking &&
-                this.fires.countActive() < gamePrefs.MAX_BULLET_AMOUNT) {
+                this.fires.countActive() < gamePrefs.MAX_FIRE_AMOUNT) {
                 this.timeSinceLastShot = this.scene.time.addEvent(
                     {
                         delay: 50,

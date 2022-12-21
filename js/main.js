@@ -11,7 +11,8 @@ var gamePrefs=
     LEVEL1_WIDTH:3552,
     LEVEL1_HEIGHT:192,
     SPEAR_SPEED_: 220,
-    MAX_BULLET_AMOUNT : 3
+    MAX_BULLET_AMOUNT : 3,
+    MAX_FIRE_AMOUNT : 2
 }
 
 var config =

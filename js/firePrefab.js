@@ -8,8 +8,7 @@ class firePrefab extends Phaser.GameObjects.Sprite
         _scene.physics.add.collider
         (
             this,
-            [_scene.tombs1F,
-             _scene.tombs2F],
+            _scene.tombs,
             this.hasHitTomb
         );
 

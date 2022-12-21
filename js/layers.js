@@ -15,7 +15,7 @@ LAYERS.create = function (context) {
     context.map.addTilesetImage('Mountain01', 'firstMountain');
     context.map.addTilesetImage('Mountain02', 'mountainSides');
     context.map.addTilesetImage('2FLadders', 'ladders');
-    context.map.addTilesetImage('Tombs', 'tombs');
+    // context.map.addTilesetImage('Tombs', 'tombs');
     context.map.addTilesetImage('Graveyard Terrain', 'terrain');
     context.map.addTilesetImage('2FTerrain', 'f2Terrain');
 
@@ -34,9 +34,9 @@ LAYERS.create = function (context) {
     context.mountainLSide = context.map.createLayer('2FLeftLayer', 'Mountain02');
     context.mountainRSide = context.map.createLayer('2FRightLayer', 'Mountain02');
     context.ladders = context.map.createLayer('LaddersLayer','2FLadders');
-    context.tombs2F = context.map.createLayer('2FTombsLayer', 'Tombs');
+    // context.tombs2F = context.map.createLayer('2FTombsLayer', 'Tombs');
     context.terrain2F = context.map.createLayer('2FTerrainLayer', '2FTerrain');
-    context.tombs1F = context.map.createLayer('1FTombsLayer', 'Tombs');
+    // context.tombs1F = context.map.createLayer('1FTombsLayer', 'Tombs');
     context.terrainBorder1F = context.map.createLayer('BorderTerrainLayer', 'Graveyard Terrain');
     context.terrain1F = context.map.createLayer('TerrainLayer', 'Graveyard Terrain');
     context.enemiesSpawn = context.map.createLayer('EnemiesLayer');
@@ -45,8 +45,8 @@ LAYERS.create = function (context) {
     context.map.setCollisionBetween(1,1,true,true,'BorderTerrainLayer');
     context.map.setCollisionBetween(1,1,true,true,'TerrainLayer');
     context.map.setCollisionBetween(11,12,true,true,'2FTerrainLayer');
-    context.map.setCollisionBetween(5,7,true,true,'1FTombsLayer');
-    context.map.setCollisionBetween(5,7,true,true,'2FTombsLayer');
+    // context.map.setCollisionBetween(5,7,true,true,'1FTombsLayer');
+    // context.map.setCollisionBetween(5,7,true,true,'2FTombsLayer');
     context.map.setCollisionBetween(8,10,true,true,'LaddersLayer');
     context.map.setCollisionBetween(24,25,true,true,'WaterLayer');
 };
