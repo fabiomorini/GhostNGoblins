@@ -63,17 +63,6 @@ class stage1 extends Phaser.Scene {
             this.gameTheme.setLoop(true);
             this.hasPlayed = true;
         }
-
-        if (this.tombs1F.culledTiles.length > 0) {
-            var tiles = this.tombs1F;
-
-            //debug.body(this.tombs1F);
-
-            tiles.culledTiles.forEach(element => {
-               //element.body. = 32;
-               //element.height = ;
-            });
-          }
     }
 
     loadAnimations() {

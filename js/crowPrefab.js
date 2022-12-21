@@ -22,8 +22,6 @@ class crowPrefab extends actorPrefab {
             );
         this.body.setSize(15, 28, true);
 
-            console.log(this.body);
-
         this.isMoving = false;
     }
 
