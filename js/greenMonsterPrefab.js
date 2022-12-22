@@ -25,6 +25,8 @@ class greenMonsterPrefab extends actorPrefab {
                 loop: true
             } 
         );
+        
+        this.anims.play('greenMonsterIddle', true);
 
         this.loadPools();
 
@@ -46,12 +48,6 @@ class greenMonsterPrefab extends actorPrefab {
         this.bullet = this.scene.physics.add.group();
     }
 
-
-    /*
-
-        PREGUNTAR AL RICHARD POR QUE A VECES SI QUE FUNCIONA EL THIS.ON() (ZOMBIE) PERO OTRAS NO, GREENMONSTER / PLAYER.
-
-    */
     preUpdate(time,delta)
     {
         if(this.direction == 1)
@@ -59,23 +55,13 @@ class greenMonsterPrefab extends actorPrefab {
         else 
             this.setFlipX(false);
 
-        if(Phaser.Math.Distance.BetweenPoints(this,this.scene.arthur) < 200)
+        if(Phaser.Math.Distance.BetweenPoints(this,this.scene.arthur) < 100)
         {
-            if(this.randNum == 1)
-            {
-                this.anims.play('greenMonsterIddle', true);
-            }
-            else if(this.randNum == 3)
-            {
-                this.anims.play('greenMonsterAttack', true);
-                this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, ()=> {
-                    this.anims.stop();
-                    this.attack();
-                });
-    
-            }
-            else
-            this.anims.stop().setFrame(0);
+            this.anims.play('greenMonsterAttack', true);
+            this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, ()=> {
+                this.anims.stop();
+                this.attack();
+            }); 
         }        
     
     super.preUpdate(time,delta);

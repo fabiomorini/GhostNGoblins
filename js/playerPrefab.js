@@ -331,8 +331,8 @@ class playerPrefab extends actorPrefab {
                 });
 
                 //Save Score
-                if(this.score > this.gamePrefs.topScore){
-                    this.gamePrefs.topScore = this.score;
+                if(this.score > gamePrefs.topScore){
+                    gamePrefs.topScore = this.score;
                 }
 
                 //Musica de muerte de Arthur
