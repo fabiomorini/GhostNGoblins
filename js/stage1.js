@@ -45,7 +45,7 @@ class stage1 extends Phaser.Scene {
         this.cameras.main.setBounds(0, 0, gamePrefs.LEVEL1_WIDTH, gamePrefs.LEVEL1_HEIGHT);
         
         //TMP mecago en todo q   uew molestO A WDOAWIDHAW
-        this.sound.volume = 0.01;
+        this.sound.volume = 1;
 
         this.gameStart = this.sound.add('gameStart');
         this.gameTheme = this.sound.add('gameTheme');

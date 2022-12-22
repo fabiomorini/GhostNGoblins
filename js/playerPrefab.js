@@ -19,6 +19,7 @@ class playerPrefab extends actorPrefab {
         this.weapon = 0;
         this.canClimbLadder = false;
         this.canDownLadder = false;
+        this.score = 0;
 
         this.body.setSize(12, 28, true);
 
