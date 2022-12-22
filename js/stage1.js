@@ -1,16 +1,13 @@
 class stage1 extends Phaser.Scene {
-    constructor() 
-    {
+    constructor() {
         super({ key: 'stage1' });
     }
-    
-    preload()
-    {
-        
+
+    preload() {
+
     }
 
-	create()
-    {
+    create() {
         //Carga namespace layers
         LAYERS.create(this);
 
@@ -22,8 +19,9 @@ class stage1 extends Phaser.Scene {
         //Pintamos los enemigos
         this.zombie = new zombiePrefab(this, 300, 190);
         this.greenMonster = new greenMonsterPrefab(this, 500, 190);
-        this.flyingKnight = new flyingKnightPrefab(this, 400, 100);
         this.crow = new crowPrefab(this, 400, 160);
+        this.flyingKnight = new flyingKnightPrefab(this, 400, 100);
+        this.woodyPig = new woodyPigPrefab(this, 400, 50);
 
         //Pintamos las tumbas
         this.tombs = new Array(
@@ -116,14 +114,22 @@ class stage1 extends Phaser.Scene {
             frameRate: 10,
             repeat: 0
         });
+
+        this.anims.create({
+            key: 'breakArmour',
+            frames: this.anims.generateFrameNumbers('break_armour', { start: 0, end: 4 }),
+            frameRate: 10,
+            repeat: 0
+        })
+
         //FIRE ANIMATION
         this.anims.create
-        ({
-            key:'throwFire',
-            frames:this.anims.generateFrameNumbers('fire',{start:0,end:3}),
-            frameRate:8,
-            repeat:-1
-        });
+            ({
+                key: 'throwFire',
+                frames: this.anims.generateFrameNumbers('fire', { start: 0, end: 3 }),
+                frameRate: 8,
+                repeat: -1
+            });
 
         //ZOMBIE ANIMATIONS
         this.anims.create({
@@ -157,30 +163,39 @@ class stage1 extends Phaser.Scene {
 
         //GREEN MONSTER BULLET
         this.anims.create
-        ({
-            key: 'greenMonsterBullet',
-            frames: this.anims.generateFrameNumbers('greenMonsterBullet', {start:0, end:3}),
-            frameRate:5,
+            ({
+                key: 'greenMonsterBullet',
+                frames: this.anims.generateFrameNumbers('greenMonsterBullet', { start: 0, end: 3 }),
+                frameRate: 5,
+                repeat: -1
+            })
+
+        //FLYING KNIGHT
+        this.anims.create({
+            key: 'flyingKnightIddle',
+            frames: this.anims.generateFrameNumbers('flyingKnight', { start: 0, end: 3 }),
+            frameRate: 5,
+            repeat: -1
+        })
+
+        //WOODY PIG
+        this.anims.create({
+            key: 'woodyPigMove',
+            frames: this.anims.generateFrameNumbers('woodyPig', { start: 0, end: 1 }),
+            frameRate: 5,
             repeat: -1
         })
 
         this.anims.create({
-            key: 'breakArmour',
-            frames: this.anims.generateFrameNumbers('break_armour', { start: 0, end: 4 }),
-            frameRate: 10,
+            key: 'woodyPigTurn',
+            frames: this.anims.generateFrameNumbers('woodyPig', { start: 2, end: 3}),
+            frameRate: 5,
             repeat: 0
         })
 
         this.anims.create({
-            key: 'flyingKnightIddle',
-            frames: this.anims.generateFrameNumbers('flyingKnight', { start: 0, end: 3}),
-            frameRate: 10,
-            repeat: -1
-        })
-
-        this.anims.create({
             key: 'enemyDeath',
-            frames: this.anims.generateFrameNumbers('enemy_death', { start: 0, end: 7}),
+            frames: this.anims.generateFrameNumbers('enemy_death', { start: 0, end: 7 }),
             frameRate: 10,
             repeat: 0
         })

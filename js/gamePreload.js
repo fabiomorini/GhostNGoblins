@@ -1,12 +1,9 @@
-class gamePreload extends Phaser.Scene
-{
-    constructor()
-    {
-        super({key: "gamePreload"});
+class gamePreload extends Phaser.Scene {
+    constructor() {
+        super({ key: "gamePreload" });
     }
 
-    preload()
-    {
+    preload() {
         //Cargamos las tileset que se utilizarán en el nivel
         this.load.setPath('assets/tilesets/');
         this.load.image('background','background.png');
@@ -26,9 +23,9 @@ class gamePreload extends Phaser.Scene
         this.load.image('terrain','graveyardTerrain.png');
 
         this.load.setPath('assets/map/');
-        this.load.tilemapTiledJSON('stage1','stage1.json');
-        this.load.json('json','stage1.json');
-        
+        this.load.tilemapTiledJSON('stage1', 'stage1.json');
+        this.load.json('json', 'stage1.json');
+
         //Cargamos los sonidos
         this.load.setPath('assets/audio');
         this.load.audio('arthurJump', 'ARTHURJUMP.wav');
@@ -56,20 +53,22 @@ class gamePreload extends Phaser.Scene
         //Cargamos los sprites del personaje
         this.load.setPath('assets/sprites/Arthur/');
         this.load.spritesheet('arthur', 'arthur.png',
-        { frameWidth: 32, frameHeight: 32 });
+            { frameWidth: 32, frameHeight: 32 });
         this.load.spritesheet('break_armour', 'armour_break.png',
-        { frameWidth: 52, frameHeight: 49 });
+            { frameWidth: 52, frameHeight: 49 });
 
         //Cargamos los sprites de los enemigos
         this.load.setPath('assets/sprites/Enemies/');
         this.load.spritesheet('zombie', 'zombie.png',
-        { frameWidth: 32, frameHeight: 32 });
+            { frameWidth: 32, frameHeight: 32 });
         this.load.spritesheet('greenMonster', 'green_monster.png',
             { frameWidth: 16, frameHeight: 32 });
         this.load.spritesheet('flyingKnight', 'flying_knight.png',
-        {frameWidth:16, frameHeight:30})
+            { frameWidth: 16, frameHeight: 30 })
+        this.load.spritesheet('woodyPig', 'woody_pig.png',
+            { frameWidth: 32, frameHeight: 16 })
         this.load.spritesheet('enemy_death', 'enemy_death.png',
-        {frameWidth:44, frameHeight:35})
+            { frameWidth: 44, frameHeight: 35 })
         this.load.spritesheet("greenMonsterBullet", "greenMonsterBullet.png",
         {frameWidth:32,frameHeight:32});
         this.load.spritesheet("crow", "crow.png",
@@ -80,16 +79,14 @@ class gamePreload extends Phaser.Scene
         this.load.image("spear", "Spear.png");
         this.load.image("knife", "Knife.png");
         this.load.spritesheet("fire", "Fire projectile animation.png",
-        {frameWidth:32,frameHeight:16});
+            { frameWidth: 32, frameHeight: 16 });
     }
 
-    create()
-    {
+    create() {
         this.startGame();
     }
 
-    startGame()
-    {
+    startGame() {
         this.scene.start('stage1');
     }
 }

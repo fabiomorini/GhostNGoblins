@@ -274,15 +274,12 @@ class playerPrefab extends actorPrefab {
         }
     }
 
-    resizeCollision()
-    {
-        if(!this.cursorKeys.down.isDown)
-        {
+    resizeCollision() {
+        if (!this.cursorKeys.down.isDown) {
             this.setSize(32 + 2, 32 + 2, true)
             this.body.setSize(12, 28, true);
         }
-        else
-        {
+        else {
             this.setSize(32 + 2, 32 + 10, true)
             this.body.setSize(12, 20, true);
         }
@@ -294,9 +291,9 @@ class playerPrefab extends actorPrefab {
         this.resetAttackAnim();
         if (this.tookDamage) {
             if (this.health == 1) {
-                if(this.direction == 1) this.body.velocity.x = -256;
-                else    this.body.velocity.x = 256;
-                
+                if (this.direction == 1) this.body.velocity.x = -256;
+                else this.body.velocity.x = 256;
+
                 this.body.velocity.y = -300;
                 this.anims.stop().setFrame(32);
                 var b_armour = new breakArmourPrefab(this.scene, this.body.position.x, this.body.position.y);
@@ -330,7 +327,7 @@ class playerPrefab extends actorPrefab {
                     this.isAlive = false;
                 });
                 //Musica de muerte de Arthur
-                if(!this.isAlive) {
+                if (!this.isAlive) {
                     this.scene.sound.play('arthurDeath');
                     this.isAlive = true;
                 }
@@ -503,7 +500,7 @@ class playerPrefab extends actorPrefab {
 
                 if (this.scene.terrain2F.culledTiles.length > 0) {
                     var tiles = this.scene.terrain2F.culledTiles
-    
+
                     if (tiles != null && !(this.canClimbLadder || this.canDownLadder)) {
                         for (var i = 0; i < tiles.length; i++) {
                             if (tiles[i] != null &&

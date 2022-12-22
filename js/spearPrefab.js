@@ -1,9 +1,7 @@
-class spearPrefab extends Phaser.GameObjects.Sprite
-{
-    constructor(_scene,_posX,_posY,_tag='spear')
-    {
-        super(_scene,_posX,_posY,_tag);
-            _scene.add.existing(this); 
+class spearPrefab extends Phaser.GameObjects.Sprite {
+    constructor(_scene, _posX, _posY, _tag = 'spear') {
+        super(_scene, _posX, _posY, _tag);
+        _scene.add.existing(this);
 
             console.log (this);
         _scene.physics.add.collider
@@ -21,18 +19,18 @@ class spearPrefab extends Phaser.GameObjects.Sprite
         );
 
         _scene.physics.add.collider
-        (
-            this,
-            _scene.greenMonster,
-            this.hasHitGreenMonster
-        );
+            (
+                this,
+                _scene.greenMonster,
+                this.hasHitGreenMonster
+            );
 
         _scene.physics.add.collider
-        (
-            this,
-            _scene.flyingKnight,
-            this.hasHitKnight
-        );
+            (
+                this,
+                _scene.flyingKnight,
+                this.hasHitKnight
+            );
 
         _scene.physics.add.collider
         (
@@ -41,65 +39,62 @@ class spearPrefab extends Phaser.GameObjects.Sprite
             this.hasHitCrow
         );
 
+        _scene.physics.add.collider
+            (
+                this,
+                _scene.woodyPig,
+                this.hasHitWoodyPig
+            );
+
         this.aliveTime = 0;
     }
 
-    
-    hasHitTomb(_this, _tomb)
-    {
+    hasHitTomb(_this, _tomb) {
         _this.setActive(false);
         _this.y += 500;
         _this.scene.sound.play('projectileBlock');
     }
-    
-    hasHitNull(_this, _null)
-    {
+
+    hasHitNull(_this, _null) {
         _this.setActive(false);
         _this.y += 500;
         
     }
-    hasHitGreenMonster(_this, _greenMonster)
-    {
+    hasHitGreenMonster(_this, _greenMonster) {
         _this.setActive(false);
         _this.y += 500;
-        var enemyDeath = new enemyDeathPrefab(_this.scene, _greenMonster.body.position.x, _greenMonster.body.position.y);      
+        var enemyDeath = new enemyDeathPrefab(_this.scene, _greenMonster.body.position.x, _greenMonster.body.position.y);
         _this.scene.sound.play('enemyDeath');
         _greenMonster.destroy();
     }
 
-    hasHitZombie(_this, _zombie)
-    {
+    hasHitZombie(_this, _zombie) {
         _this.setActive(false);
         _this.y += 500;
         var enemyDeath = new enemyDeathPrefab(_this.scene, _zombie.body.position.x, _zombie.body.position.y);
         _this.scene.sound.play('enemyDeath');
         _zombie.destroy();
     }
-    
-    hasHitKnight(_this, _flyingKnight)
-    {
+
+    hasHitKnight(_this, _flyingKnight) {
         _this.setActive(false);
         _this.y += 500;
         _flyingKnight.gethit = true;
-        if(_flyingKnight.direction == 1)
-        {
-            if(_this.body.position.x <= _flyingKnight.body.position.x)
-            {
+        if (_flyingKnight.direction == 1) {
+            if (_this.body.position.x <= _flyingKnight.body.position.x) {
                 var enemyDeath = new enemyDeathPrefab(_this.scene, _flyingKnight.body.position.x, _flyingKnight.body.position.y);
                 _this.scene.sound.play('enemyDeath');
                 _flyingKnight.destroy();
             }
-            else{}
+            else { }
         }
-        else if(_flyingKnight.direction == -1)
-        {
-            if(_this.body.position.x >= _flyingKnight.body.position.x)
-            {
+        else if (_flyingKnight.direction == -1) {
+            if (_this.body.position.x >= _flyingKnight.body.position.x) {
                 var enemyDeath = new enemyDeathPrefab(_this.scene, _flyingKnight.body.position.x, _flyingKnight.body.position.y);
                 _this.scene.sound.play('enemyDeath');
                 _flyingKnight.destroy();
             }
-            else{}
+            else { }
         }
     }
 
@@ -112,15 +107,23 @@ class spearPrefab extends Phaser.GameObjects.Sprite
         _crow.destroy();
     }
     
-    preUpdate(time,delta)
-    {
+
+    hasHitWoodyPig(_this, _woodyPig) {
+        _this.setActive(false);
+        _this.y += 500;
+        var enemyDeath = new enemyDeathPrefab(_this.scene, _woodyPig.body.position.x, _woodyPig.body.position.y);
+        _this.scene.sound.play('enemyDeath');
+        _woodyPig.destroy();
+    }
+
+    preUpdate(time, delta) {
         this.aliveTime = this.scene.time.addEvent(
             {
                 delay: 1000,
                 callback: this.destroy,
                 callbackScope: this,
                 repeat: 0
-            }   
+            }
         );
         
         super.preUpdate(time, delta);
