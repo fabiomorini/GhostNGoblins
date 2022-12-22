@@ -326,6 +326,12 @@ class playerPrefab extends actorPrefab {
                     this.isInvincible = false;
                     this.isAlive = false;
                 });
+
+                //Save Score
+                if(this.score > gamePrefs.topScore){
+                    gamePrefs.topScore = this.score;
+                }
+
                 //Musica de muerte de Arthur
                 if (!this.isAlive) {
                     this.scene.sound.play('arthurDeath');
