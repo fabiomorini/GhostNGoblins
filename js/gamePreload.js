@@ -40,21 +40,16 @@ class gamePreload extends Phaser.Scene
         this.load.audio('enemyDeath', 'ENEMYDEATH.wav');
         this.load.audio('projectileBlock', 'PROJECTILEBLOCK.wav');
         this.load.audio('flyingKnightAudio', 'FLYINGKNIGHT.wav');
+        this.load.audio('crow', 'CROW.wav');
+        this.load.audio('crowDeath', 'SMALLENEMYDEATH.wav');
+        this.load.audio('torch', 'TORCH.wav');
+        this.load.audio('treasurePickup', 'TREASUREPICKUP.wav');
+        this.load.audio('weaponPickup', 'WEAPONPICKUP.wav');
+        this.load.audio('woodyPig', 'WOODYPIG.wav');
+        this.load.audio('doorOpen', 'DOOROPEN.wav');
+        this.load.audio('bigEnemyWalk', 'BIGENEMYWALK.wav');
         this.load.audio('gameStart', 'GAMESTART.wav');
         this.load.audio('gameTheme', 'GNGTHEME.mp3');
-        this.load.audio('arthurJump', 'ARTHURJUMP.wav');
-        this.load.audio('arthurJump', 'ARTHURJUMP.wav');
-        this.load.audio('arthurJump', 'ARTHURJUMP.wav');
-        this.load.audio('arthurJump', 'ARTHURJUMP.wav');
-        this.load.audio('arthurJump', 'ARTHURJUMP.wav');
-        this.load.audio('arthurJump', 'ARTHURJUMP.wav');
-        this.load.audio('arthurJump', 'ARTHURJUMP.wav');
-        this.load.audio('arthurJump', 'ARTHURJUMP.wav');
-        this.load.audio('arthurJump', 'ARTHURJUMP.wav');
-        this.load.audio('arthurJump', 'ARTHURJUMP.wav');
-        this.load.audio('arthurJump', 'ARTHURJUMP.wav');
-        this.load.audio('arthurJump', 'ARTHURJUMP.wav');
-        this.load.audio('arthurJump', 'ARTHURJUMP.wav');
 
         //Cargamos los sprites del personaje
         this.load.setPath('assets/sprites/Arthur/');
