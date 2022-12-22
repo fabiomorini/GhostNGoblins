@@ -12,7 +12,9 @@ var gamePrefs=
     LEVEL1_HEIGHT:192,
     SPEAR_SPEED_: 220,
     MAX_BULLET_AMOUNT : 3,
-    MAX_FIRE_AMOUNT : 2
+    MAX_FIRE_AMOUNT : 2,
+    topScore: 10000,
+    highScores: []
 }
 
 var config =
@@ -38,7 +40,7 @@ var config =
         arcade:
         {
             gravity:{y:gamePrefs.GRAVITY},
-            debug:true
+            debug:false
         }
     }
 }
