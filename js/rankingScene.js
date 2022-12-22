@@ -3,13 +3,16 @@ class rankingScene extends Phaser.Scene
   constructor() {
     super({ key: "Highscore"});
 
+      
     this.padding = 25;
     this.topPadding = 260;
-
+      
+    console.log("1");
     this.add
-      .bitmapText(this.padding, this.topPadding, "arcade", "RANK  SCORE   NAME")
-      .setTint(0xff00ff);
-
+    .bitmapText(this.padding, this.topPadding, "arcade", "RANK  SCORE   NAME")
+    .setTint(0xff00ff);
+    
+      
     this.add
       .bitmapText(
         this.padding + 32 * 6,

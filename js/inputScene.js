@@ -1,7 +1,7 @@
-class InputPanel extends Phaser.Scene {
+class InputScene extends Phaser.Scene {
     constructor(data) {
       super({
-        key: "InputPanel"
+        key: "InputScene"
       });
   
       this.chars = [
@@ -10,27 +10,18 @@ class InputPanel extends Phaser.Scene {
         ["U", "V", "W", "X", "Y", "Z", ".", "-", "<", ">"]
       ];
   
-      /*this.chars = [
-        ["A", "B", "C", "D", "E"],
-        ["F", "G", "H", "I", "J"],
-        ["K", "L", "M", "N", "O"],
-        ["P", "Q", "R", "S", "T"],
-        ["U", "V", "W", "X", "Y"],
-        ["Z", ".", "-", "<", ">"]
-      ];*/
-  
       this.rows = this.chars.length;
       this.columns = this.chars[0].length;
-  
+      
       this.cursor = new Phaser.Math.Vector2();
-  
+      
       this.text;
       this.block;
-  
+      
       this.name = "";
       this.charLimit = 4;
     }
-  
+    
     create(data) {
       this.padding = data.padding;
       this.letterSpacing = 20;
@@ -47,12 +38,15 @@ class InputPanel extends Phaser.Scene {
           characters += "\n".repeat(lineHeight);
         }
       }
-  
-      let text = this.add.bitmapText(30 + this.padding, 50, "arcade", characters);
-  
+      
+      console.log("1");
+      var text = this.add.bitmapText(30 + this.padding, 50, "arcade", characters);
+      
+      console.log("2");
       text.setLetterSpacing(this.letterSpacing);
       text.setInteractive();
-  
+      console.log("3");
+      
       this.add.image(
         text.x +
           charWidth * (this.columns - 1) -
