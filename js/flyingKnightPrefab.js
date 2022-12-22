@@ -20,14 +20,27 @@ class flyingKnightPrefab extends actorPrefab {
             );
         this.body.setSize(15, 28, true);
 
+        console.log(_scene.sound)
+
+        _scene.flyingKnightAudio = _scene.sound.add('flyingKnightAudio');
+
+        setInterval(() =>
+        {
+            // Comprueba si el enemigo está en pantalla
+            if (this.x > 0 && this.x < this.scene.renderer.width && this.y > 0 && this.y < this.scene.renderer.height) {
+                if(!_scene.flyingKnightAudio.isPlaying){
+                    _scene.flyingKnightAudio.play();
+                }
+            } else {
+                if(!_scene.flyingKnightAudio.isPlaying){
+                    _scene.flyingKnightAudio.stop();
+                }
+            }
+        }, 100);
+
         // //Audio del Flying Knight
-        // var fkAudio = _scene.sound.play('flyingKnightAudio');
-        // console.log(fkAudio);
-        // fkAudio.loop = true;
-        // fkAudio.play();
+        // _scene.sound.play('flyingKnightAudio');
     }
-
-
 
     hit(_flyingKnight, _arthur) {
         if (_arthur.isInvincible == false) {
