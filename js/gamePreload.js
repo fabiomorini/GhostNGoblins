@@ -19,7 +19,10 @@ class gamePreload extends Phaser.Scene
         this.load.image('firstMountain','mountain01.png');
         this.load.image('mountainSides','F2MountainSides.png');
         this.load.image('ladders','F2Ladders.png');
-        this.load.image('tombs','tombs.png');
+        // this.load.image('tombs','tombs.png');
+        this.load.image('tomb01','tomb01.png');
+        this.load.image('tomb02','tomb02.png');
+        this.load.image('tomb03','tomb03.png');
         this.load.image('terrain','graveyardTerrain.png');
 
         this.load.setPath('assets/map/');
@@ -37,8 +40,8 @@ class gamePreload extends Phaser.Scene
         this.load.audio('enemyDeath', 'ENEMYDEATH.wav');
         this.load.audio('projectileBlock', 'PROJECTILEBLOCK.wav');
         this.load.audio('flyingKnightAudio', 'FLYINGKNIGHT.wav');
-        this.load.audio('arthurJump', 'ARTHURJUMP.wav');
-        this.load.audio('arthurJump', 'ARTHURJUMP.wav');
+        this.load.audio('gameStart', 'GAMESTART.wav');
+        this.load.audio('gameTheme', 'GNGTHEME.mp3');
         this.load.audio('arthurJump', 'ARTHURJUMP.wav');
         this.load.audio('arthurJump', 'ARTHURJUMP.wav');
         this.load.audio('arthurJump', 'ARTHURJUMP.wav');

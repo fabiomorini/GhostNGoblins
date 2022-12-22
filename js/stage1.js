@@ -25,26 +25,44 @@ class stage1 extends Phaser.Scene {
         this.flyingKnight = new flyingKnightPrefab(this, 400, 100);
         this.crow = new crowPrefab(this, 400, 160);
 
+        //Pintamos las tumbas
+        this.tombs = new Array(
+            new tombPrefab(this, 1*32+16+1, 5*32+16+1),
+            new tombPrefab(this, 7*32+16+1, 5*32+16+1, "tomb02"),
+            new tombPrefab(this, 12*32+16+1, 5*32+16+1),
+            new tombPrefab(this, 16*32+16+1, 5*32+16+1),
+            new tombPrefab(this, 23*32+16+1, 5*32+16+1),
+            new tombPrefab(this, 30*32+16+1, 5*32+16+1),
+            new tombPrefab(this, 34*32+16+1, 5*32+16+1),
+            new tombPrefab(this, 39*32+16+1, 5*32+16+1),
+            new tombPrefab(this, 46*32+16+1, 5*32+16+1),
+            new tombPrefab(this, 23*32+16+16, 2*32+16+17),
+            new tombPrefab(this, 26*32+16+16, 2*32+16+17),
+            new tombPrefab(this, 29*32+16+16, 2*32+16+17));
+
         //Camaras
         this.cameras.main.startFollow(this.arthur);
         this.cameras.main.setBounds(0, 0, gamePrefs.LEVEL1_WIDTH, gamePrefs.LEVEL1_HEIGHT);
-
-        console.log(this);
         
         //TMP mecago en todo q   uew molestO A WDOAWIDHAW
-        this.sound.volume = 0;
+        this.sound.volume = 1;
+
+        this.gameStart = this.sound.add('gameStart');
+        this.gameTheme = this.sound.add('gameTheme');
+        //this.sound.
+        
+        this.gameStart.play();
+        this.hasPlayed = false;
     }
 
     update()
     {
-        if (this.tombs1F.culledTiles.length > 0) {
-            var tiles = this.tombs1F;
-
-            //debug.body(this.tombs1F);
-            //console.log(tiles);
-            //tiles.tileSet.setCollisionBounds(8,8,8,8);
-            //tiles.body.setSize(1, 1, true);
-          }
+        if(!this.gameStart.isPlaying && !this.hasPlayed)
+        {
+            this.gameTheme.play()
+            this.gameTheme.setLoop(true);
+            this.hasPlayed = true;
+        }
     }
 
     loadAnimations() {

@@ -5,17 +5,11 @@ class spearPrefab extends Phaser.GameObjects.Sprite
         super(_scene,_posX,_posY,_tag);
             _scene.add.existing(this); 
 
+            console.log (this);
         _scene.physics.add.collider
         (
             this,
-            _scene.tombs1F,
-            this.hasHitTomb
-        );
-
-        _scene.physics.add.collider
-        (
-            this,
-            _scene.tombs2F,
+            _scene.tombs,
             this.hasHitTomb
         );
 

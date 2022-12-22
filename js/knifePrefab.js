@@ -8,14 +8,7 @@ class knifePrefab extends Phaser.GameObjects.Sprite
         _scene.physics.add.collider
         (
             this,
-            _scene.tombs1F,
-            this.hasHitTomb
-        );
-
-        _scene.physics.add.collider
-        (
-            this,
-            _scene.tombs2F,
+            _scene.tombs,
             this.hasHitTomb
         );
 

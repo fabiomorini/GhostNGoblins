@@ -22,8 +22,7 @@ class zombiePrefab extends actorPrefab {
             null,
             this
         );
-
-        console.log(this.body);
+        
         this.body.setSize(15, 30, true)
     }
 
