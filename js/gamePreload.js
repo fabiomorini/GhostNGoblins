@@ -87,7 +87,7 @@ class gamePreload extends Phaser.Scene
 
         //Cargamos las fuentes
         this.load.bitmapFont(
-            "arcade",
+            "arcadeFont",
             "../assets/fonts/arcade.png",
             "../assets/fonts/arcade.xml"
           );
@@ -100,6 +100,6 @@ class gamePreload extends Phaser.Scene
 
     startGame()
     {
-        this.scene.start('stage1');
+        this.scene.start('rankingScene');
     }
 }
