@@ -8,6 +8,7 @@ class crowPrefab extends actorPrefab {
         this.sinus = -1;
         this.ascendent = true;
         this.gethit = false;
+        this.crowSlipped = true;
         
         this.anims.play('crowIdle', true);
         this.body.setAllowGravity(false);
@@ -41,6 +42,11 @@ class crowPrefab extends actorPrefab {
         {
             this.isMoving = true;
             this.anims.play('crowFly', true);
+            if(this.crowSlipped)
+            {
+                this.scene.sound.play('crow');
+                this.crowSlipped = false;
+            }
         }
     }
 
