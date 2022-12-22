@@ -8,7 +8,7 @@ class flyingKnightPrefab extends actorPrefab {
         this.sinus = -1;
         this.ascendent = true;
         this.gethit = false;
-        this.anims.play('flyingKnightIddle', true)
+        this.anims.play('flyingKnightIddle', true);
         this.body.setAllowGravity(false);
         _scene.physics.add.overlap
             (
@@ -38,30 +38,29 @@ class flyingKnightPrefab extends actorPrefab {
     }
 
 
-    preUpdate(time,delta)
-    {
-        if(this.direction == 1)
+    preUpdate(time, delta) {
+        if (this.direction == 1)
             this.setFlipX(true);
-        else 
+        else
             this.setFlipX(false);
 
         //Calculo para poder cambiar el movimiento del knight de arriba a abajo
-        if(this.sinus <= -1)
+        if (this.sinus <= -1)
             this.ascendent = true;
-        else if( this.sinus >= 1)
+        else if (this.sinus >= 1)
             this.ascendent = false;
 
         //Calculo para poder mover el knight de posicion frame a frame.
-        if(this.ascendent)
+        if (this.ascendent)
             this.sinus = this.sinus + 0.05;
-        else 
+        else
             this.sinus = this.sinus - 0.05;
 
 
         this.body.setVelocityX(this.direction * gamePrefs.ENEMY_SPEED);
         this.body.velocity.y = gamePrefs.FLYINGKNIGHT_HEIGHT * Math.sin(this.sinus);
-    
-    super.preUpdate(time,delta);
+
+        super.preUpdate(time, delta);
     }
 
 }

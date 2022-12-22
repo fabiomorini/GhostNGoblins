@@ -15,14 +15,15 @@ class zombiePrefab extends actorPrefab {
         this.spawningSound = true;
         this.scene = _scene;
         _scene.physics.add.overlap
-        (
-            this,
-            _scene.arthur,
-            this.hit,
-            null,
-            this
-        );
-        
+            (
+                this,
+                _scene.arthur,
+                this.hit,
+                null,
+                this
+            );
+
+        console.log(this.body);
         this.body.setSize(15, 30, true)
     }
 
@@ -36,9 +37,9 @@ class zombiePrefab extends actorPrefab {
 
     preUpdate(time, delta) {
 
-        if(this.direction == 1)
+        if (this.direction == 1)
             this.setFlipX(true);
-        else 
+        else
             this.setFlipX(false);
 
         this.dist = Phaser.Math.Distance.Between(this.body.position.x, 0, this.startingPos, 0)
@@ -56,8 +57,8 @@ class zombiePrefab extends actorPrefab {
                 this.anims.play('zombieRun', true);
                 this.spawningSound = true;
             }
-            else{
-                if(this.spawningSound){
+            else {
+                if (this.spawningSound) {
                     this.scene.sound.play('zombieSpawn');
                     this.spawningSound = false;
                 }
