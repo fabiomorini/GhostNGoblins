@@ -3,16 +3,16 @@ class rankingScene extends Phaser.Scene
   constructor() {
     super({ key: "rankingScene"});
 
-      
+  }
+   
+  create()
+  {
     this.padding = 25;
     this.topPadding = 260;
       
-    console.log("1");
     this.add
     .bitmapText(this.padding, this.topPadding, "arcadeFont", "RANK  SCORE   NAME")
     .setTint(0xff00ff);
-    
-    console.log("2");
       
     this.add
       .bitmapText(
@@ -24,14 +24,14 @@ class rankingScene extends Phaser.Scene
       .setTint(0x0261c7);
 
     this.playerText = this.add
-      .bitmapText(32 * 14 + this.padding, 50 + this.topPadding, "arcade", "")
+      .bitmapText(32 * 14 + this.padding, 50 + this.topPadding, "arcadeFont", "")
       .setTint(0x0261c7);
 
     this.input.keyboard.enabled = false;
 
     this.scene.launch("InputPanel", { padding: this.padding });
 
-    let panel = this.scene.get("InputPanel");
+    var panel = this.scene.get("InputScene");
 
     panel.events.on("updateName", this.updateName, this);
     panel.events.on("submitName", this.submitName, this);

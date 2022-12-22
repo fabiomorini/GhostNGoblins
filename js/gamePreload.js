@@ -88,8 +88,8 @@ class gamePreload extends Phaser.Scene
         //Cargamos las fuentes
         this.load.bitmapFont(
             "arcadeFont",
-            "../assets/fonts/arcade.png",
-            "../assets/fonts/arcade.xml"
+            "../../font/arcade.png",
+            "../../font/arcade.xml"
           );
     }
 
