@@ -106,7 +106,7 @@ class knifePrefab extends Phaser.GameObjects.Sprite
         _this.setActive(false);
         _this.y += 500;
         var enemyDeath = new enemyDeathPrefab(_this.scene, _crow.body.position.x, _crow.body.position.y);
-        _this.scene.sound.play('enemyDeath');
+        _this.scene.sound.play('crowDeath');
         _crow.destroy();
     }
     

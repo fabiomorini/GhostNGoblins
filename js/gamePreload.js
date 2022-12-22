@@ -37,17 +37,19 @@ class gamePreload extends Phaser.Scene
         this.load.audio('arthurDeath', 'ARTHURDEATH.wav');
         this.load.audio('armorPickup', 'ARMORPICKUP.wav');
         this.load.audio('zombieSpawn', 'ZOMBIESPAWN.wav');
-        this.load.audio('enemyDeath', 'ENEMYDEATH.wav');
-        this.load.audio('projectileBlock', 'PROJECTILEBLOCK.wav');
-        this.load.audio('flyingKnightAudio', 'FLYINGKNIGHT.wav');
+        this.load.audio('torch', 'TORCH.wav'); //Explosion de las antorchas //Por añadir en el código
         this.load.audio('crow', 'CROW.wav');
+        this.load.audio('woodyPig', 'WOODYPIG.wav'); //Por añadir en el código
+        this.load.audio('enemyDeath', 'ENEMYDEATH.wav');
         this.load.audio('crowDeath', 'SMALLENEMYDEATH.wav');
-        this.load.audio('torch', 'TORCH.wav');
-        this.load.audio('treasurePickup', 'TREASUREPICKUP.wav');
-        this.load.audio('weaponPickup', 'WEAPONPICKUP.wav');
-        this.load.audio('woodyPig', 'WOODYPIG.wav');
-        this.load.audio('doorOpen', 'DOOROPEN.wav');
-        this.load.audio('bigEnemyWalk', 'BIGENEMYWALK.wav');
+        this.load.audio('projectileBlock', 'PROJECTILEBLOCK.wav');
+        this.load.audio('flyingKnightAudio', 'FLYINGKNIGHT.wav'); //Debe sonar en bucle mientras exista en pantalla //Por añadir en el código
+        this.load.audio('treasurePickup', 'TREASUREPICKUP.wav'); //Recoger objeto //Por añadir en el código
+        this.load.audio('weaponPickup', 'WEAPONPICKUP.wav'); //Recoger arma //Por añadir en el código
+        this.load.audio('doorOpen', 'DOOROPEN.wav'); //Abrir puerta //Por añadir en el código
+        this.load.audio('bigEnemyWalk', 'BIGENEMYWALK.wav'); //Boss moviendose //Por añadir en el código
+
+        //Cargamos la musica
         this.load.audio('gameStart', 'GAMESTART.wav');
         this.load.audio('gameTheme', 'GNGTHEME.mp3');
 
