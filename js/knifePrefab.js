@@ -37,6 +37,12 @@ class knifePrefab extends Phaser.GameObjects.Sprite {
                 _scene.flyingKnight,
                 this.hasHitKnight
             );
+            _scene.physics.add.collider
+            (
+                this,
+                _scene.woodyPig,
+                this.hasHitWoodyPig
+            );
 
         this.aliveTime = 0;
     }
@@ -88,6 +94,14 @@ class knifePrefab extends Phaser.GameObjects.Sprite {
             }
             else { }
         }
+    }
+
+    hasHitWoodyPig(_this, _woodyPig) {
+        _this.setActive(false);
+        _this.y += 500;
+        var enemyDeath = new enemyDeathPrefab(_this.scene, _woodyPig.body.position.x, _woodyPig.body.position.y);
+        _this.scene.sound.play('enemyDeath');
+        _woodyPig.destroy();
     }
 
     preUpdate(time, delta) {
