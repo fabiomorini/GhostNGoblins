@@ -38,7 +38,7 @@ class crowPrefab extends actorPrefab {
 
     checkDistance()
     {
-        if(Phaser.Math.Distance.BetweenPoints(this,this.scene.arthur) < 200)
+        if(Phaser.Math.Distance.BetweenPoints(this,this.scene.arthur) < 100)
         {
             this.isMoving = true;
             this.anims.play('crowFly', true);

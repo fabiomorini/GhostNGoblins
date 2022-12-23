@@ -17,14 +17,16 @@ class greenMonsterPrefab extends actorPrefab {
                 this
             );
         var numberTimer = _scene.time.addEvent
-            (
-                {
-                    delay: 2000, //ms
-                    callback: this.makeRandom,
-                    callbackScope: this,
-                    loop: true
-                }
-            );
+        (
+            {
+                delay:2000, //ms
+                callback:this.makeRandom,
+                callbackScope: this,
+                loop: true
+            } 
+        );
+        
+        this.anims.play('greenMonsterIddle', true);
 
         this.loadPools();
 
@@ -45,35 +47,23 @@ class greenMonsterPrefab extends actorPrefab {
         this.bullet = this.scene.physics.add.group();
     }
 
-
-    /*
-
-        PREGUNTAR AL RICHARD POR QUE A VECES SI QUE FUNCIONA EL THIS.ON() (ZOMBIE) PERO OTRAS NO, GREENMONSTER / PLAYER.
-
-    */
-    preUpdate(time, delta) {
-        if (this.direction == 1)
+    preUpdate(time,delta)
+    {
+        if(this.direction == 1)
             this.setFlipX(true);
         else
             this.setFlipX(false);
 
-        if (Phaser.Math.Distance.BetweenPoints(this, this.scene.arthur) < 200) {
-            if (this.randNum == 1) {
-                this.anims.play('greenMonsterIddle', true);
-            }
-            else if (this.randNum == 3) {
-                this.anims.play('greenMonsterAttack', true);
-                this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-                    this.anims.stop();
-                    this.attack();
-                });
-
-            }
-            else
-                this.anims.stop().setFrame(0);
-        }
-
-        super.preUpdate(time, delta);
+        if(Phaser.Math.Distance.BetweenPoints(this,this.scene.arthur) < 100)
+        {
+            this.anims.play('greenMonsterAttack', true);
+            this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, ()=> {
+                this.anims.stop();
+                this.attack();
+            }); 
+        }        
+    
+    super.preUpdate(time,delta);
     }
 
     //THIS FUNCTION GETS CALLED BY THE TIMER EVERY 0.8SEC USED BY THE GREEN MOSTER TO DECIDE IF HE SHOOTS OR NOT. 

@@ -79,7 +79,14 @@ class gamePreload extends Phaser.Scene {
         this.load.image("spear", "Spear.png");
         this.load.image("knife", "Knife.png");
         this.load.spritesheet("fire", "Fire projectile animation.png",
-            { frameWidth: 32, frameHeight: 16 });
+        {frameWidth:32,frameHeight:16});
+
+        //Cargamos las fuentes
+        this.load.bitmapFont(
+            "arcadeFont",
+            "../../font/arcade.png",
+            "../../font/arcade.xml"
+          );
     }
 
     create() {
