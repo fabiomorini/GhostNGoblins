@@ -37,9 +37,6 @@ class flyingKnightPrefab extends actorPrefab {
                 }
             }
         }, 100);
-
-        // //Audio del Flying Knight
-        // _scene.sound.play('flyingKnightAudio');
     }
 
     hit(_flyingKnight, _arthur) {
