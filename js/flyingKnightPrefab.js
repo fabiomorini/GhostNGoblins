@@ -26,7 +26,8 @@ class flyingKnightPrefab extends actorPrefab {
 
         setInterval(() =>
         {
-            // Comprueba si el enemigo está en pantalla
+            // Comprueba si el enemigo está en pantalla.
+            // Si no funciona bien, habrá que sacar esto a Scene1, iterar el array de enemigos y ejecutar esto si aún existe.
             if (this.x > 0 && this.x < this.scene.renderer.width && this.y > 0 && this.y < this.scene.renderer.height) {
                 if(!_scene.flyingKnightAudio.isPlaying){
                     _scene.flyingKnightAudio.play();
