@@ -100,6 +100,6 @@ class gamePreload extends Phaser.Scene {
     }
 
     startGame() {
-        this.scene.start('InputScene');
+        this.scene.start('stage1');
     }
 }
