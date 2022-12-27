@@ -82,10 +82,16 @@ class gamePreload extends Phaser.Scene {
         {frameWidth:32,frameHeight:16});
 
         //Cargamos las fuentes
+        this.load.setPath('assets/font/');
+
+        this.load.image("outline", "outline.png");
+        this.load.image("del", "del.png");
+        this.load.image("end", "end.png");
+
         this.load.bitmapFont(
             "arcadeFont",
-            "../../font/arcade.png",
-            "../../font/arcade.xml"
+            "arcade.png",
+            "arcade.xml"
           );
     }
 
@@ -94,6 +100,6 @@ class gamePreload extends Phaser.Scene {
     }
 
     startGame() {
-        this.scene.start('stage1');
+        this.scene.start('InputScene');
     }
 }

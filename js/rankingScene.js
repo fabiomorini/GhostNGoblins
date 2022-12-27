@@ -29,7 +29,7 @@ class rankingScene extends Phaser.Scene
 
     this.input.keyboard.enabled = false;
 
-    this.scene.launch("InputPanel", { padding: this.padding });
+    this.scene.launch("InputPanel");
 
     var panel = this.scene.get("InputScene");
 

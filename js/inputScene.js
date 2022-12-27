@@ -12,23 +12,28 @@ class InputScene extends Phaser.Scene {
   
       this.rows = this.chars.length;
       this.columns = this.chars[0].length;
-      
       this.cursor = new Phaser.Math.Vector2();
-      
       this.text;
-      this.block;
-      
+      this.outline;
       this.name = "";
       this.charLimit = 4;
     }
     
-    create(data) {
-      this.padding = data.padding;
-      this.letterSpacing = 20;
-      var charWidth = 32;
-      var charHeight = 32;
+    create() {
+
+      this.add.bitmapText(
+        this.padding + 32 * 6,
+        50 + this.topPadding,
+        "arcadeFont",
+        "50000"
+      );
+
+      this.padding = 5;
+      this.letterSpacing = 10;
+      var charWidth = 16;
+      var charHeight = 16;
       var lineHeight = 2;
-      this.xSpacing = charWidth + this.letterSpacing;
+      this.xSpacing = charWidth + 5;
       this.ySpacing = charHeight * lineHeight;
   
       var characters = "";
@@ -39,166 +44,127 @@ class InputScene extends Phaser.Scene {
         }
       }
       
-      console.log("1");
-      var text = this.add.bitmapText(30 + this.padding, 50, "arcade", characters);
-      
-      console.log("2");
+      // Creamos el texto pixel art
+      var text = this.add.bitmapText(20 + this.padding, 20, "arcadeFont", characters);
+      text.fontSize = 16;
       text.setLetterSpacing(this.letterSpacing);
       text.setInteractive();
-      console.log("3");
-      
+  
+      //Cargamos el botón de borrar
       this.add.image(
         text.x +
           charWidth * (this.columns - 1) -
-          20 +
+          44 +
           this.letterSpacing * (this.columns - 2),
-        text.y + charWidth * (lineHeight * (this.chars.length - 1)) + 20,
-        "rub"
+        text.y + charWidth * (lineHeight * (this.chars.length - 1)) + 11,
+        "del"
       );
+
+      //Cargamos el botón de finalizar
       this.add.image(
         text.x +
           charWidth * this.columns -
-          20 +
+          48 +
           this.letterSpacing * (this.columns - 1),
-        text.y + charWidth * (lineHeight * (this.chars.length - 1)) + 20,
+        text.y + charWidth * (lineHeight * (this.chars.length - 1)) + 11,
         "end"
       );
   
-      this.block = this.add.image(text.x - 10, text.y - 2, "block").setOrigin(0);
-  
+      // Cargamos el outline de los caracteres
+      this.outline = this.add.image(text.x - 5, text.y - 2, "outline").setOrigin(0);
+      this.outline.setScale(.5);
       this.text = text;
-  
-      this.input.keyboard.on("keyup_LEFT", this.moveLeft, this);
-      this.input.keyboard.on("keyup_RIGHT", this.moveRight, this);
-      this.input.keyboard.on("keyup_UP", this.moveUp, this);
-      this.input.keyboard.on("keyup_DOWN", this.moveDown, this);
-      this.input.keyboard.on("keyup_ENTER", this.pressKey, this);
-      this.input.keyboard.on("keyup_SPACE", this.pressKey, this);
-      this.input.keyboard.on("keyup", this.anyKey, this);
-  
-      text.on("pointermove", this.moveBlock, this);
-      text.on("pointerup", this.pressKey, this);
-  
+        
+      // Animación de fundido del outline 
       this.tweens.add({
-        targets: this.block,
+        targets: this.outline,
         alpha: 0.2,
         yoyo: true,
         repeat: -1,
         ease: "Sine.easeInOut",
         duration: 350
       });
+      text.on("pointermove", this.moveBlock, this);
+      text.on("pointerup", this.pressKey, this);
     }
   
     moveBlock(pointer, x, y) {
-      let cx = Phaser.Math.Snap.Floor(x, this.xSpacing, 0, true);
-      let cy = Phaser.Math.Snap.Floor(y, this.ySpacing, 0, true);
+      var cx = Phaser.Math.Snap.Floor(x, this.xSpacing, 0, true);
+      var cy = Phaser.Math.Snap.Floor(y, this.ySpacing, 0, true);
   
       if (cy <= this.rows - 1 && cx <= this.columns - 1) {
         this.cursor.set(cx, cy);
   
-        this.block.x = this.text.x - 10 + cx * this.xSpacing;
-        this.block.y = this.text.y - 2 + cy * this.ySpacing;
+        this.outline.x = this.text.x - this.padding + cx * this.xSpacing;
+        this.outline.y = this.text.y - 2 + cy * this.ySpacing;
       }
     }
   
     moveLeft() {
       if (this.cursor.x > 0) {
         this.cursor.x--;
-        this.block.x -= this.xSpacing;
+        this.outline.x -= this.xSpacing;
       } else {
         this.cursor.x = 9;
-        this.block.x += this.xSpacing * 9;
+        this.outline.x += this.xSpacing * 9;
       }
     }
   
     moveRight() {
       if (this.cursor.x < 9) {
         this.cursor.x++;
-        this.block.x += this.xSpacing;
+        this.outline.x += this.xSpacing;
       } else {
         this.cursor.x = 0;
-        this.block.x -= this.xSpacing * 9;
+        this.outline.x -= this.xSpacing * 9;
       }
     }
   
     moveUp() {
       if (this.cursor.y > 0) {
         this.cursor.y--;
-        this.block.y -= this.ySpacing;
+        this.outline.y -= this.ySpacing;
       } else {
         this.cursor.y = 2;
-        this.block.y += this.ySpacing * 2;
+        this.outline.y += this.ySpacing * 2;
       }
     }
   
     moveDown() {
       if (this.cursor.y < 2) {
         this.cursor.y++;
-        this.block.y += this.ySpacing;
+        this.outline.y += this.ySpacing;
       } else {
         this.cursor.y = 0;
-        this.block.y -= this.ySpacing * 2;
-      }
-    }
-  
-    anyKey(event) {
-      //  Only allow A-Z . and -
-  
-      let code = event.keyCode;
-  
-      if (code === Phaser.Input.Keyboard.KeyCodes.PERIOD) {
-        this.cursor.set(6, 2);
-        this.pressKey();
-      } else if (code === Phaser.Input.Keyboard.KeyCodes.MINUS) {
-        this.cursor.set(7, 2);
-        this.pressKey();
-      } else if (
-        code === Phaser.Input.Keyboard.KeyCodes.BACKSPACE ||
-        code === Phaser.Input.Keyboard.KeyCodes.DELETE
-      ) {
-        this.cursor.set(8, 2);
-        this.pressKey();
-      } else if (
-        code >= Phaser.Input.Keyboard.KeyCodes.A &&
-        code <= Phaser.Input.Keyboard.KeyCodes.Z
-      ) {
-        code -= 65;
-  
-        let y = Math.floor(code / 10);
-        let x = code - y * 10;
-  
-        this.cursor.set(x, y);
-        this.pressKey();
+        this.outline.y -= this.ySpacing * 2;
       }
     }
   
     pressKey() {
-      let x = this.cursor.x;
-      let y = this.cursor.y;
-      let nameLength = this.name.length;
+      var x = this.cursor.x;
+      var y = this.cursor.y;
+      var nameLength = this.name.length;
   
-      this.block.x = this.text.x - 10 + x * this.xSpacing;
-      this.block.y = this.text.y - 2 + y * this.ySpacing;
+      this.outline.x = this.text.x - this.padding + x * this.xSpacing;
+      this.outline.y = this.text.y - 2 + y * this.ySpacing;
   
       if (x === this.columns - 1 && y === this.rows - 1 && nameLength > 0) {
         //  Submit
         this.events.emit("submitName", this.name);
-      } else if (
-        x === this.columns - 2 &&
-        y === this.rows - 1 &&
-        nameLength > 0
-      ) {
-        //  Rub
+      } 
+      else if (  x === this.columns - 2 &&  y === this.rows - 1 && nameLength > 0) {
+        // Return
         this.name = this.name.substr(0, nameLength - 1);
-  
         this.events.emit("updateName", this.name);
-      } else if (this.name.length < this.charLimit) {
-        //  Add
+      } 
+      else if (this.name.length < this.charLimit) {
+        // Concadenamos las letras
         this.name = this.name.concat(this.chars[y][x]);
-  
         this.events.emit("updateName", this.name);
       }
     }
   
-    update(time, delta) {}
+    update(time, delta) {
+      
+    }
   }
