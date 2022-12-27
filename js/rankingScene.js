@@ -7,38 +7,10 @@ class rankingScene extends Phaser.Scene
    
   create()
   {
-    this.padding = 25;
-    this.topPadding = 260;
-      
-    this.add
-    .bitmapText(this.padding, this.topPadding, "arcadeFont", "RANK  SCORE   NAME")
-    .setTint(0xff00ff);
-      
-    this.add
-      .bitmapText(
-        this.padding + 32 * 6,
-        50 + this.topPadding,
-        "arcadeFont",
-        "50000"
-      )
-      .setTint(0x0261c7);
 
-    this.playerText = this.add
-      .bitmapText(32 * 14 + this.padding, 50 + this.topPadding, "arcadeFont", "")
-      .setTint(0x0261c7);
-
-    this.input.keyboard.enabled = false;
-
-    this.scene.launch("InputPanel", { padding: this.padding });
-
-    var panel = this.scene.get("InputScene");
-
-    panel.events.on("updateName", this.updateName, this);
-    panel.events.on("submitName", this.submitName, this);
   }
 
   submitName() {
-    this.scene.stop("InputPanel");
 
     this.add
       .bitmapText(
@@ -81,9 +53,5 @@ class rankingScene extends Phaser.Scene
         "5TH   10000   ZIK"
       )
       .setTint(0x00bfff);
-  }
-
-  updateName(name) {
-    this.playerText.setText(name);
   }
 }
