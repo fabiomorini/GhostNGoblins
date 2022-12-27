@@ -50,6 +50,12 @@ class InputScene extends Phaser.Scene {
       text.setLetterSpacing(this.letterSpacing);
       text.setInteractive();
   
+      // Creamos el texto con el nombre del jugador
+      this.playerText = this.add
+      .bitmapText(100, 150, "arcadeFont", "")
+      .setTint(0xff0000)
+      .setScale(.5);
+
       //Cargamos el botón de borrar
       this.add.image(
         text.x +
@@ -154,16 +160,22 @@ class InputScene extends Phaser.Scene {
       } 
       else if (  x === this.columns - 2 &&  y === this.rows - 1 && nameLength > 0) {
         // Return
-        this.name = this.name.substr(0, nameLength - 1);
-        this.events.emit("updateName", this.name);
+        this.name = this.name.substring(0, nameLength - 1);
+        this.updateName(this.name)
       } 
       else if (this.name.length < this.charLimit) {
         // Concadenamos las letras
         this.name = this.name.concat(this.chars[y][x]);
-        this.events.emit("updateName", this.name);
+        this.updateName(this.name)
       }
+
     }
-  
+    
+    updateName(name)
+    {
+      this.playerText.setText(name);      
+    }
+
     update(time, delta) {
       
     }
