@@ -268,6 +268,12 @@ class playerPrefab extends actorPrefab {
         }
     }
 
+    deathByFall(){
+        if(this.y > 178){
+            console.log("F");
+        }
+    }
+
     changeMountainCollisions(){
         if(!this.scene.allMountainCollisionsAreModified && this.x > 520){
             var tiles = this.scene.terrain2F.culledTiles
@@ -283,13 +289,6 @@ class playerPrefab extends actorPrefab {
             if(this.x >= 1140){
                 this.scene.allMountainCollisionsAreModified = true;
             }
-        }
-    }
-
-    touchWater(_player, _water) {
-        var tile = this.scene.water.getTileAtWorldXY(this.x, this.y);
-        if (tile != null && tile.index != 0) {
-            console.log("Funciona");
         }
     }
 

@@ -47,7 +47,6 @@ class stage1 extends Phaser.Scene {
 
         this.gameStart = this.sound.add('gameStart');
         this.gameTheme = this.sound.add('gameTheme');
-        //this.sound.
         
         this.gameStart.play();
         this.hasPlayed = false;
