@@ -295,222 +295,229 @@ class playerPrefab extends actorPrefab {
         
     }
 
-    preUpdate(time, delta) {
-        this.resizeCollision();
-        this.checkArmour();
-        this.resetAttackAnim();
-        if (this.tookDamage) {
-            if (this.health == 1) {
-                if (this.direction == 1) this.body.velocity.x = -256;
-                else this.body.velocity.x = 256;
-
-                this.body.velocity.y = -300;
-                this.anims.stop().setFrame(32);
-                var b_armour = new breakArmourPrefab(this.scene, this.body.position.x, this.body.position.y);
-                var invincibleTimer = this.scene.time.addEvent({
-                    delay: 1500, //ms
-                    callback: this.endInvincibility,
-                    callbackScope: this,
-                    loop: false
-                });
-                if (this.direction == 1) {
-                    b_armour.setFlipX(false);
-                }
-                else if (this.direction == -1) {
-                    b_armour.setFlipX(true);
-                }
-                this.tookDamage = false;
-                this.scene.sound.play('arthurHit');
-            }
-            else if (this.health <= 0) {
-                //DIE ANIMATION.
-                this.body.setVelocityX(0);
-                this.body.setVelocityY(0);
-                this.anims.play('die', true);
-                this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-                    this.body.reset(65, 100);
-                    this.scene.cameras.main.shake(500, 0.05);
-                    this.scene.cameras.main.flash(500, 255, 0, 0);
-                    this.health = 2;
-                    this.tookDamage = false;
-                    this.isInvincible = false;
-                    this.isAlive = false;
-                });
-
-                //Save Score
-                if(this.score > gamePrefs.topScore){
-                    gamePrefs.topScore = this.score;
-                }
-
-                //Musica de muerte de Arthur
-                if (!this.isAlive) {
-                    this.scene.sound.play('arthurDeath');
-                    this.isAlive = true;
-                }
-            }
-        }
-        else {
-            if (this.hasArmour) {
-                if (this.isAttacking) {
-                    if (this.cursorKeys.down.isDown) {
-                        this.anims.play('throwCrouch', true);
-                        this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-                            this.anims.stop().setFrame(7);
-                        });
-                    }
-                    else {
-                        if (this.body.onFloor())
-                            this.body.setVelocityX(0);
-                        this.anims.play('throw', true);
-                        this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-                            this.anims.stop().setFrame(4);
-                        });
-                    }
+    playerMovement(){
+        if (this.hasArmour) {
+            if (this.isAttacking) {
+                if (this.cursorKeys.down.isDown) {
+                    this.anims.play('throwCrouch', true);
+                    this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+                        this.anims.stop().setFrame(7);
+                    });
                 }
                 else {
-                    if (this.cursorKeys.down.isDown) {
+                    if (this.body.onFloor())
                         this.body.setVelocityX(0);
-                        this.anims.stop().setFrame(7);
+                    this.anims.play('throw', true);
+                    this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+                        this.anims.stop().setFrame(4);
+                    });
+                }
+            }
+            else {
+                if (this.cursorKeys.down.isDown) {
+                    this.body.setVelocityX(0);
+                    this.anims.stop().setFrame(7);
+                }
+                else if (this.body.onFloor()) {
+                    //Left
+                    if (this.cursorKeys.left.isDown) {
+                        this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED);
+                        this.setFlipX(true);
+                        this.anims.play('run', true);
+                        this.direction = -1;
+                        this.changeMountainCollisions();
                     }
-                    else if (this.body.onFloor()) {
-                        //Left
-                        if (this.cursorKeys.left.isDown) {
-                            this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED);
-                            this.setFlipX(true);
-                            this.anims.play('run', true);
-                            this.direction = -1;
-                            this.changeMountainCollisions();
-                        }
-                        //Right
-                        else if (this.cursorKeys.right.isDown) {
-                            this.body.setVelocityX(gamePrefs.ARTHUR_SPEED);
-                            this.setFlipX(false);
-                            this.anims.play('run', true);
-                            this.direction = 1;
-                            this.changeMountainCollisions();
-                        }
-                        else {
-                            this.body.setVelocityX(0);
-                            this.anims.stop().setFrame(4);
-                        }
+                    //Right
+                    else if (this.cursorKeys.right.isDown) {
+                        this.body.setVelocityX(gamePrefs.ARTHUR_SPEED);
+                        this.setFlipX(false);
+                        this.anims.play('run', true);
+                        this.direction = 1;
+                        this.changeMountainCollisions();
+                    }
+                    else {
+                        this.body.setVelocityX(0);
+                        this.anims.stop().setFrame(4);
+                    }
 
-                        //Jump
-                        if (this.cursorKeys.up.isDown &&
-                            this.body.blocked.down &&
-                            Phaser.Input.Keyboard.DownDuration(this.cursorKeys.up, 250)) {
-                            this.body.setVelocityY(-gamePrefs.ARTHUR_JUMP);
-                            this.scene.sound.play('arthurJump');
-                        }
-                        else if (this.cursorKeys.up.isDown &&
-                            this.body.blocked.down && this.cursorKeys.up.isDown) {
-                            this.body.setAllowGravity(false);
-                            this.body.setMaxVelocityX(0);
-                            this.body.setMaxVelocityX(gamePrefs.ARTHUR_SPEED);
-                            this.body.setVelocityY(-gamePrefs.ARTHUR_SPEED);
-                        }
+                    //Jump
+                    if (this.cursorKeys.up.isDown &&
+                        this.body.blocked.down &&
+                        Phaser.Input.Keyboard.DownDuration(this.cursorKeys.up, 250)) {
+                        this.body.setVelocityY(-gamePrefs.ARTHUR_JUMP);
+                        this.scene.sound.play('arthurJump');
+                    }
+                    else if (this.cursorKeys.up.isDown &&
+                        this.body.blocked.down && this.cursorKeys.up.isDown) {
+                        this.body.setAllowGravity(false);
+                        this.body.setMaxVelocityX(0);
+                        this.body.setMaxVelocityX(gamePrefs.ARTHUR_SPEED);
+                        this.body.setVelocityY(-gamePrefs.ARTHUR_SPEED);
+                    }
+                }
+
+                if (!this.body.onFloor() && !this.isAttacking) {
+                    if (this.cursorKeys.right.isDown || this.cursorKeys.left.isDown) {
+                        this.anims.stop().setFrame(5);
                     }
 
                     if (!this.body.onFloor() && !this.isAttacking) {
                         if (this.cursorKeys.right.isDown || this.cursorKeys.left.isDown) {
                             this.anims.stop().setFrame(5);
                         }
-
-                        if (!this.body.onFloor() && !this.isAttacking) {
-                            if (this.cursorKeys.right.isDown || this.cursorKeys.left.isDown) {
-                                this.anims.stop().setFrame(5);
-                            }
-                            else {
-                                this.anims.stop().setFrame(6);
-                            }
+                        else {
+                            this.anims.stop().setFrame(6);
                         }
                     }
                 }
             }
-            else {
-                if (this.isAttacking) {
-                    if (this.cursorKeys.down.isDown) {
-                        this.anims.play('throwCrouchNaked', true);
-                        this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-                            this.anims.stop().setFrame(23);
-                        });
-                    }
-                    else {
-                        if (this.body.onFloor()) this.body.setVelocityX(0);
-                        this.anims.play('throwNaked', true);
-                        this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-                            this.anims.stop().setFrame(18);
-                        });
-                    }
+        }
+        else {
+            if (this.isAttacking) {
+                if (this.cursorKeys.down.isDown) {
+                    this.anims.play('throwCrouchNaked', true);
+                    this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+                        this.anims.stop().setFrame(23);
+                    });
                 }
                 else {
-                    //Crouch
-                    if (this.cursorKeys.down.isDown) {
-                        this.body.setVelocityX(0);
-                        this.anims.stop().setFrame(23);
+                    if (this.body.onFloor()) this.body.setVelocityX(0);
+                    this.anims.play('throwNaked', true);
+                    this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+                        this.anims.stop().setFrame(18);
+                    });
+                }
+            }
+            else {
+                //Crouch
+                if (this.cursorKeys.down.isDown) {
+                    this.body.setVelocityX(0);
+                    this.anims.stop().setFrame(23);
+                }
+                else if (this.body.onFloor()) {
+                    //Left
+                    if (this.cursorKeys.left.isDown) {
+                        this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED);
+                        this.setFlipX(true);
+                        this.anims.play('runNaked', true);
+                        this.direction = -1;
+                        this.changeMountainCollisions();
                     }
-                    else if (this.body.onFloor()) {
-                        //Left
-                        if (this.cursorKeys.left.isDown) {
-                            this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED);
-                            this.setFlipX(true);
-                            this.anims.play('runNaked', true);
-                            this.direction = -1;
-                            this.changeMountainCollisions();
-                        }
-                        //Right
-                        else if (this.cursorKeys.right.isDown) {
-                            this.body.setVelocityX(gamePrefs.ARTHUR_SPEED);
-                            this.setFlipX(false);
-                            this.anims.play('runNaked', true);
-                            this.direction = 1;
-                            this.changeMountainCollisions();
-                        }
-                        else {
-                            this.body.setVelocityX(0);
-                            this.anims.stop().setFrame(18);
-                        }
+                    //Right
+                    else if (this.cursorKeys.right.isDown) {
+                        this.body.setVelocityX(gamePrefs.ARTHUR_SPEED);
+                        this.setFlipX(false);
+                        this.anims.play('runNaked', true);
+                        this.direction = 1;
+                        this.changeMountainCollisions();
+                    }
+                    else {
+                        this.body.setVelocityX(0);
+                        this.anims.stop().setFrame(18);
+                    }
 
-                        //Jump
-                        if (this.cursorKeys.up.isDown &&
-                            this.body.blocked.down &&
-                            Phaser.Input.Keyboard.DownDuration(this.cursorKeys.up, 250)) {
-                            this.body.setVelocityY(-gamePrefs.ARTHUR_JUMP);
-                            this.scene.sound.play('arthurJump');
-                        }
-                        else if (this.cursorKeys.up.isDown &&
-                            this.body.blocked.down && this.cursorKeys.up.isDown) {
-                            this.body.setAllowGravity(false);
-                            this.body.setMaxVelocityX(0);
-                            this.body.setMaxVelocityX(gamePrefs.ARTHUR_SPEED);
-                            this.body.setVelocityY(-gamePrefs.ARTHUR_SPEED);
-                        }
+                    //Jump
+                    if (this.cursorKeys.up.isDown &&
+                        this.body.blocked.down &&
+                        Phaser.Input.Keyboard.DownDuration(this.cursorKeys.up, 250)) {
+                        this.body.setVelocityY(-gamePrefs.ARTHUR_JUMP);
+                        this.scene.sound.play('arthurJump');
+                    }
+                    else if (this.cursorKeys.up.isDown &&
+                        this.body.blocked.down && this.cursorKeys.up.isDown) {
+                        this.body.setAllowGravity(false);
+                        this.body.setMaxVelocityX(0);
+                        this.body.setMaxVelocityX(gamePrefs.ARTHUR_SPEED);
+                        this.body.setVelocityY(-gamePrefs.ARTHUR_SPEED);
+                    }
+                }
+
+                if (!this.body.onFloor() && !this.isAttacking) {
+                    if (this.cursorKeys.right.isDown || this.cursorKeys.left.isDown) {
+                        this.anims.stop().setFrame(21);
                     }
 
                     if (!this.body.onFloor() && !this.isAttacking) {
                         if (this.cursorKeys.right.isDown || this.cursorKeys.left.isDown) {
                             this.anims.stop().setFrame(21);
                         }
-
-                        if (!this.body.onFloor() && !this.isAttacking) {
-                            if (this.cursorKeys.right.isDown || this.cursorKeys.left.isDown) {
-                                this.anims.stop().setFrame(21);
-                            }
-                            else {
-                                this.anims.stop().setFrame(22);
-                            }
+                        else {
+                            this.anims.stop().setFrame(22);
                         }
                     }
                 }
             }
         }
-        // this.scene.terrain2F.setCollision(11, true, false, false, false);
-        // this.scene.terrain2F.setCollision(12, true, false, false, false);
+    }
+
+    healthManager(){
+        if (this.health == 1) {
+            if (this.direction == 1) this.body.velocity.x = -256;
+            else this.body.velocity.x = 256;
+
+            this.body.velocity.y = -300;
+            this.anims.stop().setFrame(32);
+            var b_armour = new breakArmourPrefab(this.scene, this.body.position.x, this.body.position.y);
+            var invincibleTimer = this.scene.time.addEvent({
+                delay: 1500, //ms
+                callback: this.endInvincibility,
+                callbackScope: this,
+                loop: false
+            });
+            if (this.direction == 1) {
+                b_armour.setFlipX(false);
+            }
+            else if (this.direction == -1) {
+                b_armour.setFlipX(true);
+            }
+            this.tookDamage = false;
+            this.scene.sound.play('arthurHit');
+        }
+        else if (this.health <= 0) {
+            this.death()
+        }
+    }
+
+    death(){
+        //DIE ANIMATION.
+        this.body.setVelocityX(0);
+        this.body.setVelocityY(0);
+        this.anims.play('die', true);
+        this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+            this.body.reset(65, 100);
+            this.scene.cameras.main.shake(500, 0.05);
+            this.scene.cameras.main.flash(500, 255, 0, 0);
+            this.health = 2;
+            this.tookDamage = false;
+            this.isInvincible = false;
+            this.isAlive = false;
+        });
+
+        //Save Score
+        if(this.score > gamePrefs.topScore){
+            gamePrefs.topScore = this.score;
+        }
+
+        //Musica de muerte de Arthur
+        if (!this.isAlive) {
+            this.scene.sound.play('arthurDeath');
+            this.isAlive = true;
+        }
+    }
+
+    preUpdate(time, delta) {
+        this.resizeCollision();
+        this.checkArmour();
+        this.resetAttackAnim();
+        if (this.tookDamage) {
+            this.healthManager();
+        }
+        else {
+            this.playerMovement();
+        }
 
         this.checkBorders();
         super.preUpdate(time, delta);
-    }
-
-    update() {
     }
 
     endInvincibility() {
