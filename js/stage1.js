@@ -28,22 +28,22 @@ class stage1 extends Phaser.Scene {
             new tombPrefab(this, 1*32+16+1, 5*32+16+1),
             new tombPrefab(this, 7*32+16+1, 5*32+16+1, "tomb02"),
             new tombPrefab(this, 12*32+16+1, 5*32+16+1),
-            new tombPrefab(this, 16*32+16+1, 5*32+16+1),
+            new tombPrefab(this, 16*32+16+1, 5*32+16+1, "tomb03"),
             new tombPrefab(this, 23*32+16+1, 5*32+16+1),
             new tombPrefab(this, 30*32+16+1, 5*32+16+1),
             new tombPrefab(this, 34*32+16+1, 5*32+16+1),
-            new tombPrefab(this, 39*32+16+1, 5*32+16+1),
-            new tombPrefab(this, 46*32+16+1, 5*32+16+1),
-            new tombPrefab(this, 23*32+16+16, 2*32+16+17),
-            new tombPrefab(this, 26*32+16+16, 2*32+16+17),
-            new tombPrefab(this, 29*32+16+16, 2*32+16+17));
+            new tombPrefab(this, 39*32+16+1, 5*32+16+1, "tomb02"),
+            new tombPrefab(this, 46*32+16+1, 5*32+16+1, "tomb03"),
+            new tombPrefab(this, 23*32+16+16, 2*32+16+17, "tomb02"),
+            new tombPrefab(this, 26*32+16+16, 2*32+16+17, "tomb03"),
+            new tombPrefab(this, 29*32+16+16, 2*32+16+17, "tomb03"));
 
         //Camaras
         this.cameras.main.startFollow(this.arthur);
         this.cameras.main.setBounds(0, 0, gamePrefs.LEVEL1_WIDTH, gamePrefs.LEVEL1_HEIGHT);
         
         //TMP mecago en todo q   uew molestO A WDOAWIDHAW
-        this.sound.volume = 1;
+        this.sound.volume = 0;
 
         this.gameStart = this.sound.add('gameStart');
         this.gameTheme = this.sound.add('gameTheme');
@@ -51,6 +51,11 @@ class stage1 extends Phaser.Scene {
         
         this.gameStart.play();
         this.hasPlayed = false;
+
+        //Comprobamos si todas las tiles necesarias para no colisionar
+        //con la parte de abajo y laterales del segundo piso de la montaña
+        //han sido modificadas
+        this.allMountainCollisionsAreModified = false;
     }
 
     update()

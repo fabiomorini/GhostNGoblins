@@ -21,6 +21,7 @@ class playerPrefab extends actorPrefab {
         this.canDownLadder = false;
         this.score = 0;
 
+
         this.body.setSize(12, 28, true);
 
         _scene.physics.add.collider
@@ -267,6 +268,24 @@ class playerPrefab extends actorPrefab {
         }
     }
 
+    changeMountainCollisions(){
+        if(!this.scene.allMountainCollisionsAreModified && this.x > 520){
+            var tiles = this.scene.terrain2F.culledTiles
+    
+            if (tiles != null) {
+                for (var i = 0; i < tiles.length; i++) {
+                    if (tiles[i] != null && tiles[i].y == 3 &&
+                       (tiles[i].index == 11 || tiles[i].index == 12)) {
+                           tiles[i].setCollision(false, false, true, false);
+                    }
+                }
+            }
+            if(this.x >= 1140){
+                this.scene.allMountainCollisionsAreModified = true;
+            }
+        }
+    }
+
     touchWater(_player, _water) {
         var tile = this.scene.water.getTileAtWorldXY(this.x, this.y);
         if (tile != null && tile.index != 0) {
@@ -377,6 +396,7 @@ class playerPrefab extends actorPrefab {
                             this.setFlipX(true);
                             this.anims.play('run', true);
                             this.direction = -1;
+                            this.changeMountainCollisions();
                         }
                         //Right
                         else if (this.cursorKeys.right.isDown) {
@@ -384,6 +404,7 @@ class playerPrefab extends actorPrefab {
                             this.setFlipX(false);
                             this.anims.play('run', true);
                             this.direction = 1;
+                            this.changeMountainCollisions();
                         }
                         else {
                             this.body.setVelocityX(0);
@@ -459,6 +480,7 @@ class playerPrefab extends actorPrefab {
                             this.setFlipX(true);
                             this.anims.play('runNaked', true);
                             this.direction = -1;
+                            this.changeMountainCollisions();
                         }
                         //Right
                         else if (this.cursorKeys.right.isDown) {
@@ -466,6 +488,7 @@ class playerPrefab extends actorPrefab {
                             this.setFlipX(false);
                             this.anims.play('runNaked', true);
                             this.direction = 1;
+                            this.changeMountainCollisions();
                         }
                         else {
                             this.body.setVelocityX(0);
@@ -503,25 +526,12 @@ class playerPrefab extends actorPrefab {
                         }
                     }
                 }
-
-                if (this.scene.terrain2F.culledTiles.length > 0) {
-                    var tiles = this.scene.terrain2F.culledTiles
-
-                    if (tiles != null && !(this.canClimbLadder || this.canDownLadder)) {
-                        for (var i = 0; i < tiles.length; i++) {
-                            if (tiles[i] != null &&
-                                tiles[i].collideLeft &&
-                                tiles[i].collideRight &&
-                                tiles[i].collideUp &&
-                                tiles[i].collideDown) {
-                                tiles[i].setCollision(false, false, true, false);
-                            }
-                        }
-                    }
-                }
                 //console.log("Climb: " + this.canClimbLadder + ". Down: " + this.canDownLadder + ".");
             }
         }
+        // this.scene.terrain2F.setCollision(11, true, false, false, false);
+        // this.scene.terrain2F.setCollision(12, true, false, false, false);
+
         super.preUpdate(time, delta);
     }
 
