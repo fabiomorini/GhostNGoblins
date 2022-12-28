@@ -165,7 +165,8 @@ class woodyPigPrefab extends actorPrefab {
 
     startMoving() {
         this.isAttacking = false;
-        this.anims.play("woodyPigMove", true);
+        if(this.body != null)
+            this.anims.play("woodyPigMove", true);
     }
 
     throwProjectile() {

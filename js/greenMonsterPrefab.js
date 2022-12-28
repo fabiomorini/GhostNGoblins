@@ -71,7 +71,7 @@ class greenMonsterPrefab extends actorPrefab {
     makeRandom(min, max) {
         this.randNum = Phaser.Math.Between(0, 3);
     }
-    attack() {
+    attack() {   
         //Throw projectile
         var _bullet = this.bullet.getFirst(false);
 

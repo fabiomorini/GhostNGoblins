@@ -303,6 +303,18 @@ class playerPrefab extends actorPrefab {
         }
     }
 
+    checkBorders()
+    {
+        console.log(this.body.position.x);
+        if(this.body.position.x <= 4)
+            this.body.setVelocityX(gamePrefs.ARTHUR_SPEED);
+        
+        if(this.body.position.x >= 3540)
+            this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED);
+
+        
+    }
+
     preUpdate(time, delta) {
         this.resizeCollision();
         this.checkArmour();
@@ -531,6 +543,7 @@ class playerPrefab extends actorPrefab {
         // this.scene.terrain2F.setCollision(11, true, false, false, false);
         // this.scene.terrain2F.setCollision(12, true, false, false, false);
 
+        this.checkBorders();
         super.preUpdate(time, delta);
     }
 
