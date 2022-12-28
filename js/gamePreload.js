@@ -6,21 +6,21 @@ class gamePreload extends Phaser.Scene {
     preload() {
         //Cargamos las tileset que se utilizarán en el nivel
         this.load.setPath('assets/tilesets/');
-        this.load.image('background','background.png');
-        this.load.image('trees','graveyardTrees.png');
-        this.load.image('fences','fences.png');
-        this.load.image('grass','grass.png');
-        this.load.image('fortress','fortress01.png');
-        this.load.image('water','water.png');
-        this.load.image('f2Terrain','F2Terrain.png');
-        this.load.image('firstMountain','mountain01.png');
-        this.load.image('mountainSides','F2MountainSides.png');
-        this.load.image('ladders','F2Ladders.png');
+        this.load.image('background', 'background.png');
+        this.load.image('trees', 'graveyardTrees.png');
+        this.load.image('fences', 'fences.png');
+        this.load.image('grass', 'grass.png');
+        this.load.image('fortress', 'fortress01.png');
+        this.load.image('water', 'water.png');
+        this.load.image('f2Terrain', 'F2Terrain.png');
+        this.load.image('firstMountain', 'mountain01.png');
+        this.load.image('mountainSides', 'F2MountainSides.png');
+        this.load.image('ladders', 'F2Ladders.png');
         // this.load.image('tombs','tombs.png');
-        this.load.image('tomb01','tomb01.png');
-        this.load.image('tomb02','tomb02.png');
-        this.load.image('tomb03','tomb03.png');
-        this.load.image('terrain','graveyardTerrain.png');
+        this.load.image('tomb01', 'tomb01.png');
+        this.load.image('tomb02', 'tomb02.png');
+        this.load.image('tomb03', 'tomb03.png');
+        this.load.image('terrain', 'graveyardTerrain.png');
 
         this.load.setPath('assets/map/');
         this.load.tilemapTiledJSON('stage1', 'stage1.json');
@@ -70,17 +70,20 @@ class gamePreload extends Phaser.Scene {
         this.load.spritesheet('enemy_death', 'enemy_death.png',
             { frameWidth: 44, frameHeight: 35 })
         this.load.spritesheet("greenMonsterBullet", "greenMonsterBullet.png",
-        {frameWidth:32,frameHeight:32});
+            { frameWidth: 32, frameHeight: 32 });
         this.load.spritesheet("crow", "crow.png",
-        {frameWidth:16,frameHeight:16});
+            { frameWidth: 16, frameHeight: 16 });
 
         //Cargamos los sprites de las armas
         this.load.setPath('assets/sprites/Weapons/');
         this.load.image("spear", "Spear.png");
         this.load.image("knife", "Knife.png");
         this.load.spritesheet("fire", "Fire projectile animation.png",
-        {frameWidth:32,frameHeight:16});
+            { frameWidth: 32, frameHeight: 16 });
 
+        //Cargamos los sprites de las armas enemigas
+        this.load.spritesheet("woodyPigBullet", "woody_pig_spear.png",
+            { frameWidth: 23, frameHeight: 23 });
         //Cargamos las fuentes
         this.load.setPath('assets/font/');
 
@@ -92,7 +95,7 @@ class gamePreload extends Phaser.Scene {
             "arcadeFont",
             "arcade.png",
             "arcade.xml"
-          );
+        );
     }
 
     create() {
