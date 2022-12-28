@@ -166,9 +166,8 @@ class InputScene extends Phaser.Scene {
       else if (this.name.length < this.charLimit) {
         // Concadenamos las letras
         this.name = this.name.concat(this.chars[y][x]);
-        this.updateName(this.name)
       }
-
+      this.updateName(this.name);
     }
     
     updateName(name)
