@@ -18,6 +18,10 @@ class playerPrefab extends actorPrefab {
         this.timeSinceLastShot;
         this.weapon = 0;
         this.score = 0;
+        this.throwAnimation = "throw";
+        this.throwAnimationCrouch = "throwCrouch";
+        this.runAnimation = "run";
+        this.selectAnimation = [5,6];
 
 
         this.body.setSize(12, 28, true);
@@ -291,159 +295,95 @@ class playerPrefab extends actorPrefab {
         
         if(this.body.position.x >= 3540)
             this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED);
+    }
 
-        
+    setAnimations(){
+        if (this.hasArmour)
+        {
+            this.throwAnimation = "throw";
+            this.throwAnimationCrouch = "throwCrouch";
+            this.runAnimation = "run";
+            this.selectAnimation = [5,6];
+        }
+        else
+        {
+            this.throwAnimation = "throwNaked";
+            this.throwAnimationCrouch = "throwCrouchNaked";
+            this.runAnimation = "runNaked";
+            this.selectAnimation = [21,22];
+        }
+    }
+
+    attack(){
+        if (this.cursorKeys.down.isDown) {
+            this.anims.play(this.throwAnimationCrouch, true);
+            this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+                this.anims.stop().setFrame(7);
+            });
+        }
+        else {
+            if (this.body.onFloor())
+                this.body.setVelocityX(0);
+            this.anims.play(this.throwAnimation, true);
+            this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+                this.anims.stop().setFrame(4);
+            });
+        }
     }
 
     playerMovement(){
-        if (this.hasArmour) {
-            if (this.isAttacking) {
-                if (this.cursorKeys.down.isDown) {
-                    this.anims.play('throwCrouch', true);
-                    this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-                        this.anims.stop().setFrame(7);
-                    });
-                }
-                else {
-                    if (this.body.onFloor())
-                        this.body.setVelocityX(0);
-                    this.anims.play('throw', true);
-                    this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-                        this.anims.stop().setFrame(4);
-                    });
-                }
-            }
-            else {
-                if (this.cursorKeys.down.isDown) {
-                    this.body.setVelocityX(0);
-                    this.anims.stop().setFrame(7);
-                }
-                else if (this.body.onFloor()) {
-                    //Left
-                    if (this.cursorKeys.left.isDown) {
-                        this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED);
-                        this.setFlipX(true);
-                        this.anims.play('run', true);
-                        this.direction = -1;
-                        this.changeMountainCollisions();
-                    }
-                    //Right
-                    else if (this.cursorKeys.right.isDown) {
-                        this.body.setVelocityX(gamePrefs.ARTHUR_SPEED);
-                        this.setFlipX(false);
-                        this.anims.play('run', true);
-                        this.direction = 1;
-                        this.changeMountainCollisions();
-                    }
-                    else {
-                        this.body.setVelocityX(0);
-                        this.anims.stop().setFrame(4);
-                    }
-
-                    //Jump
-                    if (this.cursorKeys.up.isDown &&
-                        this.body.blocked.down &&
-                        Phaser.Input.Keyboard.DownDuration(this.cursorKeys.up, 250)) {
-                        this.body.setVelocityY(-gamePrefs.ARTHUR_JUMP);
-                        this.scene.sound.play('arthurJump');
-                    }
-                    else if (this.cursorKeys.up.isDown &&
-                        this.body.blocked.down && this.cursorKeys.up.isDown) {
-                        this.body.setAllowGravity(false);
-                        this.body.setMaxVelocityX(0);
-                        this.body.setMaxVelocityX(gamePrefs.ARTHUR_SPEED);
-                        this.body.setVelocityY(-gamePrefs.ARTHUR_SPEED);
-                    }
-                }
-
-                if (!this.body.onFloor() && !this.isAttacking) {
-                    if (this.cursorKeys.right.isDown || this.cursorKeys.left.isDown) {
-                        this.anims.stop().setFrame(5);
-                    }
-
-                    if (!this.body.onFloor() && !this.isAttacking) {
-                        if (this.cursorKeys.right.isDown || this.cursorKeys.left.isDown) {
-                            this.anims.stop().setFrame(5);
-                        }
-                        else {
-                            this.anims.stop().setFrame(6);
-                        }
-                    }
-                }
-            }
+        if (this.isAttacking) {
+            this.attack();
         }
+
         else {
-            if (this.isAttacking) {
-                if (this.cursorKeys.down.isDown) {
-                    this.anims.play('throwCrouchNaked', true);
-                    this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-                        this.anims.stop().setFrame(23);
-                    });
+            if (this.cursorKeys.down.isDown) {
+                this.body.setVelocityX(0);
+                this.anims.stop().setFrame(7);
+            }
+    
+            else if (this.body.onFloor()) {
+                //Left
+                if (this.cursorKeys.left.isDown){
+                    this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED);
+                    this.setFlipX(true);
+                    this.anims.play(this.runAnimation, true);
+                    this.direction = -1;
+                    this.changeMountainCollisions();
+                }
+                //Right
+                else if (this.cursorKeys.right.isDown) {
+                    this.body.setVelocityX(gamePrefs.ARTHUR_SPEED);
+                    this.setFlipX(false);
+                    this.anims.play(this.runAnimation, true);
+                    this.direction = 1;
+                    this.changeMountainCollisions();
                 }
                 else {
-                    if (this.body.onFloor()) this.body.setVelocityX(0);
-                    this.anims.play('throwNaked', true);
-                    this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-                        this.anims.stop().setFrame(18);
-                    });
+                    this.body.setVelocityX(0);
+                    this.anims.stop().setFrame(4);
+                }
+    
+                //Jump
+                if (this.cursorKeys.up.isDown &&
+                    this.body.blocked.down &&
+                    Phaser.Input.Keyboard.DownDuration(this.cursorKeys.up, 250)) {
+                    this.body.setVelocityY(-gamePrefs.ARTHUR_JUMP);
+                    this.scene.sound.play('arthurJump');
                 }
             }
-            else {
-                //Crouch
-                if (this.cursorKeys.down.isDown) {
-                    this.body.setVelocityX(0);
-                    this.anims.stop().setFrame(23);
-                }
-                else if (this.body.onFloor()) {
-                    //Left
-                    if (this.cursorKeys.left.isDown) {
-                        this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED);
-                        this.setFlipX(true);
-                        this.anims.play('runNaked', true);
-                        this.direction = -1;
-                        this.changeMountainCollisions();
-                    }
-                    //Right
-                    else if (this.cursorKeys.right.isDown) {
-                        this.body.setVelocityX(gamePrefs.ARTHUR_SPEED);
-                        this.setFlipX(false);
-                        this.anims.play('runNaked', true);
-                        this.direction = 1;
-                        this.changeMountainCollisions();
-                    }
-                    else {
-                        this.body.setVelocityX(0);
-                        this.anims.stop().setFrame(18);
-                    }
 
-                    //Jump
-                    if (this.cursorKeys.up.isDown &&
-                        this.body.blocked.down &&
-                        Phaser.Input.Keyboard.DownDuration(this.cursorKeys.up, 250)) {
-                        this.body.setVelocityY(-gamePrefs.ARTHUR_JUMP);
-                        this.scene.sound.play('arthurJump');
-                    }
-                    else if (this.cursorKeys.up.isDown &&
-                        this.body.blocked.down && this.cursorKeys.up.isDown) {
-                        this.body.setAllowGravity(false);
-                        this.body.setMaxVelocityX(0);
-                        this.body.setMaxVelocityX(gamePrefs.ARTHUR_SPEED);
-                        this.body.setVelocityY(-gamePrefs.ARTHUR_SPEED);
-                    }
+            if (!this.body.onFloor() && !this.isAttacking) {
+                if (this.cursorKeys.right.isDown || this.cursorKeys.left.isDown) {
+                    this.anims.stop().setFrame(this.selectAnimation[0]);
                 }
 
                 if (!this.body.onFloor() && !this.isAttacking) {
                     if (this.cursorKeys.right.isDown || this.cursorKeys.left.isDown) {
-                        this.anims.stop().setFrame(21);
+                        this.anims.stop().setFrame(this.selectAnimation[0]);
                     }
-
-                    if (!this.body.onFloor() && !this.isAttacking) {
-                        if (this.cursorKeys.right.isDown || this.cursorKeys.left.isDown) {
-                            this.anims.stop().setFrame(21);
-                        }
-                        else {
-                            this.anims.stop().setFrame(22);
-                        }
+                    else {
+                        this.anims.stop().setFrame(this.selectAnimation[1]);
                     }
                 }
             }
@@ -509,6 +449,7 @@ class playerPrefab extends actorPrefab {
         this.resizeCollision();
         this.checkArmour();
         this.resetAttackAnim();
+        this.setAnimations();
         if (this.tookDamage) {
             this.healthManager();
         }
