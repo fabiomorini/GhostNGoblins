@@ -245,13 +245,6 @@ class playerPrefab extends actorPrefab {
         this.scene.sound.play('arthurThrow');
     }
 
-    useLadder(_player, _ladder) {
-        var tile1 = this.scene.ladders.getTileAtWorldXY(this.x, this.y);
-        var tile2 = this.scene.ladders.getTileAtWorldXY(this.x, this.y + 20);
-
-        
-    }
-
     deathByFall(){
         if(this.y > 178){
             console.log("F");
@@ -303,14 +296,14 @@ class playerPrefab extends actorPrefab {
             this.throwAnimation = "throw";
             this.throwAnimationCrouch = "throwCrouch";
             this.runAnimation = "run";
-            this.selectAnimation = [5,6];
+            this.selectAnimation = [4,5,6,7];
         }
         else
         {
             this.throwAnimation = "throwNaked";
             this.throwAnimationCrouch = "throwCrouchNaked";
             this.runAnimation = "runNaked";
-            this.selectAnimation = [21,22];
+            this.selectAnimation = [18,21,22,23];
         }
     }
 
@@ -318,7 +311,7 @@ class playerPrefab extends actorPrefab {
         if (this.cursorKeys.down.isDown) {
             this.anims.play(this.throwAnimationCrouch, true);
             this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-                this.anims.stop().setFrame(7);
+                this.anims.stop().setFrame(this.selectAnimation[3]);
             });
         }
         else {
@@ -326,9 +319,16 @@ class playerPrefab extends actorPrefab {
                 this.body.setVelocityX(0);
             this.anims.play(this.throwAnimation, true);
             this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-                this.anims.stop().setFrame(4);
+                this.anims.stop().setFrame(this.selectAnimation[0]);
             });
         }
+    }
+
+    useLadder(_player, _ladder) {
+        var tile1 = this.scene.ladders.getTileAtWorldXY(this.x, this.y);
+        var tile2 = this.scene.ladders.getTileAtWorldXY(this.x, this.y + 20);
+
+        console.log(_player.y);
     }
 
     playerMovement(){
@@ -339,7 +339,7 @@ class playerPrefab extends actorPrefab {
         else {
             if (this.cursorKeys.down.isDown) {
                 this.body.setVelocityX(0);
-                this.anims.stop().setFrame(7);
+                this.anims.stop().setFrame(this.selectAnimation[3]);
             }
     
             else if (this.body.onFloor()) {
@@ -361,7 +361,7 @@ class playerPrefab extends actorPrefab {
                 }
                 else {
                     this.body.setVelocityX(0);
-                    this.anims.stop().setFrame(4);
+                    this.anims.stop().setFrame(this.selectAnimation[0]);
                 }
     
                 //Jump
@@ -375,15 +375,15 @@ class playerPrefab extends actorPrefab {
 
             if (!this.body.onFloor() && !this.isAttacking) {
                 if (this.cursorKeys.right.isDown || this.cursorKeys.left.isDown) {
-                    this.anims.stop().setFrame(this.selectAnimation[0]);
+                    this.anims.stop().setFrame(this.selectAnimation[1]);
                 }
 
                 if (!this.body.onFloor() && !this.isAttacking) {
                     if (this.cursorKeys.right.isDown || this.cursorKeys.left.isDown) {
-                        this.anims.stop().setFrame(this.selectAnimation[0]);
+                        this.anims.stop().setFrame(this.selectAnimation[1]);
                     }
                     else {
-                        this.anims.stop().setFrame(this.selectAnimation[1]);
+                        this.anims.stop().setFrame(this.selectAnimation[2]);
                     }
                 }
             }
@@ -464,5 +464,4 @@ class playerPrefab extends actorPrefab {
     endInvincibility() {
         this.isInvincible = false;
     }
-    //
 }
