@@ -76,73 +76,52 @@ class playerPrefab extends actorPrefab {
     }
 
     resetAttackAnim() {
-        //Temporal: Swap between weapons
+        // Comprobamos qué tipo de arma está seleccionada
         if (this.key1.isDown) {
-            this.weapon = 0; // Spear
+          this.weapon = 0; // Spear
+        } else if (this.key2.isDown) {
+          this.weapon = 1; // Knife
+        } else if (this.key3.isDown) {
+          this.weapon = 2; // Fire
         }
-        else if (this.key2.isDown) {
-            this.weapon = 1;  // Knife
+      
+        // Si se está pulsando la tecla de ataque y no se está disparando actualmente
+        if (this.attack.isDown && !this.isAttacking) {
+          // Comprobamos si se puede disparar con el tipo de arma seleccionada
+          if (this.canShoot(this.weapon)) {
+            this.timeSinceLastShot = this.scene.time.addEvent(
+                {
+                    delay: 50,
+                    callback: this.shoot(this.weapon),
+                    callbackScope: this,
+                    repeat: 0
+                }
+            );
+            this.isAttacking = true;
+          }
+        } else if (!this.attack.isDown && this.isAttacking) {
+          this.isAttacking = false;
         }
-        else if (this.key3.isDown) {
-            this.weapon = 2; // Fire
+    }
+      
+      // Función para comprobar si se puede disparar con el tipo de arma especificado
+      canShoot(weapon) {
+        if (weapon === 0) {
+          return this.spears.countActive() < gamePrefs.MAX_BULLET_AMOUNT;
+        } else if (weapon === 1) {
+          return this.knives.countActive() < gamePrefs.MAX_BULLET_AMOUNT;
+        } else if (weapon === 2) {
+          return this.fires.countActive() < gamePrefs.MAX_FIRE_AMOUNT;
         }
-        //TODO finish spawning only one animation
-        //this.anims.complete()
-        if (this.weapon == 0) { // Spear
-            if (this.attack.isDown &&
-                !this.isAttacking &&
-                this.spears.countActive() < gamePrefs.MAX_BULLET_AMOUNT) {
-                this.timeSinceLastShot = this.scene.time.addEvent(
-                    {
-                        delay: 50,
-                        callback: this.shootSpear,
-                        callbackScope: this,
-                        repeat: 0
-                    }
-                );
-                this.isAttacking = true;
-            }
-            else if (!this.attack.isDown && this.isAttacking) {
-                this.isAttacking = false;
-            }
-        }
-        else if (this.weapon == 1) // Knife
-        {
-            if (this.attack.isDown &&
-                !this.isAttacking &&
-                this.knives.countActive() < gamePrefs.MAX_BULLET_AMOUNT) {
-                this.timeSinceLastShot = this.scene.time.addEvent(
-                    {
-                        delay: 50,
-                        callback: this.shootKnife,
-                        callbackScope: this,
-                        repeat: 0
-                    }
-                );
-                this.isAttacking = true;
-            }
-            else if (!this.attack.isDown && this.isAttacking) {
-                this.isAttacking = false;
-            }
-        }
-        else // Fire
-        {
-            if (this.attack.isDown &&
-                !this.isAttacking &&
-                this.fires.countActive() < gamePrefs.MAX_FIRE_AMOUNT) {
-                this.timeSinceLastShot = this.scene.time.addEvent(
-                    {
-                        delay: 50,
-                        callback: this.shootFire,
-                        callbackScope: this,
-                        repeat: 0
-                    }
-                );
-                this.isAttacking = true;
-            }
-            else if (!this.attack.isDown && this.isAttacking) {
-                this.isAttacking = false;
-            }
+    }
+
+    shoot(weapon) {
+        if (weapon === 0) {
+          this.shootSpear();
+        } else if (weapon === 1) {
+          this.shootKnife();
+        } else if (weapon === 2) {
+          this.shootFire();
         }
     }
 
