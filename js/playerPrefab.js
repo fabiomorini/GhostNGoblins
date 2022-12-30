@@ -282,7 +282,6 @@ class playerPrefab extends actorPrefab {
 
     checkBorders()
     {
-        console.log(this.body.position.x);
         if(this.body.position.x <= 4)
             this.body.setVelocityX(gamePrefs.ARTHUR_SPEED);
         
@@ -324,11 +323,29 @@ class playerPrefab extends actorPrefab {
         }
     }
 
-    useLadder(_player, _ladder) {
+    useLadder(_player, _ladders) {
         var tile1 = this.scene.ladders.getTileAtWorldXY(this.x, this.y);
-        var tile2 = this.scene.ladders.getTileAtWorldXY(this.x, this.y + 20);
+        var tile2 = this.scene.ladders.getTileAtWorldXY(this.x, this.y + 32);
 
-        console.log(_player.y);
+        if(tile1 != null && tile1.index != null && tile1.index != 0){
+            //Si esto se cumple se pueden subir escaleras
+            this.canClimbLadders = true;
+
+            if(_player.y >= 177){
+                //Si esto se cumple, SOLO se podrán subir
+                this.canDownLadders = false;
+            }
+        }
+        
+        if(tile2 != null && tile2.index != null && tile2.index != 0){
+            //Si esto se cumple se pueden bajar escaleras
+            this.canDownLadders = true;
+
+            if(_player.y <= 97){
+                //Si esto se cumple, SOLO se podrán bajar
+                this.canClimbLadders = false;
+            }
+        }
     }
 
     playerMovement(){
