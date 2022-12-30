@@ -22,6 +22,8 @@ class playerPrefab extends actorPrefab {
         this.throwAnimationCrouch = "throwCrouch";
         this.runAnimation = "run";
         this.selectAnimation = [5,6];
+        this.canClimbLadders = false;
+        this.canDownLadders = false;
 
 
         this.body.setSize(12, 28, true);
@@ -59,6 +61,7 @@ class playerPrefab extends actorPrefab {
         this.key3 = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_THREE);
         this.attack = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.jump = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        this.invencibile = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
     }
 
     loadPools() {
@@ -308,24 +311,33 @@ class playerPrefab extends actorPrefab {
         var tile1 = this.scene.ladders.getTileAtWorldXY(this.x, this.y);
         var tile2 = this.scene.ladders.getTileAtWorldXY(this.x, this.y + 32);
 
+        //Si estamos en una escalera, desactivamos el salto y el movimiento lateral del jugador
+
         if(tile1 != null && tile1.index != null && tile1.index != 0){
             //Si esto se cumple se pueden subir escaleras
             this.canClimbLadders = true;
+        }
+        else this.canClimbLadders = false;
 
-            if(_player.y >= 177){
-                //Si esto se cumple, SOLO se podrán subir
-                this.canDownLadders = false;
-            }
+        if(_player.y >= 177){
+            //Si esto se cumple, SOLO se podrán subir
+            this.canDownLadders = false;
         }
         
         if(tile2 != null && tile2.index != null && tile2.index != 0){
             //Si esto se cumple se pueden bajar escaleras
             this.canDownLadders = true;
+        }
+        else this.canDownLadders = false;
 
-            if(_player.y <= 97){
-                //Si esto se cumple, SOLO se podrán bajar
-                this.canClimbLadders = false;
-            }
+        if(_player.y <= 97){
+            //Si esto se cumple, SOLO se podrán bajar
+            this.canClimbLadders = false;
+        }
+
+        //Si no podemos subir o bajar por escaleras, reestablecemos la gravedad
+        if(!this.canClimbLadders && !this.canDownLadders){
+            this.body.allowGravity = true;
         }
     }
 
@@ -357,6 +369,23 @@ class playerPrefab extends actorPrefab {
                     this.direction = 1;
                     this.changeMountainCollisions();
                 }
+
+                else if (this.canClimbLadders && this.cursorKeys.up.isDown) {
+                    // Si el personaje está en una escalera y se está moviendo hacia arriba,
+                    // ajustamos su velocidad vertical para que suba en la escalera
+                    this.body.setVelocityY(-gamePrefs.ARTHUR_SPEED);
+                    this.body.allowGravity = false;
+                    // this.anims.stop().setFrame(this.selectAnimation[4]); // Animación de subir escaleras
+                }
+            
+                else if (this.canDownLadders && this.cursorKeys.down.isDown) {
+                    // Si el personaje está en una escalera y se está moviendo hacia abajo,
+                    // ajustamos su velocidad vertical para que baje en la escalera
+                    this.body.setVelocityY(gamePrefs.ARTHUR_SPEED);
+                    this.body.allowGravity = false;
+                    // this.anims.stop().setFrame(this.selectAnimation[5]); // Animación de bajar escaleras
+                }
+
                 else {
                     this.body.setVelocityX(0);
                     this.anims.stop().setFrame(this.selectAnimation[0]);
@@ -456,10 +485,16 @@ class playerPrefab extends actorPrefab {
         }
 
         this.checkBorders();
+        this.setInvencible();
         super.preUpdate(time, delta);
     }
 
     endInvincibility() {
         this.isInvincible = false;
+    }
+
+    setInvencible(){
+        if(this.invencibile.isDown)
+        this.isInvincible = true;
     }
 }
