@@ -57,6 +57,8 @@ class playerPrefab extends actorPrefab {
         this.key1 = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_ONE);
         this.key2 = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_TWO);
         this.key3 = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_THREE);
+        this.attack = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        this.jump = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     }
 
     loadPools() {
@@ -74,73 +76,52 @@ class playerPrefab extends actorPrefab {
     }
 
     resetAttackAnim() {
-        //Temporal: Swap between weapons
+        // Comprobamos qué tipo de arma está seleccionada
         if (this.key1.isDown) {
-            this.weapon = 0; // Spear
+          this.weapon = 0; // Spear
+        } else if (this.key2.isDown) {
+          this.weapon = 1; // Knife
+        } else if (this.key3.isDown) {
+          this.weapon = 2; // Fire
         }
-        else if (this.key2.isDown) {
-            this.weapon = 1;  // Knife
+      
+        // Si se está pulsando la tecla de ataque y no se está disparando actualmente
+        if (this.attack.isDown && !this.isAttacking) {
+          // Comprobamos si se puede disparar con el tipo de arma seleccionada
+          if (this.canShoot(this.weapon)) {
+            this.timeSinceLastShot = this.scene.time.addEvent(
+                {
+                    delay: 50,
+                    callback: this.shoot(this.weapon),
+                    callbackScope: this,
+                    repeat: 0
+                }
+            );
+            this.isAttacking = true;
+          }
+        } else if (!this.attack.isDown && this.isAttacking) {
+          this.isAttacking = false;
         }
-        else if (this.key3.isDown) {
-            this.weapon = 2; // Fire
+    }
+      
+      // Función para comprobar si se puede disparar con el tipo de arma especificado
+      canShoot(weapon) {
+        if (weapon === 0) {
+          return this.spears.countActive() < gamePrefs.MAX_BULLET_AMOUNT;
+        } else if (weapon === 1) {
+          return this.knives.countActive() < gamePrefs.MAX_BULLET_AMOUNT;
+        } else if (weapon === 2) {
+          return this.fires.countActive() < gamePrefs.MAX_FIRE_AMOUNT;
         }
-        //TODO finish spawning only one animation
-        //this.anims.complete()
-        if (this.weapon == 0) { // Spear
-            if (this.cursorKeys.space.isDown &&
-                !this.isAttacking &&
-                this.spears.countActive() < gamePrefs.MAX_BULLET_AMOUNT) {
-                this.timeSinceLastShot = this.scene.time.addEvent(
-                    {
-                        delay: 50,
-                        callback: this.shootSpear,
-                        callbackScope: this,
-                        repeat: 0
-                    }
-                );
-                this.isAttacking = true;
-            }
-            else if (!this.cursorKeys.space.isDown && this.isAttacking) {
-                this.isAttacking = false;
-            }
-        }
-        else if (this.weapon == 1) // Knife
-        {
-            if (this.cursorKeys.space.isDown &&
-                !this.isAttacking &&
-                this.knives.countActive() < gamePrefs.MAX_BULLET_AMOUNT) {
-                this.timeSinceLastShot = this.scene.time.addEvent(
-                    {
-                        delay: 50,
-                        callback: this.shootKnife,
-                        callbackScope: this,
-                        repeat: 0
-                    }
-                );
-                this.isAttacking = true;
-            }
-            else if (!this.cursorKeys.space.isDown && this.isAttacking) {
-                this.isAttacking = false;
-            }
-        }
-        else // Fire
-        {
-            if (this.cursorKeys.space.isDown &&
-                !this.isAttacking &&
-                this.fires.countActive() < gamePrefs.MAX_FIRE_AMOUNT) {
-                this.timeSinceLastShot = this.scene.time.addEvent(
-                    {
-                        delay: 50,
-                        callback: this.shootFire,
-                        callbackScope: this,
-                        repeat: 0
-                    }
-                );
-                this.isAttacking = true;
-            }
-            else if (!this.cursorKeys.space.isDown && this.isAttacking) {
-                this.isAttacking = false;
-            }
+    }
+
+    shoot(weapon) {
+        if (weapon === 0) {
+          this.shootSpear();
+        } else if (weapon === 1) {
+          this.shootKnife();
+        } else if (weapon === 2) {
+          this.shootFire();
         }
     }
 
@@ -306,7 +287,7 @@ class playerPrefab extends actorPrefab {
         }
     }
 
-    attack(){
+    throwAttack(){
         if (this.cursorKeys.down.isDown) {
             this.anims.play(this.throwAnimationCrouch, true);
             this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
@@ -350,7 +331,7 @@ class playerPrefab extends actorPrefab {
 
     playerMovement(){
         if (this.isAttacking) {
-            this.attack();
+            this.throwAttack();
         }
 
         else {
@@ -382,9 +363,9 @@ class playerPrefab extends actorPrefab {
                 }
     
                 //Jump
-                if (this.cursorKeys.up.isDown &&
+                if (this.jump.isDown &&
                     this.body.blocked.down &&
-                    Phaser.Input.Keyboard.DownDuration(this.cursorKeys.up, 250)) {
+                    Phaser.Input.Keyboard.DownDuration(this.jump, 250)) {
                     this.body.setVelocityY(-gamePrefs.ARTHUR_JUMP);
                     this.scene.sound.play('arthurJump');
                 }
