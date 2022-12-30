@@ -57,6 +57,8 @@ class playerPrefab extends actorPrefab {
         this.key1 = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_ONE);
         this.key2 = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_TWO);
         this.key3 = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_THREE);
+        this.attack = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        this.jump = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     }
 
     loadPools() {
@@ -87,7 +89,7 @@ class playerPrefab extends actorPrefab {
         //TODO finish spawning only one animation
         //this.anims.complete()
         if (this.weapon == 0) { // Spear
-            if (this.cursorKeys.space.isDown &&
+            if (this.attack.isDown &&
                 !this.isAttacking &&
                 this.spears.countActive() < gamePrefs.MAX_BULLET_AMOUNT) {
                 this.timeSinceLastShot = this.scene.time.addEvent(
@@ -100,13 +102,13 @@ class playerPrefab extends actorPrefab {
                 );
                 this.isAttacking = true;
             }
-            else if (!this.cursorKeys.space.isDown && this.isAttacking) {
+            else if (!this.attack.isDown && this.isAttacking) {
                 this.isAttacking = false;
             }
         }
         else if (this.weapon == 1) // Knife
         {
-            if (this.cursorKeys.space.isDown &&
+            if (this.attack.isDown &&
                 !this.isAttacking &&
                 this.knives.countActive() < gamePrefs.MAX_BULLET_AMOUNT) {
                 this.timeSinceLastShot = this.scene.time.addEvent(
@@ -119,13 +121,13 @@ class playerPrefab extends actorPrefab {
                 );
                 this.isAttacking = true;
             }
-            else if (!this.cursorKeys.space.isDown && this.isAttacking) {
+            else if (!this.attack.isDown && this.isAttacking) {
                 this.isAttacking = false;
             }
         }
         else // Fire
         {
-            if (this.cursorKeys.space.isDown &&
+            if (this.attack.isDown &&
                 !this.isAttacking &&
                 this.fires.countActive() < gamePrefs.MAX_FIRE_AMOUNT) {
                 this.timeSinceLastShot = this.scene.time.addEvent(
@@ -138,7 +140,7 @@ class playerPrefab extends actorPrefab {
                 );
                 this.isAttacking = true;
             }
-            else if (!this.cursorKeys.space.isDown && this.isAttacking) {
+            else if (!this.attack.isDown && this.isAttacking) {
                 this.isAttacking = false;
             }
         }
@@ -306,7 +308,7 @@ class playerPrefab extends actorPrefab {
         }
     }
 
-    attack(){
+    throwAttack(){
         if (this.cursorKeys.down.isDown) {
             this.anims.play(this.throwAnimationCrouch, true);
             this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
@@ -350,7 +352,7 @@ class playerPrefab extends actorPrefab {
 
     playerMovement(){
         if (this.isAttacking) {
-            this.attack();
+            this.throwAttack();
         }
 
         else {
@@ -382,9 +384,9 @@ class playerPrefab extends actorPrefab {
                 }
     
                 //Jump
-                if (this.cursorKeys.up.isDown &&
+                if (this.jump.isDown &&
                     this.body.blocked.down &&
-                    Phaser.Input.Keyboard.DownDuration(this.cursorKeys.up, 250)) {
+                    Phaser.Input.Keyboard.DownDuration(this.jump, 250)) {
                     this.body.setVelocityY(-gamePrefs.ARTHUR_JUMP);
                     this.scene.sound.play('arthurJump');
                 }
