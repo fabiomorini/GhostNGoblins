@@ -4,18 +4,18 @@ class knifePrefab extends Phaser.GameObjects.Sprite {
         _scene.add.existing(this);
 
         _scene.physics.add.collider
-        (
-            this,
-            _scene.tombs,
-            this.hasHitTomb
-        );
+            (
+                this,
+                _scene.tombs,
+                this.hasHitTomb
+            );
 
         _scene.physics.add.collider
-        (
-            this,
-            _scene.zombie,
-            this.hasHitZombie
-        );
+            (
+                this,
+                _scene.zombie,
+                this.hasHitZombie
+            );
 
         _scene.physics.add.collider
             (
@@ -30,7 +30,7 @@ class knifePrefab extends Phaser.GameObjects.Sprite {
                 _scene.flyingKnight,
                 this.hasHitKnight
             );
-            _scene.physics.add.collider
+        _scene.physics.add.collider
             (
                 this,
                 _scene.woodyPig,
@@ -38,11 +38,18 @@ class knifePrefab extends Phaser.GameObjects.Sprite {
             );
 
         _scene.physics.add.collider
-        (
-            this,
-            _scene.crow,
-            this.hasHitCrow
-        );
+            (
+                this,
+                _scene.crow,
+                this.hasHitCrow
+            );
+
+        _scene.physics.add.collider
+            (
+                this,
+                _scene.unicorn,
+                this.hasHitUnicorn
+            );
 
         this.aliveTime = 0;
     }
@@ -56,6 +63,23 @@ class knifePrefab extends Phaser.GameObjects.Sprite {
     hasHitNull(_this, _null) {
         _this.setActive(false);
         _this.y += 500;
+    }
+
+    hasHitUnicorn(_this, _unicorn) {
+        _this.setActive(false);
+        _this.y += 500;
+        _unicorn.health -= 1;
+        if (_unicorn.health == 0) {
+            var enemyDeath = new enemyDeathPrefab(_this.scene, _unicorn.body.position.x, _unicorn.body.position.y);
+            _this.scene.sound.play('enemyDeath');
+            _unicorn.destroy();
+            //summon key
+            //var key = new keyPrefab(_this.scene, _unicorn.body.position.x, _unicorn.body.position.y - 100);
+        }
+        else {
+            _this.scene.sound.play('projectileBlock');
+        }
+
     }
 
     hasHitGreenMonster(_this, _greenMonster) {
@@ -96,15 +120,14 @@ class knifePrefab extends Phaser.GameObjects.Sprite {
         }
     }
 
-    hasHitCrow(_this, _crow)
-    {
+    hasHitCrow(_this, _crow) {
         _this.setActive(false);
         _this.y += 500;
         var enemyDeath = new enemyDeathPrefab(_this.scene, _crow.body.position.x, _crow.body.position.y);
         _this.scene.sound.play('crowDeath');
         _crow.destroy();
     }
-    
+
 
     hasHitWoodyPig(_this, _woodyPig) {
         _this.setActive(false);

@@ -17,11 +17,14 @@ class stage1 extends Phaser.Scene {
         this.arthur = new playerPrefab(this, 65, 100);
 
         //Pintamos los enemigos
+        
         this.zombie = new zombiePrefab(this, 300, 190);
         this.greenMonster = new greenMonsterPrefab(this, 500, 190);
         this.crow = new crowPrefab(this, 400, 160);
         this.flyingKnight = new flyingKnightPrefab(this, 400, 100);
         this.woodyPig = new woodyPigPrefab(this, 400, 50);
+        
+        this.unicorn = new unicornPrefab(this, 4000, 100);
 
         //Pintamos las tumbas
         this.tombs = new Array(
@@ -216,6 +219,27 @@ class stage1 extends Phaser.Scene {
             key: 'crowFly',
             frames: this.anims.generateFrameNumbers('crow', { start: 4, end: 7}),
             frameRate: 8,
+            repeat: -1
+        })
+        
+        this.anims.create({
+            key: 'unicornWalk',
+            frames: this.anims.generateFrameNumbers('unicorn', { start: 0, end: 2}),
+            frameRate: 8,
+            repeat: -1
+        })
+
+        this.anims.create({
+            key: 'unicornRun',
+            frames: this.anims.generateFrameNumbers('unicorn', { start: 3, end: 5}),
+            frameRate: 5,
+            repeat: -1
+        })
+
+        this.anims.create({
+            key: 'unicornBullet',
+            frames: this.anims.generateFrameNumbers('unicornBullet', { start: 0, end: 1}),
+            frameRate: 5,
             repeat: -1
         })
     }
