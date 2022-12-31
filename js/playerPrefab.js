@@ -342,12 +342,35 @@ class playerPrefab extends actorPrefab {
     }
 
     playerMovement(){
+        
         if (this.isAttacking) {
             this.throwAttack();
         }
 
         else {
             if (this.cursorKeys.down.isDown) {
+                if (this.canDownLadders) {
+                    // Si el personaje está en una escalera y se está moviendo hacia abajo,
+                    // desactivamos la colisión con el suelo para poder bajar
+                    this.body.allowGravity = false;
+                    this.body.setVelocityY(gamePrefs.ARTHUR_SPEED);
+                    this.body.checkCollision.down = false;
+                    console.log("1");
+
+                    this.scene.time.addEvent({
+                        delay: 200, callback: () => {
+                            this.body.checkCollision.down = true;
+                            this.body.allowGravity = true;
+
+                            console.log("2");
+                        }
+                    });
+                    // this.anims.stop().setFrame(this.selectAnimation[5]); // Animación de bajar escaleras
+                }
+                else{
+                    this.body.setVelocityY(0);
+                }
+
                 this.body.setVelocityX(0);
                 this.anims.stop().setFrame(this.selectAnimation[3]);
             }
@@ -376,14 +399,6 @@ class playerPrefab extends actorPrefab {
                     this.body.setVelocityY(-gamePrefs.ARTHUR_SPEED);
                     this.body.allowGravity = false;
                     // this.anims.stop().setFrame(this.selectAnimation[4]); // Animación de subir escaleras
-                }
-            
-                else if (this.canDownLadders && this.cursorKeys.down.isDown) {
-                    // Si el personaje está en una escalera y se está moviendo hacia abajo,
-                    // ajustamos su velocidad vertical para que baje en la escalera
-                    this.body.setVelocityY(gamePrefs.ARTHUR_SPEED);
-                    this.body.allowGravity = false;
-                    // this.anims.stop().setFrame(this.selectAnimation[5]); // Animación de bajar escaleras
                 }
 
                 else {
