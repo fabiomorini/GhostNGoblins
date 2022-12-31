@@ -88,8 +88,8 @@ class playerPrefab extends actorPrefab {
           this.weapon = 2; // Fire
         }
       
-        // Si se está pulsando la tecla de ataque y no se está disparando actualmente
-        if (this.attack.isDown && !this.isAttacking) {
+        // Si se está pulsando la tecla de ataque y no se está disparando actualmente, ni subiendo o bajando escaleras
+        if (this.attack.isDown && !this.isAttacking && this.body.allowGravity) {
           // Comprobamos si se puede disparar con el tipo de arma seleccionada
           if (this.canShoot(this.weapon)) {
             this.timeSinceLastShot = this.scene.time.addEvent(
@@ -279,6 +279,7 @@ class playerPrefab extends actorPrefab {
             this.throwAnimation = "throw";
             this.throwAnimationCrouch = "throwCrouch";
             this.runAnimation = "run";
+            this.laddersAnimation = "laddersAnimation";
             this.selectAnimation = [4,5,6,7];
         }
         else
@@ -286,6 +287,7 @@ class playerPrefab extends actorPrefab {
             this.throwAnimation = "throwNaked";
             this.throwAnimationCrouch = "throwCrouchNaked";
             this.runAnimation = "runNaked";
+            this.laddersAnimation = "laddersAnimationNaked";
             this.selectAnimation = [18,21,22,23];
         }
     }
@@ -365,10 +367,7 @@ class playerPrefab extends actorPrefab {
                             console.log("2");
                         }
                     });
-                    // this.anims.stop().setFrame(this.selectAnimation[5]); // Animación de bajar escaleras
-                }
-                else{
-                    this.body.setVelocityY(0);
+                    this.anims.play(this.laddersAnimation, true);
                 }
 
                 this.body.setVelocityX(0);
@@ -395,10 +394,10 @@ class playerPrefab extends actorPrefab {
 
                 else if (this.canClimbLadders && this.cursorKeys.up.isDown) {
                     // Si el personaje está en una escalera y se está moviendo hacia arriba,
-                    // ajustamos su velocidad vertical para que suba en la escalera
+                    // ajustamos su velocidad vertical para que suba por la escalera
                     this.body.setVelocityY(-gamePrefs.ARTHUR_SPEED);
                     this.body.allowGravity = false;
-                    // this.anims.stop().setFrame(this.selectAnimation[4]); // Animación de subir escaleras
+                    this.anims.play(this.laddersAnimation, true);
                 }
 
                 else {
