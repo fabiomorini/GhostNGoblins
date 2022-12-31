@@ -54,8 +54,15 @@ class gamePreload extends Phaser.Scene {
         this.load.setPath('assets/sprites/Arthur/');
         this.load.spritesheet('arthur', 'arthur.png',
             { frameWidth: 32, frameHeight: 32 });
+
         this.load.spritesheet('break_armour', 'armour_break.png',
             { frameWidth: 52, frameHeight: 49 });
+
+        this.load.spritesheet('ladders_animation', 'Armour/Climb - Armour Arthur.png',
+        { frameWidth: 21, frameHeight: 32 });
+
+        this.load.spritesheet('ladders_animation_naked', 'Naked/Ladder - Arthur Naked.png',
+        { frameWidth: 21, frameHeight: 32 });
 
         //Cargamos los sprites de los enemigos
         this.load.setPath('assets/sprites/Enemies/');

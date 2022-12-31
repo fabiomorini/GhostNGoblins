@@ -129,6 +129,20 @@ class stage1 extends Phaser.Scene {
             repeat: 0
         })
 
+        this.anims.create({
+            key: 'laddersAnimation',
+            frames: this.anims.generateFrameNumbers('ladders_animation', { start: 0, end: 1 }),
+            frameRate: 10,
+            repeat: -1
+        })
+
+        this.anims.create({
+            key: 'laddersAnimationNaked',
+            frames: this.anims.generateFrameNumbers('ladders_animation_naked', { start: 0, end: 1 }),
+            frameRate: 10,
+            repeat: -1
+        })
+
         //FIRE ANIMATION
         this.anims.create
             ({
