@@ -419,10 +419,13 @@ class playerPrefab extends actorPrefab {
 
     healthManager(){
         if (this.health == 1) {
-            if (this.direction == 1) this.body.velocity.x = -256;
-            else this.body.velocity.x = 256;
+            if (this.direction == 1) 
+                this.body.velocity.x = gamePrefs.ARTHUR_SPEED;
+            else 
+                this.body.velocity.x = gamePrefs.ARTHUR_SPEED;
 
             this.body.velocity.y = -300;
+            this.alpha = 0.75;
             this.anims.stop().setFrame(32);
             var b_armour = new breakArmourPrefab(this.scene, this.body.position.x, this.body.position.y);
             var invincibleTimer = this.scene.time.addEvent({
@@ -491,10 +494,12 @@ class playerPrefab extends actorPrefab {
 
     endInvincibility() {
         this.isInvincible = false;
+        this.alpha = 1;
     }
 
     setInvencible(){
         if(this.invencibile.isDown)
-        this.isInvincible = true;
+            this.isInvincible = true;
+        
     }
 }

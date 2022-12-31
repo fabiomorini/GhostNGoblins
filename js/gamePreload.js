@@ -73,6 +73,11 @@ class gamePreload extends Phaser.Scene {
             { frameWidth: 32, frameHeight: 32 });
         this.load.spritesheet("crow", "crow.png",
             { frameWidth: 16, frameHeight: 16 });
+        this.load.spritesheet("unicorn", "unicorn.png",
+            { frameWidth: 48, frameHeight: 48 });
+        this.load.spritesheet("unicornBullet", "unicorn_projectile.png",
+            { frameWidth: 16, frameHeight: 7});
+        
 
         //Cargamos los sprites de las armas
         this.load.setPath('assets/sprites/Weapons/');

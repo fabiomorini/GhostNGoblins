@@ -4,7 +4,6 @@ class woodyPigPrefab extends actorPrefab {
         _scene.add.existing(this);
         _scene.physics.world.enable(this);
         this.minimumHeight = _positionY + 80;
-        console.log(this.minimumHeight);
         this.direction = -1
         this.scene = _scene;
         this.playerDistanceHorizontal = 0;
@@ -130,7 +129,6 @@ class woodyPigPrefab extends actorPrefab {
     attackLogic() {
         this.randAttack = Phaser.Math.Between(0, 2);
         if (this.randAttack == 1) {
-            console.log("hello");
             this.body.setVelocityX(0);
             this.body.setVelocityY(0);
 
@@ -170,7 +168,8 @@ class woodyPigPrefab extends actorPrefab {
     }
 
     throwProjectile() {
-        this.anims.stop().setFrame(5);
+        if(this.body != null)
+            this.anims.stop().setFrame(5);
 
         var _bullet = this.bullet.getFirst(false);
         

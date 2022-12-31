@@ -20,8 +20,6 @@ class flyingKnightPrefab extends actorPrefab {
             );
         this.body.setSize(15, 28, true);
 
-        console.log(_scene.sound)
-
         _scene.flyingKnightAudio = _scene.sound.add('flyingKnightAudio');
 
         setInterval(() =>
