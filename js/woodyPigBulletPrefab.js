@@ -1,5 +1,5 @@
-class greenMonsterBulletPrefab extends Phaser.GameObjects.Sprite {
-    constructor(_scene, _posX, _posY, _tag = 'greenMonsterBullet') {
+class woodyPigBulletPrefab extends Phaser.GameObjects.Sprite {
+    constructor(_scene, _posX, _posY, _tag = 'woodyPigBullet') {
         super(_scene, _posX, _posY, _tag);
         _scene.add.existing(this);
 

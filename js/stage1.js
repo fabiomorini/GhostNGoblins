@@ -1,34 +1,13 @@
 class stage1 extends Phaser.Scene {
-    constructor() 
-    {
+    constructor() {
         super({ key: 'stage1' });
     }
-    
-    preload()
-    {
-        this.load.setPath('assets/sprites/Arthur/');
-        this.load.spritesheet('arthur','arthur.png',
-        {frameWidth:32,frameHeight:32});
 
-        this.load.setPath('assets/sprites/Enemies/');
-        this.load.spritesheet('zombie','zombie.png',
-        {frameWidth:32,frameHeight:32});
-        this.load.spritesheet('greenMonster', 'green_monster.png',
-        {frameWidth:16,frameHeight:32});
+    preload() {
 
-        this.load.setPath('assets/sprites/Weapons/');
-        this.load.image("spear", "Spear.png");
-        this.load.image("knife", "Knife.png");
-        this.load.spritesheet("fire", "Fire projectile animation.png",
-        {frameWidth:32,frameHeight:16});
-
-        this.load.setPath('assets/sprites/Enemies/');
-        this.load.spritesheet("greenMonsterBullet", "greenMonsterBullet.png",
-        {frameWidth:32,frameHeight:32});
     }
 
-	create()
-    {
+    create() {
         //Carga namespace layers
         LAYERS.create(this);
 
@@ -38,25 +17,56 @@ class stage1 extends Phaser.Scene {
         this.arthur = new playerPrefab(this, 65, 100);
 
         //Pintamos los enemigos
+        
         this.zombie = new zombiePrefab(this, 300, 190);
         this.greenMonster = new greenMonsterPrefab(this, 500, 190);
+        this.crow = new crowPrefab(this, 400, 160);
+        this.flyingKnight = new flyingKnightPrefab(this, 400, 100);
+        this.woodyPig = new woodyPigPrefab(this, 400, 50);
+        
+        this.unicorn = new unicornPrefab(this, 4000, 100);
+
+        //Pintamos las tumbas
+        this.tombs = new Array(
+            new tombPrefab(this, 1*32+16+1, 5*32+16+1),
+            new tombPrefab(this, 7*32+16+1, 5*32+16+1, "tomb02"),
+            new tombPrefab(this, 12*32+16+1, 5*32+16+1),
+            new tombPrefab(this, 16*32+16+1, 5*32+16+1, "tomb03"),
+            new tombPrefab(this, 23*32+16+1, 5*32+16+1),
+            new tombPrefab(this, 30*32+16+1, 5*32+16+1),
+            new tombPrefab(this, 34*32+16+1, 5*32+16+1),
+            new tombPrefab(this, 39*32+16+1, 5*32+16+1, "tomb02"),
+            new tombPrefab(this, 46*32+16+1, 5*32+16+1, "tomb03"),
+            new tombPrefab(this, 23*32+16+16, 2*32+16+17, "tomb02"),
+            new tombPrefab(this, 26*32+16+16, 2*32+16+17, "tomb03"),
+            new tombPrefab(this, 29*32+16+16, 2*32+16+17, "tomb03"));
 
         //Camaras
         this.cameras.main.startFollow(this.arthur);
         this.cameras.main.setBounds(0, 0, gamePrefs.LEVEL1_WIDTH, gamePrefs.LEVEL1_HEIGHT);
+        
+        //TMP mecago en todo q   uew molestO A WDOAWIDHAW
+        this.sound.volume = 0;
 
-        console.log(this.enemiesSpawn.objects[0]);
+        this.gameStart = this.sound.add('gameStart');
+        this.gameTheme = this.sound.add('gameTheme');
+        
+        this.gameStart.play();
+        this.hasPlayed = false;
+
+        //Comprobamos si todas las tiles necesarias para no colisionar
+        //con la parte de abajo y laterales del segundo piso de la montaña
+        //han sido modificadas
+        this.allMountainCollisionsAreModified = false;
     }
 
     update()
     {
-        if (this.tombs1F.culledTiles.length > 0) {
-            var tiles = this.tombs1F;
-
-            //console.log(tiles);
-            //tiles.tileSet.setCollisionBounds(8,8,8,8);
-            //for (var i = 0; i < tiles.length; i++) {
-            //}
+        if(!this.gameStart.isPlaying && !this.hasPlayed)
+        {
+            this.gameTheme.play()
+            this.gameTheme.setLoop(true);
+            this.hasPlayed = true;
         }
     }
 
@@ -111,14 +121,36 @@ class stage1 extends Phaser.Scene {
             frameRate: 10,
             repeat: 0
         });
+
+        this.anims.create({
+            key: 'breakArmour',
+            frames: this.anims.generateFrameNumbers('break_armour', { start: 0, end: 4 }),
+            frameRate: 10,
+            repeat: 0
+        })
+
+        this.anims.create({
+            key: 'laddersAnimation',
+            frames: this.anims.generateFrameNumbers('ladders_animation', { start: 0, end: 1 }),
+            frameRate: 10,
+            repeat: -1
+        })
+
+        this.anims.create({
+            key: 'laddersAnimationNaked',
+            frames: this.anims.generateFrameNumbers('ladders_animation_naked', { start: 0, end: 1 }),
+            frameRate: 10,
+            repeat: -1
+        })
+
         //FIRE ANIMATION
         this.anims.create
-        ({
-            key:'throwFire',
-            frames:this.anims.generateFrameNumbers('fire',{start:0,end:3}),
-            frameRate:8,
-            repeat:-1
-        });
+            ({
+                key: 'throwFire',
+                frames: this.anims.generateFrameNumbers('fire', { start: 0, end: 3 }),
+                frameRate: 8,
+                repeat: -1
+            });
 
         //ZOMBIE ANIMATIONS
         this.anims.create({
@@ -152,20 +184,78 @@ class stage1 extends Phaser.Scene {
 
         //GREEN MONSTER BULLET
         this.anims.create
-        ({
-            key: 'greenMonsterBullet',
-            frames: this.anims.generateFrameNumbers('greenMonsterBullet', {start:0, end:3}),
-            frameRate:5,
+            ({
+                key: 'greenMonsterBullet',
+                frames: this.anims.generateFrameNumbers('greenMonsterBullet', { start: 0, end: 3 }),
+                frameRate: 5,
+                repeat: -1
+            })
+
+        //FLYING KNIGHT
+        this.anims.create({
+            key: 'flyingKnightIddle',
+            frames: this.anims.generateFrameNumbers('flyingKnight', { start: 0, end: 3 }),
+            frameRate: 5,
+            repeat: -1
+        })
+
+        //WOODY PIG
+        this.anims.create({
+            key: 'woodyPigMove',
+            frames: this.anims.generateFrameNumbers('woodyPig', { start: 0, end: 1 }),
+            frameRate: 5,
             repeat: -1
         })
 
         this.anims.create({
-            key: 'breakArmour',
-            frames: this.anims.generateFrameNumbers('break_armour', { start: 0, end: 4 }),
+            key: 'woodyPigTurn',
+            frames: this.anims.generateFrameNumbers('woodyPig', { start: 2, end: 3}),
+            frameRate: 5,
+            repeat: 0
+        })
+
+        this.anims.create({
+            key: 'enemyDeath',
+            frames: this.anims.generateFrameNumbers('enemy_death', { start: 0, end: 7 }),
             frameRate: 10,
             repeat: 0
         })
 
+        //  CROW ANIMATIONS
+        this.anims.create({
+            key: 'crowIdle',
+            frames: this.anims.generateFrameNumbers('crow', { start: 0, end: 3}),
+            frameRate: 8,
+            repeat: -1
+        })
+
+        this.anims.create({
+            key: 'crowFly',
+            frames: this.anims.generateFrameNumbers('crow', { start: 4, end: 7}),
+            frameRate: 8,
+            repeat: -1
+        })
+        
+        this.anims.create({
+            key: 'unicornWalk',
+            frames: this.anims.generateFrameNumbers('unicorn', { start: 0, end: 2}),
+            frameRate: 8,
+            repeat: -1
+        })
+
+        this.anims.create({
+            key: 'unicornRun',
+            frames: this.anims.generateFrameNumbers('unicorn', { start: 3, end: 5}),
+            frameRate: 5,
+            repeat: -1
+        })
+
+        this.anims.create({
+            key: 'unicornBullet',
+            frames: this.anims.generateFrameNumbers('unicornBullet', { start: 0, end: 1}),
+            frameRate: 5,
+            repeat: -1
+        })
     }
 
     spawnEnemies()
@@ -182,4 +272,3 @@ class stage1 extends Phaser.Scene {
 
     }
 }
-

@@ -3,7 +3,7 @@ class greenMonsterPrefab extends actorPrefab {
         super(_scene, _positionX, _positionY, _spriteTag);
         _scene.add.existing(this);
         _scene.physics.world.enable(this);
-        this.direccion = -1;
+        this.direction = -1;
         this.scene = _scene;
         this.anims.stop().setFrame(0);
         this.randNum = 0;
@@ -25,59 +25,42 @@ class greenMonsterPrefab extends actorPrefab {
                 loop: true
             } 
         );
+        
+        this.anims.play('greenMonsterIddle', true);
 
         this.loadPools();
+
+        this.body.setSize(15, 25, true);
     }
 
 
 
     hit(_greenMonster, _arthur) {
-        {
-            if (_arthur.isInvincible == false) {
-                _arthur.tookDamage = true;
-                _arthur.isInvincible = true;
-                _arthur.health -= 1;
-            }
-
-            _arthur.body.setVelocityX(0);
-            _arthur.body.setVelocityY(-300);
-            //_arthur.body.velocity.x += gamePrefs.ARTHUR_SPEED * -_arthur.direccion;
-            _arthur.body.velocity.y -= Math.sin(0.1) * gamePrefs.ARTHUR_JUMP;
-            this.scene.cameras.main.shake(500,0.05);
+        if (_arthur.isInvincible == false) {
+            _arthur.tookDamage = true;
+            _arthur.isInvincible = true;
+            _arthur.health -= 1;
         }
-
     }
 
-    loadPools()
-    {
+    loadPools() {
         this.bullet = this.scene.physics.add.group();
     }
 
-
-    /*
-
-        PREGUNTAR AL RICHARD POR QUE A VECES SI QUE FUNCIONA EL THIS.ON() (ZOMBIE) PERO OTRAS NO, GREENMONSTER / PLAYER.
-
-    */
     preUpdate(time,delta)
     {
-        if(Phaser.Math.Distance.BetweenPoints(this,this.scene.arthur) < 200)
+        if(this.direction == 1)
+            this.setFlipX(true);
+        else
+            this.setFlipX(false);
+
+        if(Phaser.Math.Distance.BetweenPoints(this,this.scene.arthur) < 100)
         {
-            if(this.randNum == 1)
-            {
-                this.anims.play('greenMonsterIddle', true);
-            }
-            else if(this.randNum == 3)
-            {
-                this.anims.play('greenMonsterAttack', true);
-                this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, ()=> {
-                    this.anims.stop();
-                    this.attack();
-                });
-    
-            }
-            else
-            this.anims.stop().setFrame(0);
+            this.anims.play('greenMonsterAttack', true);
+            this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, ()=> {
+                this.anims.stop();
+                this.attack();
+            }); 
         }        
     
     super.preUpdate(time,delta);
@@ -88,14 +71,14 @@ class greenMonsterPrefab extends actorPrefab {
     makeRandom(min, max) {
         this.randNum = Phaser.Math.Between(0, 3);
     }
-    attack() {
+    attack() {   
         //Throw projectile
         var _bullet = this.bullet.getFirst(false);
 
         _bullet = new greenMonsterBulletPrefab(this.scene, this.x, this.y);
         this.bullet.add(_bullet);
 
-        _bullet.body.setSize(8,8);
+        _bullet.body.setSize(8, 8);
         _bullet.setScale(0.5);
         _bullet.body.allowGravity = false;
 
@@ -103,7 +86,7 @@ class greenMonsterPrefab extends actorPrefab {
 
         var angle = Phaser.Math.Angle.Between(this.x, this.y, this.scene.arthur.x, this.scene.arthur.y)
 
-        var speed_x = 120 * Math.cos(angle); 
+        var speed_x = 120 * Math.cos(angle);
         var speed_y = 120 * Math.sin(angle);
 
         _bullet.body.setVelocityX(speed_x);
