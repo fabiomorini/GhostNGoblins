@@ -70,6 +70,11 @@ class stage1 extends Phaser.Scene {
         }
     }
 
+    inputScene()
+    {
+        this.scene.start('InputScene');
+    }
+
     loadAnimations() {
         //ARTHUR ARMOUR ANIMATIONS
         this.anims.create({

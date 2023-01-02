@@ -14,8 +14,9 @@ var gamePrefs=
     SPEAR_SPEED_: 220,
     MAX_BULLET_AMOUNT : 3,
     MAX_FIRE_AMOUNT : 2,
-    topScore: 10000,
-    highScores: []
+    score : 9000, 
+    nickname : "",
+    lost : false
 }
 
 var config =

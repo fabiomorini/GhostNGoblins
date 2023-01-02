@@ -5,9 +5,9 @@ class InputScene extends Phaser.Scene {
       });
   
       this.chars = [
-        ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"],
+        ["A", "B", "C", "D", "E", "F", "G", "H", "i", "J"],
         ["K", "L", "M", "N", "O", "P", "Q", "R", "S", "T"],
-        ["U", "V", "W", "X", "Y", "Z", ".", "-", "<", ">"]
+        ["U", "V", "W", "X", "Y", "Z", ",", "!", "<", ">"]
       ];
   
       this.rows = this.chars.length;
@@ -28,16 +28,16 @@ class InputScene extends Phaser.Scene {
         "50000"
       );
 
-      this.padding = 5;
-      this.letterSpacing = 10;
-      var charWidth = 16;
+      this.padding = 4;
+      this.letterSpacing = 6;
+      var charWidth = 17;
       var charHeight = 16;
       var lineHeight = 2;
       this.xSpacing = charWidth + 5;
       this.ySpacing = charHeight * lineHeight;
   
       var characters = "";
-      for (let i = 0; i < this.chars.length; i++) {
+      for (var i = 0; i < this.chars.length; i++) {
         characters += this.chars[i].join("");
         if (i !== this.chars.length - 1) {
           characters += "\n".repeat(lineHeight);
@@ -60,9 +60,9 @@ class InputScene extends Phaser.Scene {
       this.add.image(
         text.x +
           charWidth * (this.columns - 1) -
-          44 +
+          12 +
           this.letterSpacing * (this.columns - 2),
-        text.y + charWidth * (lineHeight * (this.chars.length - 1)) + 11,
+        text.y + charWidth * (lineHeight * (this.chars.length - 1)) + 8,
         "del"
       );
 
@@ -70,9 +70,9 @@ class InputScene extends Phaser.Scene {
       this.add.image(
         text.x +
           charWidth * this.columns -
-          48 +
+          12 +
           this.letterSpacing * (this.columns - 1),
-        text.y + charWidth * (lineHeight * (this.chars.length - 1)) + 11,
+        text.y + charWidth * (lineHeight * (this.chars.length - 1)) + 8,
         "end"
       );
   
@@ -156,12 +156,15 @@ class InputScene extends Phaser.Scene {
   
       if (x === this.columns - 1 && y === this.rows - 1 && nameLength > 0) {
         //  Submit
-        this.events.emit("submitName", this.name);
+        console.log(gamePrefs.nickname);
+        gamePrefs.nickname = this.name;
+        console.log(gamePrefs.nickname);
+        this.scene.start("rankingScene");
       } 
       else if (  x === this.columns - 2 &&  y === this.rows - 1 && nameLength > 0) {
         // Return
         this.name = this.name.substring(0, nameLength - 1);
-        this.updateName(this.name)
+        this.updateName(this.name);
       } 
       else if (this.name.length < this.charLimit) {
         // Concadenamos las letras

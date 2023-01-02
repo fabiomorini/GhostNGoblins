@@ -105,8 +105,8 @@ class gamePreload extends Phaser.Scene {
 
         this.load.bitmapFont(
             "arcadeFont",
-            "arcade.png",
-            "arcade.xml"
+            "gng_font.png",
+            "gng_font.xml"
         );
     }
 
