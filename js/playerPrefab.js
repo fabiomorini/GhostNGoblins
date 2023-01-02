@@ -273,73 +273,39 @@ class playerPrefab extends actorPrefab {
             this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED);
     }
 
-    setAnimations(){
-        if (this.hasArmour)
-        {
-            this.throwAnimation = "throw";
-            this.throwAnimationCrouch = "throwCrouch";
-            this.runAnimation = "run";
-            this.laddersAnimation = "laddersAnimation";
-            this.selectAnimation = [4,5,6,7];
-        }
-        else
-        {
-            this.throwAnimation = "throwNaked";
-            this.throwAnimationCrouch = "throwCrouchNaked";
-            this.runAnimation = "runNaked";
-            this.laddersAnimation = "laddersAnimationNaked";
-            this.selectAnimation = [18,21,22,23];
-        }
+    setAnimations() {
+        this.throwAnimation = this.hasArmour ? "throw" : "throwNaked";
+        this.throwAnimationCrouch = this.hasArmour ? "throwCrouch" : "throwCrouchNaked";
+        this.runAnimation = this.hasArmour ? "run" : "runNaked";
+        this.laddersAnimation = this.hasArmour ? "laddersAnimation" : "laddersAnimationNaked";
+        this.selectAnimation = this.hasArmour ? [4, 5, 6, 7] : [18, 21, 22, 23];
     }
 
-    throwAttack(){
-        if (this.cursorKeys.down.isDown) {
-            this.anims.play(this.throwAnimationCrouch, true);
-            this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-                this.anims.stop().setFrame(this.selectAnimation[3]);
-            });
-        }
-        else {
-            if (this.body.onFloor())
-                this.body.setVelocityX(0);
-            this.anims.play(this.throwAnimation, true);
-            this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-                this.anims.stop().setFrame(this.selectAnimation[0]);
-            });
-        }
+    throwAttack() {
+        const animation = this.cursorKeys.down.isDown ? this.throwAnimationCrouch : this.throwAnimation;
+        this.anims.play(animation, true);
+        this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
+          this.anims.stop().setFrame(this.selectAnimation[3]);
+        });
     }
 
     useLadder(_player, _ladders) {
-        var tile1 = this.scene.ladders.getTileAtWorldXY(this.x, this.y);
-        var tile2 = this.scene.ladders.getTileAtWorldXY(this.x, this.y + 32);
-
-        //Si estamos en una escalera, desactivamos el salto y el movimiento lateral del jugador
-
-        if(tile1 != null && tile1.index != null && tile1.index != 0){
-            //Si esto se cumple se pueden subir escaleras
-            this.canClimbLadders = true;
+        const tile1 = this.scene.ladders.getTileAtWorldXY(this.x, this.y);
+        const tile2 = this.scene.ladders.getTileAtWorldXY(this.x, this.y + 32);
+      
+        this.canClimbLadders = (tile1 != null && tile1.index != null && tile1.index != 0);
+        this.canDownLadders = (tile2 != null && tile2.index != null && tile2.index != 0);
+      
+        if (_player.y >= 177) {
+          this.canDownLadders = false;
         }
-        else this.canClimbLadders = false;
-
-        if(_player.y >= 177){
-            //Si esto se cumple, SOLO se podrán subir
-            this.canDownLadders = false;
+      
+        if (_player.y <= 97) {
+          this.canClimbLadders = false;
         }
-        
-        if(tile2 != null && tile2.index != null && tile2.index != 0){
-            //Si esto se cumple se pueden bajar escaleras
-            this.canDownLadders = true;
-        }
-        else this.canDownLadders = false;
-
-        if(_player.y <= 97){
-            //Si esto se cumple, SOLO se podrán bajar
-            this.canClimbLadders = false;
-        }
-
-        //Si no podemos subir o bajar por escaleras, reestablecemos la gravedad
-        if(!this.canClimbLadders && !this.canDownLadders){
-            this.body.allowGravity = true;
+      
+        if (!this.canClimbLadders && !this.canDownLadders) {
+          this.body.allowGravity = true;
         }
     }
 
