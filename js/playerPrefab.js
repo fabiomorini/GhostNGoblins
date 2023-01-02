@@ -357,14 +357,11 @@ class playerPrefab extends actorPrefab {
                     this.body.allowGravity = false;
                     this.body.setVelocityY(gamePrefs.ARTHUR_SPEED);
                     this.body.checkCollision.down = false;
-                    console.log("1");
 
                     this.scene.time.addEvent({
                         delay: 200, callback: () => {
                             this.body.checkCollision.down = true;
                             this.body.allowGravity = true;
-
-                            console.log("2");
                         }
                     });
                     this.anims.play(this.laddersAnimation, true);
@@ -402,6 +399,7 @@ class playerPrefab extends actorPrefab {
 
                 else {
                     this.body.setVelocityX(0);
+                    this.anims.play(this.runAnimation, true);
                     this.anims.stop().setFrame(this.selectAnimation[0]);
                 }
     
