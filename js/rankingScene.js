@@ -148,4 +148,19 @@ class rankingScene extends Phaser.Scene
       )
     .setTint(0x00bfff).setFontSize(14);
   }
+
+  update()
+    {
+        let button1 = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ONE);
+        
+        if(button1.isDown)
+        {
+            this.loadStage()
+        }
+    }
+
+  loadStage()
+  {
+      this.scene.start('splashScreenScene');
+  }
 }
