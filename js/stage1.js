@@ -47,7 +47,7 @@ class stage1 extends Phaser.Scene {
     );
 
     //TMP mecago en todo q   uew molestO A WDOAWIDHAW
-    this.sound.volume = 0;
+    this.sound.volume = 0.1;
 
     this.gameStart = this.sound.add("gameStart");
     this.gameTheme = this.sound.add("gameTheme");
@@ -87,6 +87,7 @@ class stage1 extends Phaser.Scene {
   }
 
   inputScene() {
+    this.gameTheme.stop();
     this.scene.start("InputScene");
   }
 

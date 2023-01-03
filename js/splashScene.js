@@ -30,7 +30,6 @@ class splashScreenScene extends Phaser.Scene {
 
     loadStage()
     {
-        this.scene.stop();
         this.scene.start('stage1');
     }
 

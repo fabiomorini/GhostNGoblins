@@ -24,6 +24,7 @@ class playerPrefab extends actorPrefab {
         this.selectAnimation = [5,6];
         this.canClimbLadders = false;
         this.canDownLadders = false;
+        this.hasAlreadyEntered = false;
 
 
         this.body.setSize(12, 28, true);
@@ -260,8 +261,24 @@ class playerPrefab extends actorPrefab {
     }
 
     deathByFall(){
-        if(this.y > 178){
-            console.log("F");
+        if(this.y > 210 && !this.hasAlreadyEntered){
+            this.health = 2;
+            this.tookDamage = false;
+            this.isInvincible = false;
+            this.isAlive = false;
+            this.scene.inputScene();
+            
+            //Save Score
+            if(this.score > gamePrefs.score){
+                gamePrefs.score = this.score;
+            }
+            
+            //Musica de muerte de Arthur
+            if (!this.isAlive) {
+                this.scene.sound.play('arthurDeath');
+                this.isAlive = true;
+            }
+            this.hasAlreadyEntered = true;
         }
     }
 
@@ -473,8 +490,8 @@ class playerPrefab extends actorPrefab {
         });
         
         //Save Score
-        if(this.score > gamePrefs.topScore){
-            gamePrefs.topScore = this.score;
+        if(this.score > gamePrefs.score){
+            gamePrefs.score = this.score;
         }
         
         //Musica de muerte de Arthur
@@ -485,6 +502,7 @@ class playerPrefab extends actorPrefab {
     }
 
     preUpdate(time, delta) {
+        this.deathByFall();
         this.resizeCollision();
         this.checkArmour();
         this.resetAttackAnim();
