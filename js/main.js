@@ -24,7 +24,7 @@ var config =
     type: Phaser.AUTO,
     width: gamePrefs.GAME_WIDTH,
     height: gamePrefs.GAME_HEIGHT,
-    scene:[gamePreload, rankingScene, InputScene, stage1], //array con los niveles/pantallas/escenas (unity)
+    scene:[gamePreload, splashScreenScene, rankingScene, InputScene, stage1], //array con los niveles/pantallas/escenas (unity)
     render:
     {
         pixelArt:true
