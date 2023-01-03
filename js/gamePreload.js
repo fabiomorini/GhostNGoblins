@@ -108,13 +108,14 @@ class gamePreload extends Phaser.Scene {
             "gng_font.png",
             "gng_font.xml"
         );
-    }
+
+        //Cargamos el splash screen
+        this.load.setPath('assets/tilesets/');
+        this.load.spritesheet("splashGif", "splashScreen.png", 
+            { frameWidth:832, frameHeight: 720 });
+    } 
 
     create() {
-        this.startGame();
-    }
-
-    startGame() {
-        this.scene.start('stage1');
+        this.scene.start('splashScreenScene');
     }
 }
