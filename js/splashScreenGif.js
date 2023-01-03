@@ -3,11 +3,11 @@ class splashGifObject extends Phaser.GameObjects.Sprite {
         super(_scene, _posX, _posY, _tag);
         _scene.add.existing(this);
 
-        this.anims.play('run', true);
+        this.anims.play('runSplash', true);
     }
     
     create()
     {
-        console.log(this.body);
+
     }
 }

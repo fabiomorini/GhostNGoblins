@@ -8,7 +8,7 @@ class splashScreenScene extends Phaser.Scene {
     {
         
         this.anims.create({
-            key: 'run',
+            key: 'runSplash',
             frames: this.anims.generateFrameNumbers('splashGif', { start: 0, end: 2 }),
             frameRate: 0.3,
             repeat: -1
@@ -30,8 +30,8 @@ class splashScreenScene extends Phaser.Scene {
 
     loadStage()
     {
-        this.scene.start('stage1');
         this.scene.stop();
+        this.scene.start('stage1');
     }
 
 }
