@@ -55,6 +55,14 @@ class playerPrefab extends actorPrefab {
                 _scene.water
             );
 
+        
+        _scene.physics.add.overlap
+        (
+            this,
+            _scene.door,
+            _scene.door.nextScene
+        );
+
         this.loadPools();
         this.key1 = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_ONE);
         this.key2 = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_TWO);

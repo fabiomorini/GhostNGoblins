@@ -11,8 +11,11 @@ class stage1 extends Phaser.Scene {
 
     this.loadAnimations();
 
+    //Pintamos la puerta final
+    this.door = new doorPrefab(this, gamePrefs.DOOR_SPAWN_WIDTH, gamePrefs.DOOR_SPAWN_HEIGHT).setScale(.5);
+
     //Pintamos al player
-    this.arthur = new playerPrefab(this, 65, 100);
+    this.arthur = new playerPrefab(this, gamePrefs.ARTHUR_SPAWN_WIDTH, gamePrefs.ARTHUR_SPAWN_HEIGHT);
 
     //Preparamos el spawner de enemigos
     this.enemiesSpawned = [];
@@ -59,6 +62,11 @@ class stage1 extends Phaser.Scene {
 
     // Inicializa una variable para almacenar el índice de los enemigos
     this.enemyIndex;
+
+    this.bossDefeatable = false;
+    
+    //ESTO SE PUEDE ELIMINAR SI YA NO SE VA A ABRIR LA PUERTA CON "CONTROL"
+    this.openDoorKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CTRL);
   }
 
   update() {
@@ -71,6 +79,11 @@ class stage1 extends Phaser.Scene {
     //Pintamos los enemigos
     this.spawnEnemies();
     this.checkEnemyDistance(this.arthur.x);
+
+    //ESTO HAY QUE ACTIVARLO AL RECOGER LA LLAVE
+    if(this.openDoorKey.isDown){
+      this.door.openDoor();
+    }
   }
 
   inputScene() {
@@ -288,6 +301,22 @@ class stage1 extends Phaser.Scene {
       frameRate: 5,
       repeat: -1,
     });
+
+    //Door animations
+    this.anims.create({
+      key: "openDoor",
+      frames: this.anims.generateFrameNumbers("door", { start: 0, end: 2 }),
+      frameRate: 8,
+      repeat: 0,
+    });
+
+    //ARTHUR ARMOUR ANIMATIONS
+    this.anims.create({
+      key: "run",
+      frames: this.anims.generateFrameNumbers("arthur", { start: 0, end: 4 }),
+      frameRate: 10,
+      repeat: -1,
+    });
   }
 
   addEnemy(enemy) {
@@ -311,7 +340,8 @@ class stage1 extends Phaser.Scene {
       const currentTime = Date.now();
 
       // Si el enemigo ha estado fuera del juego el tiempo suficiente, se destruye y se vuelve a habilitar
-      if (
+      if (this.enemiesSpawned != null && this.enemiesSpawned[this.enemyIndex] !=null &&
+        this.enemiesSpawned[this.enemyIndex].destroyTime != null &&
         currentTime - this.enemiesSpawned[this.enemyIndex].destroyTime >
         gamePrefs.ENEMY_RESPAWN_TIME
       ) {
@@ -373,11 +403,21 @@ class stage1 extends Phaser.Scene {
         !(spawn.name in this.enemiesWaiting) &&
         this.arthur.x <= spawn.x + gamePrefs.GAME_WIDTH / 2 + 32 &&
         this.arthur.x >= spawn.x - gamePrefs.GAME_WIDTH / 2 - 32 &&
-        spawn.properties[0].value != "RedArremer"
+        spawn.properties[0].value != "RedArremer" &&
+        unicornPrefab.isAlive
       ) {
         this.enemiesSpawned.push(
           enemyCreators[spawn.properties[0].value](spawn.x, spawn.y, spawn.name)
         );
+
+        if (spawn.properties[0].value == "UnicornBoss") this.bossDefeatable = true;
+      } else if (
+        !(
+          this.arthur.x <= spawn.x + gamePrefs.GAME_WIDTH / 2 + 32 &&
+          this.arthur.x >= spawn.x - gamePrefs.GAME_WIDTH / 2 - 32
+        )
+      ) {
+        if (spawn.properties[0].value == "UnicornBoss") this.bossDefeatable = false;
       }
     }
   }

@@ -15,6 +15,10 @@ var gamePrefs=
     MAX_BULLET_AMOUNT : 3,
     MAX_FIRE_AMOUNT : 2,
     ENEMY_RESPAWN_TIME : 5000,
+    ARTHUR_SPAWN_WIDTH: 65,
+    ARTHUR_SPAWN_HEIGHT: 100,
+    DOOR_SPAWN_WIDTH: 3495,
+    DOOR_SPAWN_HEIGHT: 160,
     score : 9000, 
     nickname : "",
     lost : false
