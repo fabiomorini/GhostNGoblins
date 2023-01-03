@@ -78,6 +78,28 @@ class playerPrefab extends actorPrefab {
             this.hasArmour = false;
     }
 
+    hasHitEnemy(_this, _enemy){
+        var deathSound;
+        if (_enemy.enemyType == 'unicornBoss') {
+            _this.setActive(false);
+            _this.y += 500;
+            _enemy.health -= 1;
+            deathSound = _enemy.health == 0 ? 'enemyDeath' : 'projectileBlock';
+        } else {
+            _this.setActive(false);
+            _this.y += 500;
+            deathSound = _enemy.enemyType == 'crow' ? 'crowDeath' : 'enemyDeath';
+        }
+        var enemyDeath = new enemyDeathPrefab(_this.scene, _enemy.body.position.x, _enemy.body.position.y);
+        _this.scene.sound.play(deathSound);
+        
+        const enemyIndex = _this.scene.enemiesSpawned.indexOf(_enemy);
+        _this.scene.enemiesSpawned.splice(enemyIndex, 1);
+        _this.scene.enemiesWaiting[_enemy.spriteTag] = false;
+
+        _enemy.destroy();
+    }
+
     resetAttackAnim() {
         // Comprobamos qué tipo de arma está seleccionada
         if (this.key1.isDown) {
@@ -107,24 +129,24 @@ class playerPrefab extends actorPrefab {
         }
     }
       
-      // Función para comprobar si se puede disparar con el tipo de arma especificado
-      canShoot(weapon) {
+    // Función para comprobar si se puede disparar con el tipo de arma especificado
+    canShoot(weapon) {
         if (weapon === 0) {
-          return this.spears.countActive() < gamePrefs.MAX_BULLET_AMOUNT;
+            return this.spears.countActive() < gamePrefs.MAX_BULLET_AMOUNT;
         } else if (weapon === 1) {
-          return this.knives.countActive() < gamePrefs.MAX_BULLET_AMOUNT;
+            return this.knives.countActive() < gamePrefs.MAX_BULLET_AMOUNT;
         } else if (weapon === 2) {
-          return this.fires.countActive() < gamePrefs.MAX_FIRE_AMOUNT;
+            return this.fires.countActive() < gamePrefs.MAX_FIRE_AMOUNT;
         }
     }
 
     shoot(weapon) {
         if (weapon === 0) {
-          this.shootSpear();
+            this.shootSpear();
         } else if (weapon === 1) {
-          this.shootKnife();
+            this.shootKnife();
         } else if (weapon === 2) {
-          this.shootFire();
+            this.shootFire();
         }
     }
 

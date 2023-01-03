@@ -3,6 +3,7 @@ class woodyPigPrefab extends actorPrefab {
         super(_scene, _positionX, _positionY, _spriteTag);
         _scene.add.existing(this);
         _scene.physics.world.enable(this);
+        this.enemyType = 'woodyPig';
         this.minimumHeight = _positionY + 80;
         this.direction = -1
         this.scene = _scene;
@@ -22,7 +23,6 @@ class woodyPigPrefab extends actorPrefab {
             );
         
         this.loadPools();
-        //this.body.setSize(15, 30, true)
     }
 
     hit(_woodyPig, _arthur) {

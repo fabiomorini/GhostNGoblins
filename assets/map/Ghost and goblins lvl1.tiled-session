@@ -32,9 +32,9 @@
         },
         "stage1.tmx": {
             "scale": 3,
-            "selectedLayer": 9,
+            "selectedLayer": 21,
             "viewCenter": {
-                "x": 847.3333333333333,
+                "x": 1452.3333333333333,
                 "y": 120.83333333333334
             }
         },
@@ -93,7 +93,7 @@
         "stage1.tmx"
     ],
     "project": "Ghost and goblins lvl1.tiled-project",
-    "property.type": "int",
+    "property.type": "string",
     "recentFiles": [
         "stage1.tmx",
         "stage1.json"
