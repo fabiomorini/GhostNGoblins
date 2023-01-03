@@ -93,6 +93,8 @@ class playerPrefab extends actorPrefab {
         var enemyDeath = new enemyDeathPrefab(_this.scene, _enemy.body.position.x, _enemy.body.position.y);
         _this.scene.sound.play(deathSound);
         
+        const enemyIndex = _this.scene.enemiesSpawned.indexOf(_enemy);
+        _this.scene.enemiesSpawned.splice(enemyIndex, 1);
         _this.scene.enemiesWaiting[_enemy.spriteTag] = false;
 
         _enemy.destroy();

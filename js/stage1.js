@@ -298,12 +298,11 @@ class stage1 extends Phaser.Scene {
 
             if (!(this.arthur.x <= enemy.x + gamePrefs.GAME_WIDTH / 2 + 32 &&
             this.arthur.x >= enemy.x - gamePrefs.GAME_WIDTH / 2 - 32)) {
-                console.log("destruído");
                 const enemyIndex = this.enemiesSpawned.indexOf(enemy);
                 this.enemiesSpawned.splice(enemyIndex, 1);
-                
+
                 this.enemiesWaiting[enemy.spriteTag] = true;
-                setTimeout(() => (delete this.enemiesWaiting[spawn.name]),
+                setTimeout(() => (delete this.enemiesWaiting[enemy.spriteTag]),
                 gamePrefs.ENEMY_RESPAWN_TIME);
 
                 enemy.destroy();
@@ -343,14 +342,13 @@ class stage1 extends Phaser.Scene {
                 this.enemiesWaiting[spawn.name] = true;
             }
         }
-
-        console.log(isDuplicated);
       
       // Si el enemigo no está duplicado y está en el rango de visión del jugador, lo spawnea
       if (
         !isDuplicated && !(spawn.name in this.enemiesWaiting) &&
         this.arthur.x <= spawn.x + gamePrefs.GAME_WIDTH / 2 + 32 &&
-        this.arthur.x >= spawn.x - gamePrefs.GAME_WIDTH / 2 - 32
+        this.arthur.x >= spawn.x - gamePrefs.GAME_WIDTH / 2 - 32 &&
+        spawn.properties[0].value != 'RedArremer'
       ) {
         this.enemiesSpawned.push(
           enemyCreators[spawn.properties[0].value](spawn.x, spawn.y, spawn.name)
