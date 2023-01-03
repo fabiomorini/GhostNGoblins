@@ -69,6 +69,11 @@ class stage1 extends Phaser.Scene {
     this.spawnEnemies();
     this.checkEnemyDistance();
   }
+  
+    inputScene()
+    {
+        this.scene.start('InputScene');
+    }
 
   loadAnimations() {
     //ARTHUR ARMOUR ANIMATIONS

@@ -459,13 +459,14 @@ class playerPrefab extends actorPrefab {
             this.tookDamage = false;
             this.isInvincible = false;
             this.isAlive = false;
+            this.scene.inputScene();
         });
-
+        
         //Save Score
         if(this.score > gamePrefs.topScore){
             gamePrefs.topScore = this.score;
         }
-
+        
         //Musica de muerte de Arthur
         if (!this.isAlive) {
             this.scene.sound.play('arthurDeath');
@@ -484,12 +485,12 @@ class playerPrefab extends actorPrefab {
         else {
             this.playerMovement();
         }
-
+        
         this.checkBorders();
         this.setInvencible();
         super.preUpdate(time, delta);
     }
-
+    
     endInvincibility() {
         this.isInvincible = false;
         this.alpha = 1;
@@ -497,7 +498,7 @@ class playerPrefab extends actorPrefab {
 
     setInvencible(){
         if(this.invencibile.isDown)
-            this.isInvincible = true;
+        this.isInvincible = true;
         
     }
 }

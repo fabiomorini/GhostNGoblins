@@ -15,8 +15,9 @@ var gamePrefs=
     MAX_BULLET_AMOUNT : 3,
     MAX_FIRE_AMOUNT : 2,
     ENEMY_RESPAWN_TIME : 10000,
-    topScore: 10000,
-    highScores: []
+    score : 9000, 
+    nickname : "",
+    lost : false
 }
 
 var config =
@@ -24,7 +25,7 @@ var config =
     type: Phaser.AUTO,
     width: gamePrefs.GAME_WIDTH,
     height: gamePrefs.GAME_HEIGHT,
-    scene:[gamePreload, rankingScene, InputScene, stage1], //array con los niveles/pantallas/escenas (unity)
+    scene:[gamePreload, splashScreenScene, rankingScene, InputScene, stage1], //array con los niveles/pantallas/escenas (unity)
     render:
     {
         pixelArt:true
