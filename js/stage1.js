@@ -56,6 +56,9 @@ class stage1 extends Phaser.Scene {
     //con la parte de abajo y laterales del segundo piso de la montaña
     //han sido modificadas
     this.allMountainCollisionsAreModified = false;
+
+    // Inicializa una variable para almacenar el índice de los enemigos
+    this.enemyIndex;
   }
 
   update() {
@@ -67,13 +70,12 @@ class stage1 extends Phaser.Scene {
 
     //Pintamos los enemigos
     this.spawnEnemies();
-    this.checkEnemyDistance();
+    this.checkEnemyDistance(this.arthur.x);
   }
-  
-    inputScene()
-    {
-        this.scene.start('InputScene');
-    }
+
+  inputScene() {
+    this.scene.start("InputScene");
+  }
 
   loadAnimations() {
     //ARTHUR ARMOUR ANIMATIONS
@@ -292,23 +294,43 @@ class stage1 extends Phaser.Scene {
     this.enemiesSpawned.push(enemy);
   }
 
-    checkEnemyDistance() {
-        for (let i = 0; i < this.enemiesSpawned.length; i++) {
-            const enemy = this.enemiesSpawned[i];
+  checkEnemyDistance(arthurX) {
+    // Recorre sólo los enemigos que están a una distancia determinada de arthur
+    for (let i = 0; i < this.enemiesSpawned.length; i++) {
+      const enemy = this.enemiesSpawned[i];
 
-            if (!(this.arthur.x <= enemy.x + gamePrefs.GAME_WIDTH / 2 + 32 &&
-            this.arthur.x >= enemy.x - gamePrefs.GAME_WIDTH / 2 - 32)) {
-                const enemyIndex = this.enemiesSpawned.indexOf(enemy);
-                this.enemiesSpawned.splice(enemyIndex, 1);
-
-                this.enemiesWaiting[enemy.spriteTag] = true;
-                setTimeout(() => (delete this.enemiesWaiting[enemy.spriteTag]),
-                gamePrefs.ENEMY_RESPAWN_TIME);
-
-                enemy.destroy();
-            }
-        }
+      if (Math.abs(arthurX - enemy.x) > gamePrefs.GAME_WIDTH / 2 + 32) {
+        this.enemyIndex = i;
+        break;
+      }
     }
+
+    // Si se ha encontrado un enemigo a una distancia mayor de la permitida, se procede a destruirlo
+    if (this.enemyIndex !== undefined) {
+      // Almacena el tiempo actual en una variable local para comparar más tarde
+      const currentTime = Date.now();
+
+      // Si el enemigo ha estado fuera del juego el tiempo suficiente, se destruye y se vuelve a habilitar
+      if (
+        currentTime - this.enemiesSpawned[this.enemyIndex].destroyTime >
+        gamePrefs.ENEMY_RESPAWN_TIME
+      ) {
+        destroyEnemy(this.enemyIndex);
+      }
+    }
+  }
+
+  // Función para destruir un enemigo
+  destroyEnemy(enemyIndex) {
+    // Elimina el enemigo del array de enemigos spawneados
+    const enemy = this.enemiesSpawned.splice(enemyIndex, 1)[0];
+
+    // Marca el enemigo como disponible para ser respawmado
+    this.enemiesWaiting[enemy.spriteTag] = true;
+
+    // Destruye el enemigo
+    enemy.destroy();
+  }
 
   spawnEnemies() {
     // Crea una tabla de búsqueda para crear los enemigos
@@ -328,27 +350,30 @@ class stage1 extends Phaser.Scene {
 
       // Verifica si el enemigo ya está en el array de enemigos spawneados
       let isDuplicated = false;
-        for (let j = 0; j < this.enemiesSpawned.length; j++) {
-            if (this.enemiesSpawned[j].spriteTag == spawn.name) {
-                isDuplicated = true;
-                break;
-            }
+      for (let j = 0; j < this.enemiesSpawned.length; j++) {
+        if (this.enemiesSpawned[j].spriteTag == spawn.name) {
+          isDuplicated = true;
+          break;
         }
+      }
 
-        if (spawn.name in this.enemiesWaiting) {
-            if(!this.enemiesWaiting[spawn.name]){
-                setTimeout(() => (delete this.enemiesWaiting[spawn.name]),
-                gamePrefs.ENEMY_RESPAWN_TIME);
-                this.enemiesWaiting[spawn.name] = true;
-            }
+      if (spawn.name in this.enemiesWaiting) {
+        if (!this.enemiesWaiting[spawn.name]) {
+          setTimeout(
+            () => delete this.enemiesWaiting[spawn.name],
+            gamePrefs.ENEMY_RESPAWN_TIME
+          );
+          this.enemiesWaiting[spawn.name] = true;
         }
-      
+      }
+
       // Si el enemigo no está duplicado y está en el rango de visión del jugador, lo spawnea
       if (
-        !isDuplicated && !(spawn.name in this.enemiesWaiting) &&
+        !isDuplicated &&
+        !(spawn.name in this.enemiesWaiting) &&
         this.arthur.x <= spawn.x + gamePrefs.GAME_WIDTH / 2 + 32 &&
         this.arthur.x >= spawn.x - gamePrefs.GAME_WIDTH / 2 - 32 &&
-        spawn.properties[0].value != 'RedArremer'
+        spawn.properties[0].value != "RedArremer"
       ) {
         this.enemiesSpawned.push(
           enemyCreators[spawn.properties[0].value](spawn.x, spawn.y, spawn.name)
