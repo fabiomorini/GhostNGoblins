@@ -3,6 +3,7 @@ class zombiePrefab extends actorPrefab {
         super(_scene, _positionX, _positionY, _spriteTag);
         _scene.add.existing(this);
         _scene.physics.world.enable(this);
+        this.enemyType = 'zombie';
         this.startingPos = _positionX;
         this.dist = 0;
         this.maxDistance = 200;
@@ -23,7 +24,7 @@ class zombiePrefab extends actorPrefab {
                 this
             );
 
-        this.body.setSize(15, 30, true)
+        this.body.setSize(15, 30, true);
     }
 
     hit(_zombie, _arthur) {

@@ -270,120 +270,237 @@
  </objectgroup>
  <objectgroup id="24" name="EnemiesLayer">
   <object id="4" name="GreenMonster01" class="GreenMonster" x="815.667" y="97.3333">
+   <properties>
+    <property name="enemyType" value="GreenMonster"/>
+   </properties>
    <point/>
   </object>
   <object id="5" name="GreenMonster02" class="GreenMonster" x="1104.67" y="97.3333">
+   <properties>
+    <property name="enemyType" value="GreenMonster"/>
+   </properties>
    <point/>
   </object>
   <object id="11" name="RedArremer01" class="RedArremer" x="1469" y="171.667">
+   <properties>
+    <property name="enemyType" value="RedArremer"/>
+   </properties>
    <point/>
   </object>
   <object id="12" name="GreenMonster03" class="GreenMonster" x="2320.33" y="174.333">
+   <properties>
+    <property name="enemyType" value="GreenMonster"/>
+   </properties>
    <point/>
   </object>
   <object id="14" name="GreenMonster04" class="GreenMonster" x="3103.67" y="173">
+   <properties>
+    <property name="enemyType" value="GreenMonster"/>
+   </properties>
    <point/>
   </object>
   <object id="16" name="UnicornBoss01" class="UnicornBoss" x="3476.33" y="155.667">
+   <properties>
+    <property name="enemyType" value="UnicornBoss"/>
+   </properties>
    <point/>
   </object>
   <object id="17" name="Crow01" class="Crow" x="751.667" y="167.667">
+   <properties>
+    <property name="enemyType" value="Crow"/>
+   </properties>
    <point/>
   </object>
   <object id="18" name="Zombie01" class="Zombie" x="199.667" y="188.667">
+   <properties>
+    <property name="enemyType" value="Zombie"/>
+   </properties>
    <point/>
   </object>
   <object id="19" name="Zombie02" class="Zombie" x="265" y="180.333">
+   <properties>
+    <property name="enemyType" value="Zombie"/>
+   </properties>
    <point/>
   </object>
   <object id="20" name="Zombie03" class="Zombie" x="290.333" y="179.333">
+   <properties>
+    <property name="enemyType" value="Zombie"/>
+   </properties>
    <point/>
   </object>
   <object id="21" name="Zombie04" class="Zombie" x="560.5" y="181">
+   <properties>
+    <property name="enemyType" value="Zombie"/>
+   </properties>
    <point/>
   </object>
   <object id="22" name="Zombie05" class="Zombie" x="859" y="172.5">
+   <properties>
+    <property name="enemyType" value="Zombie"/>
+   </properties>
    <point/>
   </object>
   <object id="23" name="Crow02" class="Crow" x="862" y="88">
+   <properties>
+    <property name="enemyType" value="Crow"/>
+   </properties>
    <point/>
   </object>
   <object id="24" name="Zombie06" class="Zombie" x="979.5" y="94.5">
+   <properties>
+    <property name="enemyType" value="Zombie"/>
+   </properties>
    <point/>
   </object>
   <object id="25" name="Zombie07" class="Zombie" x="1071.5" y="94">
+   <properties>
+    <property name="enemyType" value="Zombie"/>
+   </properties>
    <point/>
   </object>
   <object id="26" name="Crow03" class="Crow" x="1104" y="167">
+   <properties>
+    <property name="enemyType" value="Crow"/>
+   </properties>
    <point/>
   </object>
   <object id="27" name="Crow04" class="Crow" x="1263" y="164">
+   <properties>
+    <property name="enemyType" value="Crow"/>
+   </properties>
    <point/>
   </object>
   <object id="29" name="Crow05" class="Crow" x="1518" y="164.5">
+   <properties>
+    <property name="enemyType" value="Crow"/>
+   </properties>
    <point/>
   </object>
   <object id="30" name="FlyingKnight01" class="FlyingKnight" x="2082.5" y="93">
+   <properties>
+    <property name="enemyType" value="FlyingKnight"/>
+   </properties>
    <point/>
   </object>
   <object id="31" name="FlyingKnight02" class="FlyingKnight" x="2128.5" y="62.5">
+   <properties>
+    <property name="enemyType" value="FlyingKnight"/>
+   </properties>
    <point/>
   </object>
   <object id="32" name="FlyingKnight03" class="FlyingKnight" x="2152" y="123">
+   <properties>
+    <property name="enemyType" value="FlyingKnight"/>
+   </properties>
    <point/>
   </object>
   <object id="33" name="FlyingKnight04" class="FlyingKnight" x="2216" y="70">
+   <properties>
+    <property name="enemyType" value="FlyingKnight"/>
+   </properties>
    <point/>
   </object>
   <object id="34" name="FlyingKnight05" class="FlyingKnight" x="2245.5" y="89">
+   <properties>
+    <property name="enemyType" value="FlyingKnight"/>
+   </properties>
    <point/>
   </object>
   <object id="35" name="FlyingKnight06" class="FlyingKnight" x="2281" y="115.5">
+   <properties>
+    <property name="enemyType" value="FlyingKnight"/>
+   </properties>
    <point/>
   </object>
   <object id="36" name="FlyingKnight07" class="FlyingKnight" x="2339.5" y="92.5">
+   <properties>
+    <property name="enemyType" value="FlyingKnight"/>
+   </properties>
    <point/>
   </object>
   <object id="37" name="FlyingKnight08" class="FlyingKnight" x="2375.5" y="81">
+   <properties>
+    <property name="enemyType" value="FlyingKnight"/>
+   </properties>
    <point/>
   </object>
   <object id="38" name="WoodyPig01" class="WoodyPig" x="2662.5" y="172.5">
+   <properties>
+    <property name="enemyType" value="WoodyPig"/>
+   </properties>
    <point/>
   </object>
   <object id="39" name="WoodyPig02" class="WoodyPig" x="2701" y="151">
+   <properties>
+    <property name="enemyType" value="WoodyPig"/>
+   </properties>
    <point/>
   </object>
   <object id="40" name="WoodyPig03" class="WoodyPig" x="2728.5" y="171.5">
+   <properties>
+    <property name="enemyType" value="WoodyPig"/>
+   </properties>
    <point/>
   </object>
   <object id="41" name="WoodyPig04" class="WoodyPig" x="2762.5" y="158">
+   <properties>
+    <property name="enemyType" value="WoodyPig"/>
+   </properties>
    <point/>
   </object>
   <object id="42" name="WoodyPig05" class="WoodyPig" x="2822.5" y="165">
+   <properties>
+    <property name="enemyType" value="WoodyPig"/>
+   </properties>
    <point/>
   </object>
   <object id="43" name="WoodyPig06" class="WoodyPig" x="2857" y="134">
+   <properties>
+    <property name="enemyType" value="WoodyPig"/>
+   </properties>
    <point/>
   </object>
   <object id="44" name="WoodyPig07" class="WoodyPig" x="2830" y="93">
+   <properties>
+    <property name="enemyType" value="WoodyPig"/>
+   </properties>
    <point/>
   </object>
   <object id="45" name="WoodyPig08" class="WoodyPig" x="2943" y="169.5">
+   <properties>
+    <property name="enemyType" value="WoodyPig"/>
+   </properties>
    <point/>
   </object>
   <object id="46" name="WoodyPig09" class="WoodyPig" x="3099.5" y="143.5">
+   <properties>
+    <property name="enemyType" value="WoodyPig"/>
+   </properties>
    <point/>
   </object>
   <object id="47" name="WoodyPig10" class="WoodyPig" x="3089.5" y="105">
+   <properties>
+    <property name="enemyType" value="WoodyPig"/>
+   </properties>
    <point/>
   </object>
   <object id="48" name="WoodyPig11" class="WoodyPig" x="3117" y="68">
+   <properties>
+    <property name="enemyType" value="WoodyPig"/>
+   </properties>
    <point/>
   </object>
   <object id="49" name="WoodyPig12" class="WoodyPig" x="3162.5" y="49.5">
+   <properties>
+    <property name="enemyType" value="WoodyPig"/>
+   </properties>
    <point/>
   </object>
   <object id="50" name="WoodyPig13" class="WoodyPig" x="3254.5" y="63.5">
+   <properties>
+    <property name="enemyType" value="WoodyPig"/>
+   </properties>
    <point/>
   </object>
  </objectgroup>

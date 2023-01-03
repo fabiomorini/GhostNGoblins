@@ -14,6 +14,7 @@ var gamePrefs=
     SPEAR_SPEED_: 220,
     MAX_BULLET_AMOUNT : 3,
     MAX_FIRE_AMOUNT : 2,
+    ENEMY_RESPAWN_TIME : 10000,
     topScore: 10000,
     highScores: []
 }

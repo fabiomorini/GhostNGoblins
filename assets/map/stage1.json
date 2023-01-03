@@ -470,6 +470,12 @@
                  "id":4,
                  "name":"GreenMonster01",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"GreenMonster"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -482,6 +488,12 @@
                  "id":5,
                  "name":"GreenMonster02",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"GreenMonster"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -494,6 +506,12 @@
                  "id":11,
                  "name":"RedArremer01",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"RedArremer"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -506,6 +524,12 @@
                  "id":12,
                  "name":"GreenMonster03",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"GreenMonster"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -518,6 +542,12 @@
                  "id":14,
                  "name":"GreenMonster04",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"GreenMonster"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -530,6 +560,12 @@
                  "id":16,
                  "name":"UnicornBoss01",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"UnicornBoss"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -542,6 +578,12 @@
                  "id":17,
                  "name":"Crow01",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"Crow"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -554,6 +596,12 @@
                  "id":18,
                  "name":"Zombie01",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"Zombie"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -566,6 +614,12 @@
                  "id":19,
                  "name":"Zombie02",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"Zombie"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -578,6 +632,12 @@
                  "id":20,
                  "name":"Zombie03",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"Zombie"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -590,6 +650,12 @@
                  "id":21,
                  "name":"Zombie04",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"Zombie"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -602,6 +668,12 @@
                  "id":22,
                  "name":"Zombie05",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"Zombie"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -614,6 +686,12 @@
                  "id":23,
                  "name":"Crow02",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"Crow"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -626,6 +704,12 @@
                  "id":24,
                  "name":"Zombie06",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"Zombie"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -638,6 +722,12 @@
                  "id":25,
                  "name":"Zombie07",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"Zombie"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -650,6 +740,12 @@
                  "id":26,
                  "name":"Crow03",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"Crow"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -662,6 +758,12 @@
                  "id":27,
                  "name":"Crow04",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"Crow"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -674,6 +776,12 @@
                  "id":29,
                  "name":"Crow05",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"Crow"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -686,6 +794,12 @@
                  "id":30,
                  "name":"FlyingKnight01",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"FlyingKnight"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -698,6 +812,12 @@
                  "id":31,
                  "name":"FlyingKnight02",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"FlyingKnight"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -710,6 +830,12 @@
                  "id":32,
                  "name":"FlyingKnight03",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"FlyingKnight"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -722,6 +848,12 @@
                  "id":33,
                  "name":"FlyingKnight04",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"FlyingKnight"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -734,6 +866,12 @@
                  "id":34,
                  "name":"FlyingKnight05",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"FlyingKnight"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -746,6 +884,12 @@
                  "id":35,
                  "name":"FlyingKnight06",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"FlyingKnight"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -758,6 +902,12 @@
                  "id":36,
                  "name":"FlyingKnight07",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"FlyingKnight"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -770,6 +920,12 @@
                  "id":37,
                  "name":"FlyingKnight08",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"FlyingKnight"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -782,6 +938,12 @@
                  "id":38,
                  "name":"WoodyPig01",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"WoodyPig"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -794,6 +956,12 @@
                  "id":39,
                  "name":"WoodyPig02",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"WoodyPig"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -806,6 +974,12 @@
                  "id":40,
                  "name":"WoodyPig03",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"WoodyPig"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -818,6 +992,12 @@
                  "id":41,
                  "name":"WoodyPig04",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"WoodyPig"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -830,6 +1010,12 @@
                  "id":42,
                  "name":"WoodyPig05",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"WoodyPig"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -842,6 +1028,12 @@
                  "id":43,
                  "name":"WoodyPig06",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"WoodyPig"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -854,6 +1046,12 @@
                  "id":44,
                  "name":"WoodyPig07",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"WoodyPig"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -866,6 +1064,12 @@
                  "id":45,
                  "name":"WoodyPig08",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"WoodyPig"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -878,6 +1082,12 @@
                  "id":46,
                  "name":"WoodyPig09",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"WoodyPig"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -890,6 +1100,12 @@
                  "id":47,
                  "name":"WoodyPig10",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"WoodyPig"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -902,6 +1118,12 @@
                  "id":48,
                  "name":"WoodyPig11",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"WoodyPig"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -914,6 +1136,12 @@
                  "id":49,
                  "name":"WoodyPig12",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"WoodyPig"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -926,6 +1154,12 @@
                  "id":50,
                  "name":"WoodyPig13",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"enemyType",
+                         "type":"string",
+                         "value":"WoodyPig"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,

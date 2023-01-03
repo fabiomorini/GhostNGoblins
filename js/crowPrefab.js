@@ -3,6 +3,7 @@ class crowPrefab extends actorPrefab {
         super(_scene, _positionX, _positionY, _spriteTag);
         _scene.add.existing(this);
         _scene.physics.world.enable(this);
+        this.enemyType = 'crow';
         this.direction = -1;
         this.scene = _scene;
         this.sinus = -1;

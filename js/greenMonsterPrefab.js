@@ -3,6 +3,7 @@ class greenMonsterPrefab extends actorPrefab {
         super(_scene, _positionX, _positionY, _spriteTag);
         _scene.add.existing(this);
         _scene.physics.world.enable(this);
+        this.enemyType = 'greenMonster';
         this.direction = -1;
         this.scene = _scene;
         this.anims.stop().setFrame(0);
