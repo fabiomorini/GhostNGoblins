@@ -92,6 +92,8 @@ class InputScene extends Phaser.Scene {
       });
       text.on("pointermove", this.moveBlock, this);
       text.on("pointerup", this.pressKey, this);
+
+      unicornPrefab.isAlive = true;
     }
   
     moveBlock(pointer, x, y) {

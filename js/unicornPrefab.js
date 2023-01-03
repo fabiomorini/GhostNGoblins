@@ -1,4 +1,6 @@
 class unicornPrefab extends actorPrefab {
+    static isAlive = true;
+
     constructor(_scene, _positionX, _positionY, _spriteTag = 'unicorn') {
         super(_scene, _positionX, _positionY, _spriteTag);
         _scene.add.existing(this);
@@ -11,7 +13,8 @@ class unicornPrefab extends actorPrefab {
         this.anims.stop().setFrame(2);
         this.randnum = 0;
         this.canShoot = true;    
-        this.body.setGravityY(-500);  
+        this.body.setGravityY(-500);
+
         _scene.physics.add.overlap
             (
                 this,
@@ -167,4 +170,15 @@ class unicornPrefab extends actorPrefab {
 
         super.preUpdate(time, delta);
     }
+
+    destroy() {
+        // Ejecuta algo aquí antes de que el enemigo sea destruido
+        if(this.scene != null && this.scene.bossDefeatable) {
+            unicornPrefab.isAlive = false;
+            //Aquí podríamos hacer aparecer la llave
+        }
+      
+        // Llama al método destroy de la superclase para destruir el enemigo
+        super.destroy();
+    };
 }

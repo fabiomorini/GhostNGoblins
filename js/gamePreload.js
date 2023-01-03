@@ -96,9 +96,14 @@ class gamePreload extends Phaser.Scene {
         //Cargamos los sprites de las armas enemigas
         this.load.spritesheet("woodyPigBullet", "woody_pig_spear.png",
             { frameWidth: 23, frameHeight: 23 });
+
+        //Cargamos el sprite de la puerta final
+        this.load.setPath('assets/tilesets/');
+        this.load.spritesheet("door", "door.png",
+            { frameWidth: 101, frameHeight: 130 });
+
         //Cargamos las fuentes
         this.load.setPath('assets/font/');
-
         this.load.image("outline", "outline.png");
         this.load.image("del", "del.png");
         this.load.image("end", "end.png");
