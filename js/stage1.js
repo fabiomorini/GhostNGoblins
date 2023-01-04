@@ -12,10 +12,13 @@ class stage1 extends Phaser.Scene {
     this.loadAnimations();
 
     //Pintamos la puerta final
-    this.door = new doorPrefab(this, gamePrefs.DOOR_SPAWN_WIDTH, gamePrefs.DOOR_SPAWN_HEIGHT).setScale(.5);
+    this.door = new doorPrefab(this, gamePrefs.DOOR_SPAWN_X, gamePrefs.DOOR_SPAWN_Y).setScale(.5);
+
+    //Pintamos la plataforma móvil
+    this.platform = new platformPrefab(this, gamePrefs.PLATFORM_SPAWN_X, gamePrefs.PLATFORM_SPAWN_Y).setScale(.5);
 
     //Pintamos al player
-    this.arthur = new playerPrefab(this, gamePrefs.ARTHUR_SPAWN_WIDTH, gamePrefs.ARTHUR_SPAWN_HEIGHT);
+    this.arthur = new playerPrefab(this, gamePrefs.ARTHUR_SPAWN_X, gamePrefs.ARTHUR_SPAWN_Y);
 
     //Preparamos el spawner de enemigos
     this.enemiesSpawned = [];

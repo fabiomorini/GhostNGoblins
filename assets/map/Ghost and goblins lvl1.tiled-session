@@ -5,8 +5,8 @@
     },
     "activeFile": "stage1.tmx",
     "expandedProjectPaths": [
-        ".",
-        "E:/Area de trabajo/Phaser/GhostNGoblins/assets"
+        "E:/Area de trabajo/Phaser/GhostNGoblins/assets",
+        "."
     ],
     "fileStates": {
         "": {
@@ -31,11 +31,11 @@
             "scaleInDock": 1
         },
         "stage1.tmx": {
-            "scale": 3,
-            "selectedLayer": 21,
+            "scale": 5.5,
+            "selectedLayer": 18,
             "viewCenter": {
-                "x": 1452.3333333333333,
-                "y": 120.83333333333334
+                "x": 1701.818181818182,
+                "y": 164.45454545454544
             }
         },
         "stage1.tmx#2FLadders": {

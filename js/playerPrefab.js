@@ -64,6 +64,12 @@ class playerPrefab extends actorPrefab {
             _scene.door.nextScene
         );
 
+        _scene.physics.add.collider
+        (
+            this,
+            _scene.platform
+        );
+
         this.loadPools();
         this.key1 = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_ONE);
         this.key2 = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_TWO);

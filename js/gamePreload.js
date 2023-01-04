@@ -102,6 +102,10 @@ class gamePreload extends Phaser.Scene {
         this.load.spritesheet("door", "door.png",
             { frameWidth: 101, frameHeight: 130 });
 
+        //Cargamos la plataforma móvil
+        this.load.setPath('assets/sprites/');
+        this.load.image('platform', 'movingPlatform.png');
+
         //Cargamos las fuentes
         this.load.setPath('assets/font/');
         this.load.image("outline", "outline.png");
@@ -121,7 +125,6 @@ class gamePreload extends Phaser.Scene {
     } 
 
     create() {
-        //this.scene.start('splashScreenScene');
-        this.scene.start('InputScene');
+        this.scene.start('splashScreenScene');
     }
 }
