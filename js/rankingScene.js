@@ -26,7 +26,7 @@ class rankingScene extends Phaser.Scene
     localStorage.clear();
     localStorage.setItem(gamePrefs.nickname, gamePrefs.score);
     
-    for (var i = 1; i < this.highscores.length + 1; i++) {      
+    for (var i = 0; i < this.highscores.length; i++) {      
       localStorage.setItem(this.nicknames[i], this.highscores[i]);
     }
     
