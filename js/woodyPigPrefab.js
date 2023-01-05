@@ -21,7 +21,7 @@ class woodyPigPrefab extends actorPrefab {
                 null,
                 this
             );
-        
+
         this.loadPools();
     }
 
@@ -163,58 +163,58 @@ class woodyPigPrefab extends actorPrefab {
 
     startMoving() {
         this.isAttacking = false;
-        if(this.body != null)
+        if (this.body != null)
             this.anims.play("woodyPigMove", true);
     }
 
     throwProjectile() {
-        if(this.body != null)
+        if (this.body != null) {
             this.anims.stop().setFrame(5);
 
-        var _bullet = this.bullet.getFirst(false);
-        
-        _bullet = new woodyPigBulletPrefab (this.scene, this.x, this.y);
+            var _bullet = this.bullet.getFirst(false);
 
-        this.bullet.add(_bullet);
-        _bullet.body.allowGravity = false;
+            _bullet = new woodyPigBulletPrefab(this.scene, this.x, this.y);
 
-        var angle = Phaser.Math.Angle.Between(this.x, this.y, this.scene.arthur.x, this.scene.arthur.y)
+            this.bullet.add(_bullet);
+            _bullet.body.allowGravity = false;
 
-        if(this.playerDistanceVertMod < 5){
-            _bullet.anims.stop().setFrame(0);
-            _bullet.body.setSize(23, 4);
+            var angle = Phaser.Math.Angle.Between(this.x, this.y, this.scene.arthur.x, this.scene.arthur.y)
+            if (this.playerDistanceVertMod < 5) {
+                _bullet.anims.stop().setFrame(0);
+                _bullet.body.setSize(23, 4);
+
+                if (this.direction == 1)
+                    _bullet.setFlipX(true);
+                else
+                    _bullet.setFlipX(false);
+
+                _bullet.body.setVelocityX(gamePrefs.ENEMY_SPEAR_SPEED * this.direction);
+            }
             
-            if(this.direction == 1)
-                _bullet.setFlipX(true);
-            else
-                _bullet.setFlipX(false);
-                
-            _bullet.body.setVelocityX(gamePrefs.ENEMY_SPEAR_SPEED * this.direction);
+            
+            else if (this.playerDistanceHorizMod < 1) {
+                _bullet.anims.stop().setFrame(1);
+                _bullet.body.setSize(4, 23);
+                _bullet.body.setVelocityY(gamePrefs.ENEMY_SPEAR_SPEED);
+            }
+            
+            this.anims.stop().setFrame(0);
         }
-
-
-        else if (this.playerDistanceHorizMod < 1){
-            _bullet.anims.stop().setFrame(1);
-            _bullet.body.setSize(4, 23);
-            _bullet.body.setVelocityY(gamePrefs.ENEMY_SPEAR_SPEED);
-        }
-
-        this.anims.stop().setFrame(0);
     }
 
-    preUpdate(time, delta) {  
+    preUpdate(time, delta) {
         if (!this.isAttacking) {
             this.playerDistanceHorizontal = this.body.position.x - this.scene.arthur.x;
             this.playerDistanceHorizMod = Phaser.Math.Distance.Between(this.body.position.x, 0, this.scene.arthur.x, 0);
-            this.playerDistanceVertMod = Phaser.Math.Distance.Between( 0, this.body.position.y, 0 ,this.scene.arthur.y);
+            this.playerDistanceVertMod = Phaser.Math.Distance.Between(0, this.body.position.y, 0, this.scene.arthur.y);
 
             this.body.setVelocityX(gamePrefs.ENEMY_SPEED * 1.25 * this.direction);
             this.turnLogic();
 
-            if (this.playerDistanceHorizMod < 0.5  || this.playerDistanceVertMod < 3) {
+            if (this.playerDistanceHorizMod < 0.5 || this.playerDistanceVertMod < 3) {
                 this.attackLogic();
             }
-         }
+        }
 
         if (this.direction == 1)
             this.setFlipX(true);

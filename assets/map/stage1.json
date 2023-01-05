@@ -399,6 +399,12 @@
                  "id":1,
                  "name":"Coin01",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"itemType",
+                         "type":"string",
+                         "value":"coin"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -411,6 +417,12 @@
                  "id":2,
                  "name":"Coin02",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"itemType",
+                         "type":"string",
+                         "value":"coin"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -423,6 +435,12 @@
                  "id":3,
                  "name":"Coin03",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"itemType",
+                         "type":"string",
+                         "value":"coin"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -430,11 +448,17 @@
                  "y":101.667
                 }, 
                 {
-                 "class":"CoinsBag",
+                 "class":"Bag",
                  "height":0,
                  "id":10,
-                 "name":"CoinsBag01",
+                 "name":"Bag01",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"itemType",
+                         "type":"string",
+                         "value":"bag"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -442,11 +466,17 @@
                  "y":178.667
                 }, 
                 {
-                 "class":"CoinBag",
+                 "class":"Bag",
                  "height":0,
                  "id":13,
-                 "name":"CoinBag02",
+                 "name":"Bag02",
                  "point":true,
+                 "properties":[
+                        {
+                         "name":"itemType",
+                         "type":"string",
+                         "value":"bag"
+                        }],
                  "rotation":0,
                  "visible":true,
                  "width":0,
@@ -785,8 +815,8 @@
                  "rotation":0,
                  "visible":true,
                  "width":0,
-                 "x":1518,
-                 "y":164.5
+                 "x":1485.17,
+                 "y":162.167
                 }, 
                 {
                  "class":"FlyingKnight",

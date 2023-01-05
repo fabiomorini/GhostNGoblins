@@ -83,6 +83,8 @@ class stage1 extends Phaser.Scene {
       ""
     ).setScale(0.28).setScrollFactor(0);
 
+
+    this.spawnItems();
   }
 
   update() {
@@ -396,6 +398,32 @@ class stage1 extends Phaser.Scene {
       repeat: 0,
     });
 
+    //Objects animations
+    this.anims.create({
+      key: "itemSpear",
+      frames: this.anims.generateFrameNumbers("item", { start: 0, end: 3 }),
+      frameRate: 10,
+      repeat: 0,
+    });
+    this.anims.create({
+      key: "itemKnife",
+      frames: this.anims.generateFrameNumbers("item", { start: 4, end: 7 }),
+      frameRate: 10,
+      repeat: 0,
+    });
+    this.anims.create({
+      key: "itemFire",
+      frames: this.anims.generateFrameNumbers("item", { start: 8, end: 11 }),
+      frameRate: 10,
+      repeat: 0,
+    });
+    this.anims.create({
+      key: "itemCoin",
+      frames: this.anims.generateFrameNumbers("item", { start: 14, end: 17 }),
+      frameRate: 20,
+      repeat: 0,
+    });
+
     //ARTHUR ARMOUR ANIMATIONS
     this.anims.create({
       key: "run",
@@ -505,6 +533,20 @@ class stage1 extends Phaser.Scene {
       ) {
         if (spawn.properties[0].value == "UnicornBoss") this.bossDefeatable = false;
       }
+    }
+  }
+
+  spawnItems() {
+    // Crea una tabla de búsqueda para crear los enemigos
+    const objectCreators = {
+      coin: (x, y) => new itemPrefab(this, x, y, 'item', 'coin'),
+      bag: (x, y) => new itemPrefab(this, x, y, 'item', 'bag')
+    };
+
+    // Recorre el array de objetos spawneables
+    for (let i = 0; i < this.objectsSpawn.objects.length; i++) {
+      const spawn = this.objectsSpawn.objects[i];
+      objectCreators[spawn.properties[0].value](spawn.x, spawn.y);
     }
   }
 }
