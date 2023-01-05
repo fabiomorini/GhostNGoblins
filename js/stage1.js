@@ -20,13 +20,6 @@ class stage1 extends Phaser.Scene {
     //Pintamos al player
     this.arthur = new playerPrefab(this, gamePrefs.ARTHUR_SPAWN_X, gamePrefs.ARTHUR_SPAWN_Y);
 
-    this.coin = new itemPrefab(this, 100, 100, 'item', 'coin');
-    this.fire = new itemPrefab(this, 150, 100, 'item', 'fire');
-    this.spear = new itemPrefab(this, 200, 100, 'item', 'spear');
-    this.knife = new itemPrefab(this, 250, 100, 'item', 'knife');
-    this.armour = new itemPrefab(this, 300, 100, 'item', 'armour');
-    this.bag = new itemPrefab(this, 350, 100, 'item', 'bag');
-
     //Preparamos el spawner de enemigos
     this.enemiesSpawned = [];
     this.enemiesWaiting = {};
@@ -77,6 +70,8 @@ class stage1 extends Phaser.Scene {
     
     //ESTO SE PUEDE ELIMINAR SI YA NO SE VA A ABRIR LA PUERTA CON "CONTROL"
     this.openDoorKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CTRL);
+
+    this.spawnItems();
   }
 
   update() {
@@ -456,6 +451,20 @@ class stage1 extends Phaser.Scene {
       ) {
         if (spawn.properties[0].value == "UnicornBoss") this.bossDefeatable = false;
       }
+    }
+  }
+
+  spawnItems() {
+    // Crea una tabla de búsqueda para crear los enemigos
+    const objectCreators = {
+      coin: (x, y) => new itemPrefab(this, x, y, 'item', 'coin'),
+      bag: (x, y) => new itemPrefab(this, x, y, 'item', 'bag')
+    };
+
+    // Recorre el array de objetos spawneables
+    for (let i = 0; i < this.objectsSpawn.objects.length; i++) {
+      const spawn = this.objectsSpawn.objects[i];
+      objectCreators[spawn.properties[0].value](spawn.x, spawn.y);
     }
   }
 }

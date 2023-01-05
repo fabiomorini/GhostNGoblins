@@ -40,20 +40,20 @@ class itemPrefab extends Phaser.GameObjects.Sprite {
             case 'knife':
                 _this.setActive(false);
                 _this.y += 500;
-                _arthur.weapon == 1;
+                _arthur.weapon = 1;
                 break;
 
             case 'fire':
                 _this.setActive(false);
                 _this.y += 500;
-                _arthur.weapon == 2;
+                _arthur.weapon = 2;
 
                 break;
 
             case 'spear':
                 _this.setActive(false);
                 _this.y += 500;
-                _arthur.weapon == 0;
+                _arthur.weapon = 0;
                 break;
 
             case 'armour':
