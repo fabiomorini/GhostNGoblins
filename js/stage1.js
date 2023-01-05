@@ -3,6 +3,8 @@ class stage1 extends Phaser.Scene {
     super({ key: "stage1" });
 
     this.playerPointsText;
+    this.sparks = [];
+    this.arthurLife;
   }
 
   preload() {}
@@ -52,7 +54,7 @@ class stage1 extends Phaser.Scene {
     );
 
     //TMP mecago en todo q   uew molestO A WDOAWIDHAW
-    this.sound.volume = 0.0;
+    this.sound.volume = 0.1;
 
     this.gameStart = this.sound.add("gameStart");
     this.gameTheme = this.sound.add("gameTheme");
@@ -112,6 +114,11 @@ class stage1 extends Phaser.Scene {
     this.scene.start("InputScene");
   }
 
+  spawnSparks(x, y)
+  {
+    this.sparks.push(new sparkPrefab(this, x, y));
+  }
+
   gameHUD()
   {
     var playerText = this.add.bitmapText(
@@ -134,7 +141,10 @@ class stage1 extends Phaser.Scene {
       "arcadeFont",
       "10000"
     ).setScale(0.28).setScrollFactor(0);
+
+    this.arthurLife = new livesPrefab(this, 20, 215);
   }
+
 
   timer()
   {
@@ -204,6 +214,20 @@ class stage1 extends Phaser.Scene {
     this.anims.create({
       key: "throwCrouch",
       frames: this.anims.generateFrameNumbers("arthur", { start: 10, end: 11 }),
+      frameRate: 10,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "animation",
+      frames: this.anims.generateFrameNumbers("lives", { start: 0, end: 1 }),
+      frameRate: 0,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "spark",
+      frames: this.anims.generateFrameNumbers("spark", { start: 0, end: 2 }),
       frameRate: 10,
       repeat: 0,
     });

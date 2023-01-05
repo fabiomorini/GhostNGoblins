@@ -508,7 +508,6 @@ class playerPrefab extends actorPrefab {
     }
 
     preUpdate(time, delta) {
-        console.log(this.score);
         this.deathByFall();
         this.resizeCollision();
         this.checkArmour();

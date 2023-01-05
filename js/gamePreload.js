@@ -111,6 +111,13 @@ class gamePreload extends Phaser.Scene {
         this.load.spritesheet('item', 'objects.png',
             { frameWidth: 28, frameHeight: 16 });
 
+
+        this.load.image('endScreen', 'game_over.png')
+        this.load.spritesheet('lives', 'lives.png',
+            { frameWidth: 56, frameHeight: 26 });
+        this.load.spritesheet('spark', 'spark.png',
+            { frameWidth: 88, frameHeight: 64 });
+
         //Cargamos las fuentes
         this.load.setPath('assets/font/');
         this.load.image("outline", "outline.png");

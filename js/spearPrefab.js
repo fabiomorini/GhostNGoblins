@@ -20,8 +20,9 @@ class spearPrefab extends Phaser.GameObjects.Sprite {
 
     hasHitTomb(_this, _tomb) {
         _this.setActive(false);
-        _this.y += 500;
         _this.scene.sound.play('projectileBlock');
+        _this.scene.spawnSparks(_this.body.position.x, _this.body.position.y);
+        _this.body.position.y += 500;
     }
 
     hasHitNull(_this, _null) {

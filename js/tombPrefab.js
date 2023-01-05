@@ -7,7 +7,7 @@ class tombPrefab extends Phaser.GameObjects.Sprite
             _scene.physics.world.enable(this);
             this.body.setAllowGravity(false);
             this.body.setImmovable(true);
-            this.body.setSize(17, 17, true);
+            this.body.setSize(13, 17, true);
 
         _scene.physics.add.collider
         (
@@ -21,7 +21,7 @@ class tombPrefab extends Phaser.GameObjects.Sprite
 
     preUpdate(time,delta)
     {
-        this.body.setOffset(8, 14);
+        this.body.setOffset(14, 14);
         super.preUpdate(time,delta);
     }
 }
