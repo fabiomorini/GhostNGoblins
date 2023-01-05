@@ -21,7 +21,7 @@ class playerPrefab extends actorPrefab {
         this.throwAnimation = "throw";
         this.throwAnimationCrouch = "throwCrouch";
         this.runAnimation = "run";
-        this.selectAnimation = [5,6];
+        this.selectAnimation = [5, 6];
         this.canClimbLadders = false;
         this.canDownLadders = false;
         this.hasAlreadyEntered = false;
@@ -56,19 +56,19 @@ class playerPrefab extends actorPrefab {
                 _scene.water
             );
 
-        
+
         _scene.physics.add.overlap
-        (
-            this,
-            _scene.door,
-            _scene.door.nextScene
-        );
+            (
+                this,
+                _scene.door,
+                _scene.door.nextScene
+            );
 
         _scene.physics.add.collider
-        (
-            this,
-            _scene.platform
-        );
+            (
+                this,
+                _scene.platform
+            );
 
         this.loadPools();
         this.key1 = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_ONE);
@@ -93,62 +93,69 @@ class playerPrefab extends actorPrefab {
             this.hasArmour = false;
     }
 
-    hasHitEnemy(_this, _enemy){
+    hasHitEnemy(_this, _enemy) {
         var deathSound;
         if (_enemy.enemyType == 'unicornBoss') {
+            console.log(_enemy.health);
             _this.setActive(false);
             _this.y += 500;
             _enemy.health -= 1;
             deathSound = _enemy.health == 0 ? 'enemyDeath' : 'projectileBlock';
-        } else {
+            if (_enemy.health == 0) {
+                var bossKey = new itemPrefab(_this.scene, 3445, 0, 'item', 'key');
+                var enemyDeath = new enemyDeathPrefab(_this.scene, _enemy.body.position.x, _enemy.body.position.y, 'enemy_death');
+                _enemy.destroy();
+                _this.scene.sound.play(deathSound);
+            }
+        }
+        else {
             _this.setActive(false);
             _this.y += 500;
             deathSound = _enemy.enemyType == 'crow' ? 'crowDeath' : 'enemyDeath';
-        }
-        
-        if(_enemy.enemyType == 'zombie'|| _enemy.enemyType == 'crow')
-            var enemyDeath = new enemyDeathPrefab(_this.scene, _enemy.body.position.x, _enemy.body.position.y+10, 'enemy_death_zombiecrow');
-        else
-            var enemyDeath = new enemyDeathPrefab(_this.scene, _enemy.body.position.x, _enemy.body.position.y,'enemy_death');
-        
+
+            if (_enemy.enemyType == 'zombie' || _enemy.enemyType == 'crow')
+                var enemyDeath = new enemyDeathPrefab(_this.scene, _enemy.body.position.x, _enemy.body.position.y + 10, 'enemy_death_zombiecrow');
+            else
+                var enemyDeath = new enemyDeathPrefab(_this.scene, _enemy.body.position.x, _enemy.body.position.y, 'enemy_death');
+
             _this.scene.sound.play(deathSound);
+            _enemy.destroy();
+        }
         
         const enemyIndex = _this.scene.enemiesSpawned.indexOf(_enemy);
         _this.scene.enemiesSpawned.splice(enemyIndex, 1);
         _this.scene.enemiesWaiting[_enemy.spriteTag] = false;
-
-        _enemy.destroy();
     }
 
     resetAttackAnim() {
         // Comprobamos qué tipo de arma está seleccionada
         if (this.key1.isDown) {
-          this.weapon = 0; // Spear
+            this.weapon = 0; // Spear
         } else if (this.key2.isDown) {
-          this.weapon = 1; // Knife
+            this.weapon = 1; // Knife
         } else if (this.key3.isDown) {
-          this.weapon = 2; // Fire
+            this.weapon = 2; // Fire
         }
-      
+
         // Si se está pulsando la tecla de ataque y no se está disparando actualmente, ni subiendo o bajando escaleras
         if (this.attack.isDown && !this.isAttacking && this.body.allowGravity) {
-          // Comprobamos si se puede disparar con el tipo de arma seleccionada
-          if (this.canShoot(this.weapon)) {
-            this.timeSinceLastShot = this.scene.time.addEvent(
-                {
-                    delay: 50,
-                    callback: this.shoot(this.weapon),
-                    callbackScope: this,
-                    repeat: 0
-                }
-            );
-            this.isAttacking = true;
-          }
+            // Comprobamos si se puede disparar con el tipo de arma seleccionada
+            if (this.canShoot(this.weapon)) {
+                this.timeSinceLastShot = this.scene.time.addEvent(
+                    {
+                        delay: 50,
+                        callback: this.shoot(this.weapon),
+                        callbackScope: this,
+                        repeat: 0
+                    }
+                );
+                this.isAttacking = true;
+            }
         } else if (!this.attack.isDown && this.isAttacking) {
-          this.isAttacking = false;
+            this.isAttacking = false;
         }
     }
-      
+
     // Función para comprobar si se puede disparar con el tipo de arma especificado
     canShoot(weapon) {
         if (weapon === 0) {
@@ -271,19 +278,19 @@ class playerPrefab extends actorPrefab {
         this.scene.sound.play('arthurThrow');
     }
 
-    deathByFall(){
-        if(this.y > 210 && !this.hasAlreadyEntered){
+    deathByFall() {
+        if (this.y > 210 && !this.hasAlreadyEntered) {
             this.health = 2;
             this.tookDamage = false;
             this.isInvincible = false;
             this.isAlive = false;
             this.scene.inputScene();
-            
+
             //Save Score
-            if(this.score > gamePrefs.score){
+            if (this.score > gamePrefs.score) {
                 gamePrefs.score = this.score;
             }
-            
+
             //Musica de muerte de Arthur
             if (!this.isAlive) {
                 this.scene.sound.play('arthurDeath');
@@ -293,19 +300,19 @@ class playerPrefab extends actorPrefab {
         }
     }
 
-    changeMountainCollisions(){
-        if(!this.scene.allMountainCollisionsAreModified && this.x > 520){
+    changeMountainCollisions() {
+        if (!this.scene.allMountainCollisionsAreModified && this.x > 520) {
             var tiles = this.scene.terrain2F.culledTiles
-    
+
             if (tiles != null) {
                 for (var i = 0; i < tiles.length; i++) {
                     if (tiles[i] != null && tiles[i].y == 3 &&
-                       (tiles[i].index == 11 || tiles[i].index == 12)) {
-                           tiles[i].setCollision(false, false, true, false);
+                        (tiles[i].index == 11 || tiles[i].index == 12)) {
+                        tiles[i].setCollision(false, false, true, false);
                     }
                 }
             }
-            if(this.x >= 1140){
+            if (this.x >= 1140) {
                 this.scene.allMountainCollisionsAreModified = true;
             }
         }
@@ -322,12 +329,11 @@ class playerPrefab extends actorPrefab {
         }
     }
 
-    checkBorders()
-    {
-        if(this.body.position.x <= 4)
+    checkBorders() {
+        if (this.body.position.x <= 4)
             this.body.setVelocityX(gamePrefs.ARTHUR_SPEED);
-        
-        if(this.body.position.x >= 3540)
+
+        if (this.body.position.x >= 3540)
             this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED);
     }
 
@@ -343,32 +349,32 @@ class playerPrefab extends actorPrefab {
         const animation = this.cursorKeys.down.isDown ? this.throwAnimationCrouch : this.throwAnimation;
         this.anims.play(animation, true);
         this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
-          this.anims.stop().setFrame(this.selectAnimation[3]);
+            this.anims.stop().setFrame(this.selectAnimation[3]);
         });
     }
 
     useLadder(_player, _ladders) {
         const tile1 = this.scene.ladders.getTileAtWorldXY(this.x, this.y);
         const tile2 = this.scene.ladders.getTileAtWorldXY(this.x, this.y + 32);
-      
+
         this.canClimbLadders = (tile1 != null && tile1.index != null && tile1.index != 0);
         this.canDownLadders = (tile2 != null && tile2.index != null && tile2.index != 0);
-      
+
         if (_player.y >= 177) {
-          this.canDownLadders = false;
+            this.canDownLadders = false;
         }
-      
+
         if (_player.y <= 97) {
-          this.canClimbLadders = false;
+            this.canClimbLadders = false;
         }
-      
+
         if (!this.canClimbLadders && !this.canDownLadders) {
-          this.body.allowGravity = true;
+            this.body.allowGravity = true;
         }
     }
 
-    playerMovement(){
-        
+    playerMovement() {
+
         if (this.isAttacking) {
             this.throwAttack();
         }
@@ -394,10 +400,10 @@ class playerPrefab extends actorPrefab {
                 this.body.setVelocityX(0);
                 this.anims.stop().setFrame(this.selectAnimation[3]);
             }
-    
+
             else if (this.body.onFloor()) {
                 //Left
-                if (this.cursorKeys.left.isDown){
+                if (this.cursorKeys.left.isDown) {
                     this.body.setVelocityX(-gamePrefs.ARTHUR_SPEED);
                     this.setFlipX(true);
                     this.anims.play(this.runAnimation, true);
@@ -426,7 +432,7 @@ class playerPrefab extends actorPrefab {
                     this.anims.play(this.runAnimation, true);
                     this.anims.stop().setFrame(this.selectAnimation[0]);
                 }
-    
+
                 //Jump
                 if (this.jump.isDown &&
                     this.body.blocked.down &&
@@ -453,11 +459,11 @@ class playerPrefab extends actorPrefab {
         }
     }
 
-    healthManager(){
+    healthManager() {
         if (this.health == 1) {
-            if (this.direction == 1) 
+            if (this.direction == 1)
                 this.body.velocity.x = gamePrefs.ARTHUR_SPEED;
-            else 
+            else
                 this.body.velocity.x = gamePrefs.ARTHUR_SPEED;
 
             this.body.velocity.y = -300;
@@ -484,7 +490,7 @@ class playerPrefab extends actorPrefab {
         }
     }
 
-    death(){
+    death() {
         //DIE ANIMATION.
         this.body.setVelocityX(0);
         this.body.setVelocityY(0);
@@ -499,12 +505,12 @@ class playerPrefab extends actorPrefab {
             this.isAlive = false;
             this.scene.inputScene();
         });
-        
+
         //Save Score
-        if(this.score > gamePrefs.score){
+        if (this.score > gamePrefs.score) {
             gamePrefs.score = this.score;
         }
-        
+
         //Musica de muerte de Arthur
         if (!this.isAlive) {
             this.scene.sound.play('arthurDeath');
@@ -524,20 +530,20 @@ class playerPrefab extends actorPrefab {
         else {
             this.playerMovement();
         }
-        
+
         this.checkBorders();
         this.setInvencible();
         super.preUpdate(time, delta);
     }
-    
+
     endInvincibility() {
         this.isInvincible = false;
         this.alpha = 1;
     }
 
-    setInvencible(){
-        if(this.invencibile.isDown)
-        this.isInvincible = true;
-        
+    setInvencible() {
+        if (this.invencibile.isDown)
+            this.isInvincible = true;
+
     }
 }

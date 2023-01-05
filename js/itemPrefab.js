@@ -63,6 +63,12 @@ class itemPrefab extends Phaser.GameObjects.Sprite {
                     _arthur.health += 1;
                 break;
 
+            case 'key':
+                _this.scene.door.openDoor();
+                _this.y += 500;
+                _this.setActive(false);
+                break;
+
             default:
                 break;
         }
@@ -92,6 +98,10 @@ class itemPrefab extends Phaser.GameObjects.Sprite {
 
             case 'armour':
                 this.anims.stop().setFrame(12);
+                break;
+
+            case 'key':
+                this.anims.play('itemKey', true);
                 break;
 
             default:
