@@ -50,7 +50,7 @@ class stage1 extends Phaser.Scene {
     );
 
     //TMP mecago en todo q   uew molestO A WDOAWIDHAW
-    this.sound.volume = 0.1;
+    this.sound.volume = 0.0;
 
     this.gameStart = this.sound.add("gameStart");
     this.gameTheme = this.sound.add("gameTheme");
@@ -70,6 +70,8 @@ class stage1 extends Phaser.Scene {
     
     //ESTO SE PUEDE ELIMINAR SI YA NO SE VA A ABRIR LA PUERTA CON "CONTROL"
     this.openDoorKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CTRL);
+ 
+    this.timer();
   }
 
   update() {
@@ -92,6 +94,42 @@ class stage1 extends Phaser.Scene {
   inputScene() {
     this.gameTheme.stop();
     this.scene.start("InputScene");
+  }
+
+  timer()
+  {
+    var timerValue = 2 * 60;
+
+    var timerText = this.add.bitmapText(
+      1,
+      1,
+      "arcadeFont",
+      "02:00"
+    ).setScale(0.36);
+
+    timerText.setScrollFactor(0);
+
+    var timerAux = this.time.addEvent({
+      delay: 1000,
+      callback: function() {
+        // Calculate the minutes and seconds left
+        var minutes = Phaser.Math.FloorTo(timerValue / 60);
+        var seconds = Phaser.Math.FloorTo(timerValue % 60);
+
+        // Add leading zeros to the minutes and seconds, if necessary
+        minutes = Phaser.Utils.String.Pad(minutes, 2, "0", 1);
+        seconds = Phaser.Utils.String.Pad(seconds, 2, "0", 1);
+
+        // Decrement the timer value
+        timerValue --;
+
+        // Update the Text object with the new time
+        timerText.text = minutes + ":" + seconds;
+
+      },
+      callbackScope: this,
+      loop: true
+    });
   }
 
   loadAnimations() {
