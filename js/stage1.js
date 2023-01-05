@@ -20,6 +20,13 @@ class stage1 extends Phaser.Scene {
     //Pintamos al player
     this.arthur = new playerPrefab(this, gamePrefs.ARTHUR_SPAWN_X, gamePrefs.ARTHUR_SPAWN_Y);
 
+    this.coin = new itemPrefab(this, 100, 100, 'item', 'coin');
+    this.fire = new itemPrefab(this, 150, 100, 'item', 'fire');
+    this.spear = new itemPrefab(this, 200, 100, 'item', 'spear');
+    this.knife = new itemPrefab(this, 250, 100, 'item', 'knife');
+    this.armour = new itemPrefab(this, 300, 100, 'item', 'armour');
+    this.bag = new itemPrefab(this, 350, 100, 'item', 'bag');
+
     //Preparamos el spawner de enemigos
     this.enemiesSpawned = [];
     this.enemiesWaiting = {};
@@ -311,6 +318,32 @@ class stage1 extends Phaser.Scene {
       key: "openDoor",
       frames: this.anims.generateFrameNumbers("door", { start: 0, end: 2 }),
       frameRate: 8,
+      repeat: 0,
+    });
+
+    //Objects animations
+    this.anims.create({
+      key: "itemSpear",
+      frames: this.anims.generateFrameNumbers("item", { start: 0, end: 3 }),
+      frameRate: 10,
+      repeat: 0,
+    });
+    this.anims.create({
+      key: "itemKnife",
+      frames: this.anims.generateFrameNumbers("item", { start: 4, end: 7 }),
+      frameRate: 10,
+      repeat: 0,
+    });
+    this.anims.create({
+      key: "itemFire",
+      frames: this.anims.generateFrameNumbers("item", { start: 8, end: 11 }),
+      frameRate: 10,
+      repeat: 0,
+    });
+    this.anims.create({
+      key: "itemCoin",
+      frames: this.anims.generateFrameNumbers("item", { start: 14, end: 17 }),
+      frameRate: 20,
       repeat: 0,
     });
 

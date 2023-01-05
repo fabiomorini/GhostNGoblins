@@ -59,10 +59,10 @@ class gamePreload extends Phaser.Scene {
             { frameWidth: 52, frameHeight: 49 });
 
         this.load.spritesheet('ladders_animation', 'Armour/Climb - Armour Arthur.png',
-        { frameWidth: 21, frameHeight: 32 });
+            { frameWidth: 21, frameHeight: 32 });
 
         this.load.spritesheet('ladders_animation_naked', 'Naked/Ladder - Arthur Naked.png',
-        { frameWidth: 21, frameHeight: 32 });
+            { frameWidth: 21, frameHeight: 32 });
 
         //Cargamos los sprites de los enemigos
         this.load.setPath('assets/sprites/Enemies/');
@@ -83,8 +83,8 @@ class gamePreload extends Phaser.Scene {
         this.load.spritesheet("unicorn", "unicorn.png",
             { frameWidth: 48, frameHeight: 48 });
         this.load.spritesheet("unicornBullet", "unicorn_projectile.png",
-            { frameWidth: 16, frameHeight: 7});
-        
+            { frameWidth: 16, frameHeight: 7 });
+
 
         //Cargamos los sprites de las armas
         this.load.setPath('assets/sprites/Weapons/');
@@ -104,7 +104,12 @@ class gamePreload extends Phaser.Scene {
 
         //Cargamos la plataforma móvil
         this.load.setPath('assets/sprites/');
-        this.load.image('platform', 'movingPlatform.png');
+        this.load.image('platform', 'movingPlatform.png')
+
+        //Cargamos los objetos
+        this.load.setPath('assets/sprites/');
+        this.load.spritesheet('item', 'objects.png',
+            { frameWidth: 28, frameHeight: 16 });
 
         //Cargamos las fuentes
         this.load.setPath('assets/font/');
@@ -120,9 +125,9 @@ class gamePreload extends Phaser.Scene {
 
         //Cargamos el splash screen
         this.load.setPath('assets/tilesets/');
-        this.load.spritesheet("splashGif", "splashScreen.png", 
-            { frameWidth:832, frameHeight: 720 });
-    } 
+        this.load.spritesheet("splashGif", "splashScreen.png",
+            { frameWidth: 832, frameHeight: 720 });
+    }
 
     create() {
         this.scene.start('splashScreenScene');
