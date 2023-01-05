@@ -1,6 +1,8 @@
 class stage1 extends Phaser.Scene {
   constructor() {
     super({ key: "stage1" });
+
+    this.playerPointsText;
   }
 
   preload() {}
@@ -50,7 +52,7 @@ class stage1 extends Phaser.Scene {
     );
 
     //TMP mecago en todo q   uew molestO A WDOAWIDHAW
-    this.sound.volume = 0.1;
+    this.sound.volume = 0.0;
 
     this.gameStart = this.sound.add("gameStart");
     this.gameTheme = this.sound.add("gameTheme");
@@ -70,6 +72,17 @@ class stage1 extends Phaser.Scene {
     
     //ESTO SE PUEDE ELIMINAR SI YA NO SE VA A ABRIR LA PUERTA CON "CONTROL"
     this.openDoorKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CTRL);
+ 
+    this.gameHUD();
+    this.timer();
+
+    this.playerPointsText = this.add.bitmapText(
+      10,
+      10,
+      "arcadeFont",
+      ""
+    ).setScale(0.28).setScrollFactor(0);
+
 
     this.spawnItems();
   }
@@ -89,11 +102,80 @@ class stage1 extends Phaser.Scene {
     if(this.openDoorKey.isDown){
       this.door.openDoor();
     }
+
+    //actualizar hud score player
+    this.playerPointsText.text = gamePrefs.score;
   }
 
   inputScene() {
     this.gameTheme.stop();
     this.scene.start("InputScene");
+  }
+
+  gameHUD()
+  {
+    var playerText = this.add.bitmapText(
+      5,
+      1,
+      "arcadeFont",
+      "PLAYER 1"
+    ).setScale(0.28).setScrollFactor(0);
+
+    var topScoreText = this.add.bitmapText(
+      100,
+      1,
+      "arcadeFont",
+      "TOP SCORE"
+    ).setScale(0.28).setScrollFactor(0).setTint(0xcb3058);
+
+    var topPointsText = this.add.bitmapText(
+      135,
+      10,
+      "arcadeFont",
+      "10000"
+    ).setScale(0.28).setScrollFactor(0);
+  }
+
+  timer()
+  {
+    var timerValue = 2 * 60;
+
+    var timeText = this.add.bitmapText(
+      10,
+      30,
+      "arcadeFont",
+      "TIME"
+    ).setScale(0.28).setScrollFactor(0);
+
+    var timerText = this.add.bitmapText(
+      10,
+      40,
+      "arcadeFont",
+      "2 00"
+    ).setScale(0.28).setScrollFactor(0);
+
+
+    var timerAux = this.time.addEvent({
+      delay: 1000,
+      callback: function() {
+        // Calculate the minutes and seconds left
+        var minutes = Phaser.Math.FloorTo(timerValue / 60);
+        var seconds = Phaser.Math.FloorTo(timerValue % 60);
+
+        // Add leading zeros to the minutes and seconds, if necessary
+        minutes = Phaser.Utils.String.Pad(minutes, 2, "", 1);
+        seconds = Phaser.Utils.String.Pad(seconds, 2, "0", 1);
+
+        // Decrement the timer value
+        timerValue --;
+
+        // Update the Text object with the new time
+        timerText.text = minutes + " " + seconds;
+
+      },
+      callbackScope: this,
+      loop: true
+    });
   }
 
   loadAnimations() {
