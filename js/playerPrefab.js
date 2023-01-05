@@ -95,33 +95,19 @@ class playerPrefab extends actorPrefab {
 
     hasHitEnemy(_this, _enemy) {
         var deathSound;
-        if (_enemy.enemyType == 'unicornBoss') {
-            console.log(_enemy.health);
-            _this.setActive(false);
-            _this.y += 500;
-            _enemy.health -= 1;
-            deathSound = _enemy.health == 0 ? 'enemyDeath' : 'projectileBlock';
-            if (_enemy.health == 0) {
-                var bossKey = new itemPrefab(_this.scene, 3445, 0, 'item', 'key');
-                var enemyDeath = new enemyDeathPrefab(_this.scene, _enemy.body.position.x, _enemy.body.position.y, 'enemy_death');
-                _enemy.destroy();
-                _this.scene.sound.play(deathSound);
-            }
-        }
-        else {
-            _this.setActive(false);
-            _this.y += 500;
-            deathSound = _enemy.enemyType == 'crow' ? 'crowDeath' : 'enemyDeath';
+        _this.setActive(false);
+        _this.y += 500;
+        deathSound = _enemy.enemyType == 'crow' ? 'crowDeath' : 'enemyDeath';
 
-            if (_enemy.enemyType == 'zombie' || _enemy.enemyType == 'crow')
-                var enemyDeath = new enemyDeathPrefab(_this.scene, _enemy.body.position.x, _enemy.body.position.y + 10, 'enemy_death_zombiecrow');
-            else
-                var enemyDeath = new enemyDeathPrefab(_this.scene, _enemy.body.position.x, _enemy.body.position.y, 'enemy_death');
+        if (_enemy.enemyType == 'zombie' || _enemy.enemyType == 'crow')
+            var enemyDeath = new enemyDeathPrefab(_this.scene, _enemy.body.position.x, _enemy.body.position.y + 10, 'enemy_death_zombiecrow');
+        else
+            var enemyDeath = new enemyDeathPrefab(_this.scene, _enemy.body.position.x, _enemy.body.position.y, 'enemy_death');
 
-            _this.scene.sound.play(deathSound);
-            _enemy.destroy();
-        }
-        
+        _this.scene.sound.play(deathSound);
+        _enemy.destroy();
+
+
         const enemyIndex = _this.scene.enemiesSpawned.indexOf(_enemy);
         _this.scene.enemiesSpawned.splice(enemyIndex, 1);
         _this.scene.enemiesWaiting[_enemy.spriteTag] = false;
@@ -544,6 +530,5 @@ class playerPrefab extends actorPrefab {
     setInvencible() {
         if (this.invencibile.isDown)
             this.isInvincible = true;
-
     }
 }

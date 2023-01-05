@@ -22,7 +22,7 @@ class stage1 extends Phaser.Scene {
     this.platform = new platformPrefab(this, gamePrefs.PLATFORM_SPAWN_X, gamePrefs.PLATFORM_SPAWN_Y).setScale(.5);
 
     //Pintamos al player
-    this.arthur = new playerPrefab(this, 2700, gamePrefs.ARTHUR_SPAWN_Y);
+    this.arthur = new playerPrefab(this, gamePrefs.ARTHUR_SPAWN_X, gamePrefs.ARTHUR_SPAWN_Y);
     this.boss = new unicornPrefab(this, gamePrefs.DOOR_SPAWN_X, gamePrefs.DOOR_SPAWN_Y);
     this.boss.active = false;
 

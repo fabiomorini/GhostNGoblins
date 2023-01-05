@@ -35,8 +35,16 @@ class zombiePrefab extends actorPrefab {
         }
     }
 
-    preUpdate(time, delta) {
+    computeDirection() {
+        var distance = this.scene.arthur.x - this.body.position.x;
+        if (distance <= 0 )
+            this.direction = -1;
+        else
+            this.direction = 1;
+    }
 
+    preUpdate(time, delta) {
+    
         if (this.direction == 1)
             this.setFlipX(true);
         else
@@ -63,22 +71,19 @@ class zombiePrefab extends actorPrefab {
                     this.spawningSound = false;
                 }
             }
-            if (this.body.blocked.right || this.body.blocked.left) {
-                this.direction *= -1;
-                this.body.setVelocityX(gamePrefs.ENEMY_SPEED * this.direction);
-                this.flipX = !this.flipX;
-            }
         }
 
         super.preUpdate(time, delta);
     }
 
     resetPosition() {
+        this.computeDirection();
         this.x = this.startingPos;
         this.anims.nextAnim = 'zombieSpawn';
         this.isSpawning = true;
         this.on(Phaser.Animations.Events.ANIMATION_COMPLETE, () => {
             this.isSpawning = false;
+            this.body.setSize(15, 30, true);
         });
     }
 
