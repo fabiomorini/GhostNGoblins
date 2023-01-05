@@ -367,10 +367,14 @@ class stage1 extends Phaser.Scene {
 
     this.anims.create({
       key: "enemyDeath",
-      frames: this.anims.generateFrameNumbers("enemy_death", {
-        start: 0,
-        end: 7,
-      }),
+      frames: this.anims.generateFrameNumbers("enemy_death", { start: 0, end: 8, }),
+      frameRate: 10,
+      repeat: 0,
+    });
+
+    this.anims.create({
+      key: "enemyDeath_zombiecrow",
+      frames: this.anims.generateFrameNumbers("enemy_death_zombiecrow", { start: 0, end: 4, }),
       frameRate: 10,
       repeat: 0,
     });
