@@ -20,17 +20,12 @@ class stage1 extends Phaser.Scene {
 
     //Pintamos la plataforma móvil
     this.platform = new platformPrefab(this, gamePrefs.PLATFORM_SPAWN_X, gamePrefs.PLATFORM_SPAWN_Y).setScale(.5);
-
+    
     //Pintamos al player
     this.arthur = new playerPrefab(this, gamePrefs.ARTHUR_SPAWN_X, gamePrefs.ARTHUR_SPAWN_Y);
     this.boss = new unicornPrefab(this, gamePrefs.DOOR_SPAWN_X, gamePrefs.DOOR_SPAWN_Y);
     this.boss.active = false;
-
-    //Preparamos el spawner de enemigos
-    this.enemiesSpawned = [];
-    this.enemiesWaiting = {};
-    var bossDistance = 0;
-
+    
     //Pintamos las tumbas
     this.tombs = new Array(
       new tombPrefab(this, 1 * 32 + 16 + 1, 5 * 32 + 16 + 1),
@@ -47,6 +42,12 @@ class stage1 extends Phaser.Scene {
       new tombPrefab(this, 29 * 32 + 16 + 16, 2 * 32 + 16 + 17, "tomb03")
     );
 
+    //Preparamos el spawner de enemigos
+    this.enemiesSpawned = [];
+    this.enemiesWaiting = {};
+    var bossDistance = 0;
+
+
     //Camaras
     this.cameras.main.startFollow(this.arthur);
     this.cameras.main.setBounds(
@@ -61,6 +62,7 @@ class stage1 extends Phaser.Scene {
 
     this.gameStart = this.sound.add("gameStart");
     this.gameTheme = this.sound.add("gameTheme");
+    this.endTheme = this.sound.add("endTheme");
 
     this.gameStart.play();
     this.hasPlayed = false;
@@ -83,7 +85,7 @@ class stage1 extends Phaser.Scene {
       10,
       10,
       "arcadeFont",
-      ""
+      "" + this.arthur.score
     ).setScale(0.28).setScrollFactor(0);
 
 
@@ -107,13 +109,20 @@ class stage1 extends Phaser.Scene {
     }
 
     //actualizar hud score player
-    this.playerPointsText.text = gamePrefs.score;
+    this.playerPointsText.text = this.arthur.score;
 
     if (Phaser.Math.Distance.Between(this.arthur.x, 0, this.boss.x, 0) <= 350)
       this.boss.active = true;
   }
 
+  endSong()
+  {
+    this.gameTheme.stop();
+    this.endTheme.play();
+  }
+
   inputScene() {
+    this.endTheme.stop();
     this.gameTheme.stop();
     this.scene.start("InputScene");
   }
@@ -141,17 +150,8 @@ class stage1 extends Phaser.Scene {
       135,
       10,
       "arcadeFont",
-      "00000"
+      "10000"
     ).setScale(0.28).setScrollFactor(0);
-    
-    var timerAux2 = this.time.addEvent({
-      delay: 100,
-      callback: function () {
-        topPointsText.text = this.arthur.score;
-      },
-      callbackScope: this,
-      loop: true
-    });
 
     this.arthurLife = new livesPrefab(this, 20, 215);
   }

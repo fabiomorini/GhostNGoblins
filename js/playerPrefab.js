@@ -144,15 +144,6 @@ class playerPrefab extends actorPrefab {
 
 
     resetAttackAnim() {
-        // Comprobamos qué tipo de arma está seleccionada
-        if (this.key1.isDown) {
-            this.weapon = 0; // Spear
-        } else if (this.key2.isDown) {
-            this.weapon = 1; // Knife
-        } else if (this.key3.isDown) {
-            this.weapon = 2; // Fire
-        }
-
         // Si se está pulsando la tecla de ataque y no se está disparando actualmente, ni subiendo o bajando escaleras
         if (this.attack.isDown && !this.isAttacking && this.body.allowGravity) {
             // Comprobamos si se puede disparar con el tipo de arma seleccionada

@@ -45,6 +45,7 @@ class gamePreload extends Phaser.Scene {
         this.load.audio('weaponPickup', 'WEAPONPICKUP.wav'); //Recoger arma //Por añadir en el código
         this.load.audio('doorOpen', 'DOOROPEN.wav'); //Abrir puerta //Por añadir en el código
         this.load.audio('bigEnemyWalk', 'BIGENEMYWALK.wav'); //Boss moviendose //Por añadir en el código
+        this.load.audio('endTheme', 'ENDTHEME.mp3'); 
 
         //Cargamos la musica
         this.load.audio('gameStart', 'GAMESTART.wav');

@@ -176,6 +176,7 @@ class unicornPrefab extends actorPrefab {
         if(this.scene != null && this.scene.bossDefeatable) {
             unicornPrefab.isAlive = false;
             //Aquí podríamos hacer aparecer la llave
+            this.scene.endSong();
         }
       
         // Llama al método destroy de la superclase para destruir el enemigo

@@ -22,7 +22,8 @@ var gamePrefs=
     DOOR_SPAWN_Y: 160,
     PLATFORM_SPAWN_X: 1700,
     PLATFORM_SPAWN_Y: 202,
-    score : 9000, 
+    topScore : 10000,
+    score : 0, 
     nickname : "",
     lost : false
 }
