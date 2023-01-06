@@ -16,12 +16,13 @@ class spearPrefab extends Phaser.GameObjects.Sprite {
                 _scene.arthur.hasHitEnemy
             );
 
-        _scene.physics.add.collider
+        _scene.physics.add.overlap
             (
                 this,
                 _scene.boss,
                 this.hasHitUnicorn
             );
+
         this.aliveTime = 0;
     }
 
@@ -45,6 +46,7 @@ class spearPrefab extends Phaser.GameObjects.Sprite {
             var enemyDeath = new enemyDeathPrefab(_this.scene, _boss.body.position.x, _boss.body.position.y);
             var bossKey = new itemPrefab(_this.scene, 3445, 0, 'item', 'key');
             var enemyDeath = new enemyDeathPrefab(_this.scene, _boss.body.position.x, _boss.body.position.y, 'enemy_death');
+            _this.scene.arthur.score += 1000;
             _boss.destroy();
             _this.scene.sound.play('enemyDeath');
         }
@@ -52,6 +54,8 @@ class spearPrefab extends Phaser.GameObjects.Sprite {
             _this.scene.sound.play('projectileBlock');
         }
     }
+
+
 
     preUpdate(time, delta) {
         this.aliveTime = this.scene.time.addEvent(

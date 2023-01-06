@@ -25,13 +25,12 @@ class firePrefab extends Phaser.GameObjects.Sprite {
             _scene.enemiesSpawned,
             _scene.arthur.hasHitEnemy
         );
-
-        _scene.physics.add.collider
-            (
-                this,
-                _scene.boss,
-                this.hasHitUnicorn
-            );
+        _scene.physics.add.overlap
+        (
+            this,
+            _scene.boss,
+            this.hasHitUnicorn
+        );
 
         this.aliveTime = 0;
         this.anims.play("throwFire");
@@ -56,6 +55,7 @@ class firePrefab extends Phaser.GameObjects.Sprite {
             var enemyDeath = new enemyDeathPrefab(_this.scene, _boss.body.position.x, _boss.body.position.y);
             var bossKey = new itemPrefab(_this.scene, 3445, 0, 'item', 'key');
             var enemyDeath = new enemyDeathPrefab(_this.scene, _boss.body.position.x, _boss.body.position.y, 'enemy_death');
+            this.scene.arthur.score += 1000;
             _boss.destroy();
             _this.scene.sound.play('enemyDeath');
         }

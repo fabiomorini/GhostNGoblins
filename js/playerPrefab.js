@@ -25,6 +25,8 @@ class playerPrefab extends actorPrefab {
         this.canClimbLadders = false;
         this.canDownLadders = false;
         this.hasAlreadyEntered = false;
+        this.weaponSpawnNumber = 0;
+        this.randomWeapon = 0;
 
 
         this.body.setSize(12, 28, true);
@@ -99,19 +101,47 @@ class playerPrefab extends actorPrefab {
         _this.y += 500;
         deathSound = _enemy.enemyType == 'crow' ? 'crowDeath' : 'enemyDeath';
 
-        if (_enemy.enemyType == 'zombie' || _enemy.enemyType == 'crow')
+        if (_enemy.enemyType == 'zombie' || _enemy.enemyType == 'crow') {
             var enemyDeath = new enemyDeathPrefab(_this.scene, _enemy.body.position.x, _enemy.body.position.y + 10, 'enemy_death_zombiecrow');
-        else
+            _this.scene.arthur.score += 100;
+        }
+        else {
             var enemyDeath = new enemyDeathPrefab(_this.scene, _enemy.body.position.x, _enemy.body.position.y, 'enemy_death');
+            _this.scene.arthur.score += 150;
+        }
 
         _this.scene.sound.play(deathSound);
-        _enemy.destroy();
-
-
         const enemyIndex = _this.scene.enemiesSpawned.indexOf(_enemy);
         _this.scene.enemiesSpawned.splice(enemyIndex, 1);
         _this.scene.enemiesWaiting[_enemy.spriteTag] = false;
+
+        this.weaponSpawnNumber = Phaser.Math.Between(0,20);
+        //RANDOM CHANCE TO SPAWN A NEW WEAPONS
+        if (this.weaponSpawnNumber == 0) {
+            var new_weapon;
+            this.randomWeapon = Phaser.Math.Between(0, 1);
+            if (_this.scene.arthur.weapon == 0) {         // Spear
+                if (this.randomWeapon == 0)
+                    new_weapon = new itemPrefab(_this.scene, _enemy.body.position.x, _enemy.body.position.y, 'item', 'knife')
+                else
+                    new_weapon = new itemPrefab(_this.scene, _enemy.body.position.x, _enemy.body.position.y, 'item', 'fire')
+            }
+            else if (_this.scene.arthur.weapon == 1) {    //knife
+                if (this.randomWeapon == 0)
+                    new_weapon = new itemPrefab(_this.scene, _enemy.body.position.x, _enemy.body.position.y, 'item', 'spear')
+                else
+                    new_weapon = new itemPrefab(_this.scene, _enemy.body.position.x, _enemy.body.position.y, 'item', 'fire')
+            }
+            else if (_this.scene.arthur.weapon == 2) {                           //fire
+                if (this.randomWeapon == 0)
+                    new_weapon = new itemPrefab(_this.scene, _enemy.body.position.x, _enemy.body.position.y, 'item', 'spear')
+                else
+                    new_weapon = new itemPrefab(_this.scene, _enemy.body.position.x, _enemy.body.position.y, 'item', 'knife')
+            }
+        }
+        _enemy.destroy();
     }
+
 
     resetAttackAnim() {
         // Comprobamos qué tipo de arma está seleccionada

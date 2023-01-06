@@ -13,6 +13,7 @@ class woodyPigPrefab extends actorPrefab {
         this.anims.play('woodyPigMove', true);
         this.isAttacking = false;
         this.body.setAllowGravity(false);
+        this.body.setSize(30, 15, true);
         _scene.physics.add.overlap
             (
                 this,

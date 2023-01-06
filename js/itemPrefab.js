@@ -26,12 +26,27 @@ class itemPrefab extends Phaser.GameObjects.Sprite {
     hit(_this, _arthur) {
         switch (this.objectType) {
             case 'bag':
+                var pointsText1 = new Phaser.GameObjects.BitmapText(
+                    _this.scene,
+                    _arthur.x,
+                    _arthur.y,
+                    "arcadeFont",
+                    "200",
+                    10
+                )
                 _this.setActive(false);
                 _this.y += 500;
                 _arthur.score += 200;
                 break;
 
             case 'coin':
+                var pointsText2 = this.scene.add.bitmapText(
+                    _this.x,
+                    _this.y,
+                    "arcadeFont",
+                    "100"
+                ).setScale(0.28).setScrollFactor(0).setTint(0xffffff);
+
                 _this.setActive(false);
                 _this.y += 500;
                 _arthur.score += 100;

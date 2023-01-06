@@ -29,6 +29,7 @@ class stage1 extends Phaser.Scene {
     //Preparamos el spawner de enemigos
     this.enemiesSpawned = [];
     this.enemiesWaiting = {};
+    var bossDistance = 0;
 
     //Pintamos las tumbas
     this.tombs = new Array(
@@ -72,8 +73,6 @@ class stage1 extends Phaser.Scene {
     // Inicializa una variable para almacenar el índice de los enemigos
     this.enemyIndex;
 
-    this.bossDefeatable = false;
-
     //ESTO SE PUEDE ELIMINAR SI YA NO SE VA A ABRIR LA PUERTA CON "CONTROL"
     this.openDoorKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CTRL);
 
@@ -92,7 +91,6 @@ class stage1 extends Phaser.Scene {
   }
 
   update() {
-    console.log(this.arthur.x);
     if (!this.gameStart.isPlaying && !this.hasPlayed) {
       this.gameTheme.play();
       this.gameTheme.setLoop(true);
@@ -110,6 +108,9 @@ class stage1 extends Phaser.Scene {
 
     //actualizar hud score player
     this.playerPointsText.text = gamePrefs.score;
+
+    if (Phaser.Math.Distance.Between(this.arthur.x, 0, this.boss.x, 0) <= 350)
+      this.boss.active = true;
   }
 
   inputScene() {
@@ -117,13 +118,11 @@ class stage1 extends Phaser.Scene {
     this.scene.start("InputScene");
   }
 
-  spawnSparks(x, y)
-  {
+  spawnSparks(x, y) {
     this.sparks.push(new sparkPrefab(this, x, y));
   }
 
-  gameHUD()
-  {
+  gameHUD() {
     var playerText = this.add.bitmapText(
       5,
       1,
@@ -142,8 +141,17 @@ class stage1 extends Phaser.Scene {
       135,
       10,
       "arcadeFont",
-      "10000"
+      "00000"
     ).setScale(0.28).setScrollFactor(0);
+    
+    var timerAux2 = this.time.addEvent({
+      delay: 100,
+      callback: function () {
+        topPointsText.text = this.arthur.score;
+      },
+      callbackScope: this,
+      loop: true
+    });
 
     this.arthurLife = new livesPrefab(this, 20, 215);
   }
@@ -549,20 +557,16 @@ class stage1 extends Phaser.Scene {
       }
 
       // Si el enemigo no está duplicado y está en el rango de visión del jugador, lo spawnea
-      if (
-        !isDuplicated &&
+      if (!isDuplicated &&
         !(spawn.name in this.enemiesWaiting) &&
         this.arthur.x <= spawn.x + gamePrefs.GAME_WIDTH / 2 + 32 &&
         this.arthur.x >= spawn.x - gamePrefs.GAME_WIDTH / 2 - 32 &&
         spawn.properties[0].value != "RedArremer" &&
         spawn.properties[0].value != "UnicornBoss" &&
-        unicornPrefab.isAlive
-      ) {
-        if (this.arthur.x < 3200) {
+        unicornPrefab.isAlive) {
+        if (this.arthur.x < 3000) {
           this.enemiesSpawned.push(enemyCreators[spawn.properties[0].value](spawn.x, spawn.y, spawn.name));
         }
-        else if(this.arthur.x >= 3200)
-          this.boss.active = true;
       }
     }
   }
