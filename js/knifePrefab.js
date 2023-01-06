@@ -31,6 +31,7 @@ class knifePrefab extends Phaser.GameObjects.Sprite {
         _this.setActive(false);
         _this.y += 500;
         _this.scene.sound.play('projectileBlock');
+        _this.scene.spawnSparks(_this.body.position.x, _this.body.position.y);
     }
 
     hasHitNull(_this, _null) {
@@ -46,7 +47,7 @@ class knifePrefab extends Phaser.GameObjects.Sprite {
             var enemyDeath = new enemyDeathPrefab(_this.scene, _boss.body.position.x, _boss.body.position.y);
             var bossKey = new itemPrefab(_this.scene, 3445, 0, 'item', 'key');
             var enemyDeath = new enemyDeathPrefab(_this.scene, _boss.body.position.x, _boss.body.position.y, 'enemy_death');
-            this.scene.arthur.score += 1000;
+            _this.scene.arthur.score += 1000;
             _boss.destroy();
             _this.scene.sound.play('enemyDeath');
         }

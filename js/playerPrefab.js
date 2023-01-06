@@ -27,6 +27,7 @@ class playerPrefab extends actorPrefab {
         this.hasAlreadyEntered = false;
         this.weaponSpawnNumber = 0;
         this.randomWeapon = 0;
+        this.hasWon = false;
 
 
         this.body.setSize(12, 28, true);
@@ -73,12 +74,9 @@ class playerPrefab extends actorPrefab {
             );
 
         this.loadPools();
-        this.key1 = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_ONE);
-        this.key2 = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_TWO);
-        this.key3 = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.NUMPAD_THREE);
         this.attack = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
         this.jump = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
-        this.invencibile = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
+        this.invencibile = _scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CTRL);
     }
 
     loadPools() {
@@ -115,7 +113,7 @@ class playerPrefab extends actorPrefab {
         _this.scene.enemiesSpawned.splice(enemyIndex, 1);
         _this.scene.enemiesWaiting[_enemy.spriteTag] = false;
 
-        this.weaponSpawnNumber = Phaser.Math.Between(0,20);
+        this.weaponSpawnNumber = Phaser.Math.Between(0,2);
         //RANDOM CHANCE TO SPAWN A NEW WEAPONS
         if (this.weaponSpawnNumber == 0) {
             var new_weapon;
@@ -386,7 +384,7 @@ class playerPrefab extends actorPrefab {
             this.throwAttack();
         }
 
-        else {
+        else if(!this.hasWon){
             if (this.cursorKeys.down.isDown) {
                 if (this.canDownLadders) {
                     // Si el personaje está en una escalera y se está moviendo hacia abajo,

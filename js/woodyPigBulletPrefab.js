@@ -23,6 +23,14 @@ class woodyPigBulletPrefab extends Phaser.GameObjects.Sprite {
     }
 
     preUpdate(time, delta) {
+        this.aliveTime = this.scene.time.addEvent(
+            {
+                delay: 1000,
+                callback: this.destroy,
+                callbackScope: this,
+                repeat: 0
+            }
+        );
         super.preUpdate(time, delta);
     }
 }

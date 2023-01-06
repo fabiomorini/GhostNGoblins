@@ -5,6 +5,8 @@ class stage1 extends Phaser.Scene {
     this.playerPointsText;
     this.sparks = [];
     this.arthurLife;
+    this.stopSpawn = false;
+    this.endSongBool = false;
   }
 
   preload() { }
@@ -75,9 +77,6 @@ class stage1 extends Phaser.Scene {
     // Inicializa una variable para almacenar el índice de los enemigos
     this.enemyIndex;
 
-    //ESTO SE PUEDE ELIMINAR SI YA NO SE VA A ABRIR LA PUERTA CON "CONTROL"
-    this.openDoorKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CTRL);
-
     this.gameHUD();
     this.timer();
 
@@ -90,45 +89,6 @@ class stage1 extends Phaser.Scene {
 
 
     this.spawnItems();
-  }
-
-  update() {
-    if (!this.gameStart.isPlaying && !this.hasPlayed) {
-      this.gameTheme.play();
-      this.gameTheme.setLoop(true);
-      this.hasPlayed = true;
-    }
-
-    //Pintamos los enemigos
-    this.spawnEnemies();
-    this.checkEnemyDistance(this.arthur.x);
-
-    //ESTO HAY QUE ACTIVARLO AL RECOGER LA LLAVE
-    if (this.openDoorKey.isDown) {
-      this.door.openDoor();
-    }
-
-    //actualizar hud score player
-    this.playerPointsText.text = this.arthur.score;
-
-    if (Phaser.Math.Distance.Between(this.arthur.x, 0, this.boss.x, 0) <= 350)
-      this.boss.active = true;
-  }
-
-  endSong()
-  {
-    this.gameTheme.stop();
-    this.endTheme.play();
-  }
-
-  inputScene() {
-    this.endTheme.stop();
-    this.gameTheme.stop();
-    this.scene.start("InputScene");
-  }
-
-  spawnSparks(x, y) {
-    this.sparks.push(new sparkPrefab(this, x, y));
   }
 
   gameHUD() {
@@ -146,14 +106,83 @@ class stage1 extends Phaser.Scene {
       "TOP SCORE"
     ).setScale(0.28).setScrollFactor(0).setTint(0xcb3058);
 
-    var topPointsText = this.add.bitmapText(
+    this.topPointsText = this.add.bitmapText(
       135,
       10,
       "arcadeFont",
-      "10000"
+      "" + gamePrefs.topScore
     ).setScale(0.28).setScrollFactor(0);
 
     this.arthurLife = new livesPrefab(this, 20, 215);
+  }
+
+  update() {
+    if (!this.gameStart.isPlaying && !this.hasPlayed) {
+      this.gameTheme.play();
+      this.gameTheme.setLoop(true);
+      this.hasPlayed = true;
+    }
+
+    //Pintamos los enemigos
+    if(!this.stopSpawn){
+
+      this.spawnEnemies();
+      this.checkEnemyDistance(this.arthur.x);
+    }
+
+    //actualizar hud score player
+    this.playerPointsText.text = this.arthur.score;
+    if (this.arthur.score > gamePrefs.topScore)
+    {
+      gamePrefs.topScore = this.arthur.score;
+      this.topPointsText.text = this.arthur.score;
+    }
+
+    if (this.arthur.x > 3300) {
+      this.stopSpawn = true;
+      for (let j = 0; j < this.enemiesSpawned.length; j++) {
+        this.cameras.main.flash(500, 20, 20, 20);
+        this.destroyEnemy(j);
+      }
+    }
+
+    if (Phaser.Math.Distance.Between(this.arthur.x, 0, this.boss.x, 0) <= 350)
+      this.boss.active = true;
+
+    if(this.endSongBool && !this.endTheme.isPlaying)
+    {
+      this.endSongBool = false;
+      this.arthur.body.setVelocityX(50);
+      this.arthur.anims.play("run")
+    }
+  }
+
+  endSong()
+  {
+    this.gameTheme.stop();
+    this.endTheme.play();
+    this.arthur.anims.stop().setFrame(31);
+    this.input.keyboard.enabled = false;
+    this.arthur.body.setVelocityX(0);
+    this.arthur.body.setVelocityY(0);
+    this.arthur.invencibile = true;
+    this.arthur.health = 2;
+    this.arthur.hasWon = true;
+    this.sound.volume = 0.3;
+    this.endSongBool = true;
+  }
+
+  inputScene() {
+    this.input.keyboard.enabled = true;
+    gamePrefs.score = this.arthur.score;
+    this.sound.volume = 0.1;
+    this.endTheme.stop();
+    this.gameTheme.stop();
+    this.scene.start("InputScene");
+  }
+
+  spawnSparks(x, y) {
+    this.sparks.push(new sparkPrefab(this, x, y));
   }
 
   timer() {
@@ -487,7 +516,7 @@ class stage1 extends Phaser.Scene {
     for (let i = 0; i < this.enemiesSpawned.length; i++) {
       const enemy = this.enemiesSpawned[i];
 
-      if (Math.abs(arthurX - enemy.x) > gamePrefs.GAME_WIDTH / 2 + 32) {
+      if (Math.abs(arthurX - enemy.x) > gamePrefs.GAME_WIDTH / 2 ) {
         this.enemyIndex = i;
         break;
       }
@@ -503,7 +532,8 @@ class stage1 extends Phaser.Scene {
         this.enemiesSpawned[this.enemyIndex].destroyTime != null &&
         currentTime - this.enemiesSpawned[this.enemyIndex].destroyTime >
         gamePrefs.ENEMY_RESPAWN_TIME
-      ) {
+        )
+       {
         destroyEnemy(this.enemyIndex);
       }
     }
@@ -540,7 +570,7 @@ class stage1 extends Phaser.Scene {
       // Verifica si el enemigo ya está en el array de enemigos spawneados
       let isDuplicated = false;
       for (let j = 0; j < this.enemiesSpawned.length; j++) {
-        if (this.enemiesSpawned[j].spriteTag == spawn.name) {
+        if (this.enemiesSpawned[j].spriteTag == spawn.name ) {
           isDuplicated = true;
           break;
         }
@@ -559,8 +589,8 @@ class stage1 extends Phaser.Scene {
       // Si el enemigo no está duplicado y está en el rango de visión del jugador, lo spawnea
       if (!isDuplicated &&
         !(spawn.name in this.enemiesWaiting) &&
-        this.arthur.x <= spawn.x + gamePrefs.GAME_WIDTH / 2 + 32 &&
-        this.arthur.x >= spawn.x - gamePrefs.GAME_WIDTH / 2 - 32 &&
+        this.arthur.x <= spawn.x + gamePrefs.GAME_WIDTH / 2  &&
+        this.arthur.x >= spawn.x - gamePrefs.GAME_WIDTH / 2  &&
         spawn.properties[0].value != "RedArremer" &&
         spawn.properties[0].value != "UnicornBoss" &&
         unicornPrefab.isAlive) {

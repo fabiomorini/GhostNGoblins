@@ -40,6 +40,7 @@ class firePrefab extends Phaser.GameObjects.Sprite {
         _this.setActive(false);
         _this.y += 500;
         _this.scene.sound.play('projectileBlock');
+        _this.scene.spawnSparks(_this.body.position.x, _this.body.position.y);
     }
 
     hasHitNull(_this, _null) {
